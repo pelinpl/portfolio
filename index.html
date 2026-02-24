@@ -69,7 +69,7 @@
         @media (min-width: 768px) {
             .swiper-container {
                 max-width: 800px;
-                aspect-ratio: 16 / 10; /* PC端采用更宽的商业报告比例 */
+                aspect-ratio: 16 / 10; /* PC端采用横向比例 */
             }
         }
 
@@ -77,12 +77,11 @@
         .result-image-box {
             width: 100%;
             height: 100%;
-            background-color: #f1f5f9; /* 环境灰色消除白边突兀感 */
+            background-color: #f8fafc; /* 背景填充灰色防止白边视觉突兀 */
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
         }
 
         .result-image-box img {
@@ -91,7 +90,7 @@
             object-fit: contain; /* 保证展示完整且不变形 */
         }
 
-        /* Swiper 分页器定制 - 固定在底部 */
+        /* Swiper 分页器定制 */
         .swiper-pagination-bullet {
             background: rgba(255,255,255,0.3) !important;
             opacity: 1 !important;
@@ -128,7 +127,7 @@
         </div>
     </nav>
 
-    <!-- 1. Hero 首页区 (保持原样) -->
+    <!-- 1. Hero 首页区 -->
     <section id="hero" class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
         <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
         <div class="absolute bottom-[-10%] left-[-5%] w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
@@ -173,7 +172,7 @@
         </div>
     </section>
 
-    <!-- 2. About Me 区 (保持原样) -->
+    <!-- 2. About Me 区 -->
     <section id="about" class="py-20 bg-white">
         <div class="max-w-4xl mx-auto px-6 reveal">
             <h2 class="text-3xl font-bold mb-10 text-center">About Me</h2>
@@ -181,7 +180,7 @@
         </div>
     </section>
 
-    <!-- 3. Skills 能力区 (保持原样) -->
+    <!-- 3. Skills 能力区 -->
     <section id="skills" class="py-20 bg-slate-50">
         <div class="max-w-6xl mx-auto px-6 reveal">
             <div class="mb-12 text-center md:text-left">
@@ -192,7 +191,7 @@
         </div>
     </section>
 
-    <!-- 4. Projects 项目区 (保持原样) -->
+    <!-- 4. Projects 项目区 -->
     <section id="projects" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6 reveal">
             <div class="mb-12">
@@ -203,7 +202,7 @@
         </div>
     </section>
 
-    <!-- 5. Experience 经历 (保持原样) -->
+    <!-- 5. Experience 经历 -->
     <section id="experience" class="py-20 bg-slate-50">
         <div class="max-w-4xl mx-auto px-6 reveal">
             <h2 class="text-3xl font-bold mb-12 text-center">Work & Experience</h2>
@@ -211,7 +210,7 @@
         </div>
     </section>
 
-    <!-- 6. Insights 思考板块 (保持原样) -->
+    <!-- 6. Insights 思考板块 -->
     <section id="insights" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-6 reveal">
             <div class="flex items-center justify-between mb-10 border-b border-slate-100 pb-4">
@@ -224,7 +223,7 @@
         </div>
     </section>
 
-    <!-- 7. Contact 联系板块 (保持原样) -->
+    <!-- 7. Contact 联系板块 -->
     <section id="contact" class="py-24 bg-slate-900 text-white relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal">
@@ -259,7 +258,7 @@
             </div>
         </div>
         
-        <!-- 底部导航 (位置恒定，防止随高度跳动) -->
+        <!-- 底部导航 (位置恒定) -->
         <div class="mt-12 flex flex-col items-center gap-6 z-10">
             <div class="swiper-pagination"></div>
             <div class="flex items-center gap-3 text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase bg-white/5 px-4 py-2 rounded-full border border-white/5">
@@ -294,7 +293,7 @@
                     id: 1,
                     title: "Google Trends 宏观就业预测模型",
                     tags: ["数据分析", "时间序列"],
-                    summary: "利用 Google Trends 搜索指数构建预测模型，辅助宏观就业趋势研判与商业战略布局。",
+                    summary: "利用 Google Trends 搜索指数构建预测模型，辅助宏观就业趋势研判与商业策略布局。",
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "在宏观经济波动背景下，传统就业数据存在滞后性。利用搜索数据作为先行指标预测就业景气度。",
                     role: "核心分析师：负责数据清洗、特征工程、模型构建与可视化。",
@@ -430,7 +429,7 @@
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
             
-            // 1. 简介卡片 (Slide 1) - 文字垂直居中对齐，内边距充足
+            // 1. 简介卡片 (Slide 1) - 文字垂直居中对齐
             const introSlide = `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -460,19 +459,17 @@
                 </div>
             `;
 
-            // 2. 成果图卡片 (Slide 2-N) - 强制比例并填充背景色，内容展示完整
+            // 2. 成果图卡片 (Slide 2-N) - 强制比例并填充背景色
             const resultSlides = project.placeholders.map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
                         <div class="result-image-box flex-1">
-                             <!-- 预留图片位置，当前使用图标作为占位 -->
                              <div class="absolute top-8 left-8 z-10">
-                                <span class="px-4 py-2 bg-slate-900 text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl">成果图 0${i+1}</span>
+                                <span class="px-4 py-2 bg-slate-900 text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl">成果 0${i+1}</span>
                              </div>
-                             <div class="text-center p-12 opacity-30 select-none">
+                             <div class="text-center p-12 opacity-40 select-none">
                                 <i data-lucide="${p.icon || 'image'}" class="w-16 h-16 text-slate-400 mx-auto mb-4"></i>
                                 <div class="text-lg font-bold text-slate-400 uppercase">${p.title}</div>
-                                <p class="text-xs text-slate-300 mt-2">此处展示分析看板、图表或产品原型截图</p>
                              </div>
                         </div>
                         <div class="p-8 md:p-10 bg-white border-t border-slate-100">
@@ -487,12 +484,12 @@
             modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
             
-            // 每次打开时重置 Swiper
+            // 每次打开时销毁旧的 Swiper 实例防止冲突
             if(currentSwiper) currentSwiper.destroy();
 
             currentSwiper = new Swiper('.swiper-container', {
                 slidesPerView: 1,
-                spaceBetween: 32, 
+                spaceBetween: 24, // 卡片间距
                 centeredSlides: true,
                 grabCursor: true,
                 speed: 800,
