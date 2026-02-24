@@ -1,662 +1,466 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  BarChart2, Target, Lightbulb, PieChart, 
-  ChevronRight, Download, Mail, Linkedin, 
-  Phone, X, ExternalLink, ArrowRight, Github
-} from 'lucide-react';
-
-// ==========================================
-// 数据配置区 (您可以直接在这里修改您的个人信息和经历)
-// ==========================================
-
-const PERSONAL_INFO = {
-  name: "彭羚",
-  title: "数据驱动的商业分析与数字营销候选人",
-  tags: ["商业分析", "用户洞察", "数据分析", "数字营销", "产品思维"],
-  email: "pengling2024uk@163.com",
-  phone: "15377614239",
-  linkedin: "https://linkedin.com/in/yourprofile",
-  about: [
-    "关注用户行为与商业增长，致力于通过结构化思维拆解复杂业务问题。",
-    "擅长用数据支持商业决策，具备从数据清洗、建模分析到策略落地的全链路能力。",
-    "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目从 0 到 1 落地。"
-  ]
-};
-
-const SKILLS = [
-  {
-    category: "商业分析",
-    icon: <BarChart2 className="w-6 h-6 text-blue-600" />,
-    items: ["市场规模测算", "竞品分析", "商业模式拆解", "行业研究报告"]
-  },
-  {
-    category: "数据分析",
-    icon: <PieChart className="w-6 h-6 text-purple-600" />,
-    items: ["Excel/SQL进阶", "R语言建模", "时间序列预测", "数据可视化"]
-  },
-  {
-    category: "营销策略",
-    icon: <Target className="w-6 h-6 text-indigo-600" />,
-    items: ["内容营销矩阵", "私域流量运营", "品牌心智建设", "多渠道分发"]
-  },
-  {
-    category: "产品思维",
-    icon: <Lightbulb className="w-6 h-6 text-blue-500" />,
-    items: ["MVP敏捷验证", "平台生态思维", "用户体验旅程", "需求优先级梳理"]
-  }
-];
-
-const PROJECTS = [
-  {
-    id: 1,
-    title: "Google Trends 宏观就业预测模型",
-    tags: ["数据分析", "时间序列", "R语言"],
-    summary: "利用 Google Trends 搜索指数构建预测模型，辅助宏观就业趋势研判与商业战略布局。",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
-    details: {
-      background: "在宏观经济波动背景下，传统就业数据存在滞后性。本项目旨在探索利用高频互联网搜索数据作为先行指标，实时预测就业市场景气度。",
-      role: "核心分析师：负责数据清洗、特征工程、模型构建与结果可视化。",
-      method: "1. 爬取并清洗 Google Trends 行业相关关键词数据；\n2. 采用 R 语言构建 ARIMA 与 VAR 时间序列模型；\n3. 进行交叉验证与模型调优。",
-      value: "成功验证了搜索数据与实际就业率的高度相关性，模型预测准确率达到 85%，为企业制定人力资源与市场战略提供了前瞻性数据支持。"
-    }
-  },
-  {
-    id: 2,
-    title: "PureFit+ 数字化健康产品方案",
-    tags: ["产品战略", "商业模式", "用户体验"],
-    summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理 MVP 方案。",
-    image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
-    details: {
-      background: "年轻群体对健康管理的需求日益增长，但市场上现有产品存在数据孤岛、缺乏持续激励等问题。",
-      role: "产品负责人：主导用户调研、竞品分析、MVP 功能定义与商业化路径规划。",
-      method: "1. 通过问卷与深度访谈产出用户画像与体验地图；\n2. 运用 KANO 模型进行需求优先级排序；\n3. 设计核心业务流程，搭建包含“硬件采集+算法分析+社区激励”的平台架构。",
-      value: "产出完整的商业计划书与高保真原型，明确了前三年商业变现路径，在内部路演中获得最高评级。"
-    }
-  },
-  {
-    id: 3,
-    title: "Cadbury Champion’s Choice 品牌营销",
-    tags: ["数字营销", "品牌重塑", "跨界合作"],
-    summary: "为吉百利设计的整合数字营销战役，旨在提升品牌在年轻体育圈层中的声量与转化。",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=400",
-    details: {
-      background: "吉百利品牌面临受众老化的挑战，急需通过创新营销战役触达年轻消费者，提升品牌活力。",
-      role: "营销策略策划：负责数字渠道策略制定、互动玩法设计与核心媒介组合方案。",
-      method: "1. 策划线上“冠军之选”投票互动 H5，结合社交货币激发裂变；\n2. 设计跨界联名周边，打通线上抽奖与线下兑换的 O2O 闭环；\n3. 制定 KOL 矩阵投放策略（覆盖电竞、极限运动领域）。",
-      value: "预期实现品牌曝光量超千万，预计带动社媒互动率提升 30%，有效转化年轻潜在消费者。"
-    }
-  }
-];
-
-const EXPERIENCES = [
-  {
-    company: "华威商学院",
-    role: "市场部门核心成员 (商业战略与市场模拟项目)",
-    date: "2025.06",
-    achievements: [
-      "跨职能协作与战略制定：在7人车企模拟项目中，与创新、财务等部门协同，制定战略路线图，平衡财务与能源转型。",
-      "动态定价与产能优化：基于数据动态调整营销投入与价格策略，实现企业增加值提升 170%。",
-      "卓越结果：在 89 支队伍中脱颖而出，团队最终斩获第 14 名优异成绩。"
-    ]
-  },
-  {
-    company: "中国建材科学研究总院",
-    role: "科技部国际合作实习生",
-    date: "2023.02 - 2024.09",
-    achievements: [
-      "市场洞察与商业分析：输出结构化海外市场分析报告，编制3期行业简报（月均阅读量 800+），为投资计划提供依据。",
-      "跨国项目推进与落地：组织并跟进 30+ 线上跨国会议（包含沙特阿美等头部企业），协同技术团队分析客户需求，促成战略合作协议签署。",
-      "国际活动策划与执行：全流程统筹国际学术交流活动，吸引 60+ 专家参会；策划青年英语竞赛等活动，覆盖 200+ 人次。"
-    ]
-  },
-  {
-    company: "SET校园营销大赛",
-    role: "营销负责人 (自热火锅创业项目)",
-    date: "2020.04",
-    achievements: [
-      "从 0 到 1 校园创业：发起并带领团队设计校园营销方案，实现月销售额 5000+ 元。",
-      "全渠道运营与私域转化：在 QQ 空间、B 站、小红书等平台制定分时段传播策略，成功吸引 215 人进入私域社群。",
-      "数据驱动优化：基于用户反馈优化产品卖点表达与促销方式，将复购率稳步提升至 10%。"
-    ]
-  }
-];
-
-const INSIGHTS = [
-  {
-    title: "AI驱动下的数据决策与业务重塑",
-    date: "2024.11.02",
-    summary: "探讨大模型技术如何从辅助决策演进至自动化行动，以及对分析师角色的挑战。"
-  },
-  {
-    title: "从私域到全域：构建高留存的用户运营体系",
-    date: "2024.10.15",
-    summary: "复盘多个校园与互联网营销案例，总结基于 AARRR 模型的精细化运营打法。"
-  }
-];
-
-// ==========================================
-// 组件定义区
-// ==========================================
-
-// --- Intersection Observer Hook (用于滚动动画) ---
-function useIntersectionObserver(options = {}) {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const targetRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsIntersecting(true);
-        // 如果只想触发一次动画，取消下面的注释
-        // observer.unobserve(entry.target);
-      }
-    }, { threshold: 0.1, ...options });
-
-    const currentTarget = targetRef.current;
-    if (currentTarget) {
-      observer.observe(currentTarget);
-    }
-
-    return () => {
-      if (currentTarget) observer.unobserve(currentTarget);
-    };
-  }, [options]);
-
-  return [targetRef, isIntersecting];
-}
-
-// --- 动画容器组件 ---
-const FadeInSection = ({ children, delay = 0 }) => {
-  const [ref, isVisible] = useIntersectionObserver();
-  
-  return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-out transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
-    >
-      {children}
-    </div>
-  );
-};
-
-// --- 项目模态框组件 ---
-const ProjectModal = ({ project, onClose }) => {
-  if (!project) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-y-auto transform transition-all">
-        {/* 顶部关闭按钮 */}
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-white/80 hover:bg-slate-100 rounded-full text-slate-600 transition-colors z-10"
-        >
-          <X className="w-5 h-5" />
-        </button>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彭羚 | 个人商业作品集</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
-        {/* 封面图 */}
-        <div className="w-full h-48 md:h-64 relative bg-slate-200">
-          <img 
-            src={project.image} 
-            alt={project.title} 
-            className="w-full h-full object-cover rounded-t-2xl opacity-90"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex flex-col justify-end p-6 md:p-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{project.title}</h3>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map(tag => (
-                <span key={tag} className="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-full">
-                  {tag}
-                </span>
-              ))}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-modal {
+            display: none;
+            scrollbar-width: none; /* Firefox */
+        }
+        .project-modal::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 selection:bg-blue-100">
+
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 w-full z-40 transition-all duration-300 py-5">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <div class="text-xl font-bold tracking-tight cursor-pointer" onclick="scrollToId('hero')">
+                彭羚<span class="text-blue-600">.</span>
             </div>
-          </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
+                <a href="#skills" class="hover:text-blue-600 transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-blue-600 transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-blue-600 transition-colors">Experience</a>
+            </div>
+            <button onclick="scrollToId('contact')" class="px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-full hover:bg-slate-800 transition-colors shadow-lg">
+                联系我
+            </button>
         </div>
+    </nav>
 
-        {/* 内容区 */}
-        <div className="p-6 md:p-8 space-y-8">
-          {/* 四大模块 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h4 className="flex items-center text-lg font-semibold text-slate-800 border-b pb-2">
-                <span className="w-1.5 h-5 bg-blue-600 rounded-full mr-2"></span>
-                项目背景 (Background)
-              </h4>
-              <p className="text-slate-600 leading-relaxed text-sm">
-                {project.details.background}
-              </p>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="flex items-center text-lg font-semibold text-slate-800 border-b pb-2">
-                <span className="w-1.5 h-5 bg-purple-600 rounded-full mr-2"></span>
-                我的角色 (Role)
-              </h4>
-              <p className="text-slate-600 leading-relaxed text-sm font-medium">
-                {project.details.role}
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="flex items-center text-lg font-semibold text-slate-800 border-b pb-2">
-                <span className="w-1.5 h-5 bg-indigo-500 rounded-full mr-2"></span>
-                解决方案 (Methods)
-              </h4>
-              <p className="text-slate-600 leading-relaxed text-sm whitespace-pre-line">
-                {project.details.method}
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="flex items-center text-lg font-semibold text-slate-800 border-b pb-2">
-                <span className="w-1.5 h-5 bg-green-500 rounded-full mr-2"></span>
-                商业价值 (Value)
-              </h4>
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-inner">
-                <p className="text-slate-800 font-medium leading-relaxed text-sm">
-                  {project.details.value}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* 可视化占位图区 */}
-          <div className="mt-8">
-             <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">相关可视化图表 / 交付物</h4>
-             <div className="w-full h-40 bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl flex items-center justify-center text-slate-400 text-sm">
-                [ 占位符：此处可替换为您项目实际的图表截图、模型评估图或PPT截图 ]
-             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-// ==========================================
-// 主应用组件
-// ==========================================
-export default function PortfolioApp() {
-  const [activeProject, setActiveProject] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  // 监听滚动以改变导航栏样式
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // 禁用背景滚动
-  useEffect(() => {
-    if (activeProject) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [activeProject]);
-
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-200">
-      {/* 导航栏 */}
-      <nav className={`fixed top-0 w-full z-40 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
-      }`}>
-        <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-          <div className="text-xl font-bold tracking-tight cursor-pointer" onClick={() => scrollTo('hero')}>
-            {PERSONAL_INFO.name}<span className="text-blue-600">.</span>
-          </div>
-          <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-            {['About', 'Skills', 'Projects', 'Experience'].map((item) => (
-              <button 
-                key={item} 
-                onClick={() => scrollTo(item.toLowerCase())}
-                className="hover:text-blue-600 transition-colors"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          <button 
-            onClick={() => scrollTo('contact')}
-            className="px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-full hover:bg-slate-800 transition-colors"
-          >
-            联系我
-          </button>
-        </div>
-      </nav>
-
-      <main>
-        {/* 1. Hero 首页区 */}
-        <section id="hero" className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-          {/* 背景装饰元素 */}
-          <div className="absolute top-[-10%] right-[-5%] w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-          <div className="absolute bottom-[-10%] left-[-5%] w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-          
-          <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1 space-y-8">
-              <FadeInSection>
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-2 border border-blue-100">
-                  <span className="flex w-2 h-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
-                  正在寻找 2026 届商业分析/产品岗位
+    <!-- 1. Hero 首页区 -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+        <div class="absolute bottom-[-10%] left-[-5%] w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 space-y-8 reveal">
+                <div>
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-4 border border-blue-100">
+                        <span class="flex w-2 h-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+                        正在寻找 2026 届商业分析/产品岗位
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                        Hi，我是 <span class="gradient-text">彭羚</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-slate-600 font-light max-w-2xl" id="hero-title"></p>
                 </div>
-                <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                  Hi，我是 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">{PERSONAL_INFO.name}</span>
-                </h1>
-                <p className="text-xl md:text-2xl text-slate-600 font-light mb-8 max-w-2xl">
-                  {PERSONAL_INFO.title}
-                </p>
                 
-                {/* 关键词标签 */}
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {PERSONAL_INFO.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm rounded-md shadow-sm">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <div class="flex flex-wrap gap-2" id="hero-tags"></div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button 
-                    onClick={() => scrollTo('projects')}
-                    className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 group"
-                  >
-                    查看精选项目
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                  <button 
-                    className="flex items-center justify-center px-6 py-3 bg-white text-slate-700 font-medium rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    下载完整简历
-                  </button>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="scrollToId('projects')" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 group">
+                        查看精选项目 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    <button class="flex items-center justify-center px-6 py-3 bg-white text-slate-700 font-medium rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i> 下载完整简历
+                    </button>
                 </div>
-              </FadeInSection>
             </div>
             
-            {/* 右侧占位图或个人照片：由于没有直接图片，使用简洁的抽象几何体 */}
-            <div className="flex-1 hidden md:flex justify-center items-center">
-              <FadeInSection delay={200}>
-                <div className="relative w-80 h-80">
-                   <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-50 rounded-[2rem] transform rotate-3 shadow-inner"></div>
-                   <div className="absolute inset-0 bg-white rounded-[2rem] transform -rotate-3 shadow-xl border border-white/50 flex flex-col items-center justify-center p-8 text-center gap-4">
-                      <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-2 shadow-lg flex items-center justify-center">
-                         <Target className="w-8 h-8 text-white" />
+            <div class="flex-1 hidden md:flex justify-center items-center reveal" style="transition-delay: 200ms;">
+                <div class="relative w-80 h-80">
+                   <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-50 rounded-[2rem] transform rotate-3 shadow-inner"></div>
+                   <div class="absolute inset-0 bg-white rounded-[2rem] transform -rotate-3 shadow-xl border border-white/50 flex flex-col items-center justify-center p-8 text-center gap-4">
+                      <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-2 shadow-lg flex items-center justify-center">
+                         <i data-lucide="target" class="w-8 h-8 text-white"></i>
                       </div>
-                      <h3 className="text-xl font-bold text-slate-800">增长思维</h3>
-                      <p className="text-sm text-slate-500">连接数据、商业与用户价值的桥梁。</p>
+                      <h3 class="text-xl font-bold text-slate-800">增长思维</h3>
+                      <p class="text-sm text-slate-500">连接数据、商业与用户价值的桥梁。</p>
                    </div>
                 </div>
-              </FadeInSection>
             </div>
-          </div>
-        </section>
+        </div>
+    </section>
 
-        {/* 2. About Me 区 */}
-        <section id="about" className="py-20 bg-white">
-          <div className="max-w-4xl mx-auto px-6">
-            <FadeInSection>
-              <h2 className="text-3xl font-bold mb-10 text-center">About Me</h2>
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-8 md:p-10 shadow-sm">
-                <div className="space-y-6">
-                  {PERSONAL_INFO.about.map((text, idx) => (
-                    <div key={idx} className="flex items-start">
-                      <div className="flex-shrink-0 mt-1">
-                        <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200">
-                          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                        </div>
-                      </div>
-                      <p className="ml-4 text-slate-700 leading-relaxed md:text-lg">
-                        {text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeInSection>
-          </div>
-        </section>
+    <!-- 2. About Me 区 -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <h2 class="text-3xl font-bold mb-10 text-center">About Me</h2>
+            <div class="bg-slate-50 border border-slate-100 rounded-2xl p-8 md:p-10 shadow-sm space-y-6" id="about-content"></div>
+        </div>
+    </section>
 
-        {/* 3. Skills 能力区 */}
-        <section id="skills" className="py-20 bg-slate-50">
-          <div className="max-w-6xl mx-auto px-6">
-            <FadeInSection>
-              <div className="mb-12">
-                <h2 className="text-3xl font-bold mb-4">Core Skills</h2>
-                <p className="text-slate-500">专业技能与工具栈，构建扎实的执行力壁垒。</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {SKILLS.map((skill, index) => (
-                  <FadeInSection key={skill.category} delay={index * 100}>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group h-full">
-                      <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        {skill.icon}
-                      </div>
-                      <h3 className="text-lg font-bold mb-4 text-slate-800">{skill.category}</h3>
-                      <ul className="space-y-3">
-                        {skill.items.map(item => (
-                          <li key={item} className="text-sm text-slate-600 flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-slate-300 before:rounded-full before:mr-3">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </FadeInSection>
-                ))}
-              </div>
-            </FadeInSection>
-          </div>
-        </section>
+    <!-- 3. Skills 能力区 -->
+    <section id="skills" class="py-20 bg-slate-50">
+        <div class="max-w-6xl mx-auto px-6 reveal">
+            <div class="mb-12 text-center md:text-left">
+                <h2 class="text-3xl font-bold mb-4">Core Skills</h2>
+                <p class="text-slate-500">专业技能与工具栈，构建扎实的执行力壁垒。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="skills-grid"></div>
+        </div>
+    </section>
 
-        {/* 4. Projects 项目区 (核心板块) */}
-        <section id="projects" className="py-24 bg-white relative">
-          <div className="max-w-6xl mx-auto px-6">
-            <FadeInSection>
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-                <div>
-                  <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
-                  <p className="text-slate-500 max-w-2xl">
-                    从数据洞察到商业落地，精选能体现分析深度与产品思考的实战案例。
-                  </p>
-                </div>
-              </div>
+    <!-- 4. Projects 项目区 -->
+    <section id="projects" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-6 reveal">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4">Featured Projects</h2>
+                <p class="text-slate-500">从数据洞察到商业落地，精选实战案例。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="projects-grid"></div>
+        </div>
+    </section>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {PROJECTS.map((project, index) => (
-                  <FadeInSection key={project.id} delay={index * 150}>
-                    <div 
-                      className="group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
-                      onClick={() => setActiveProject(project)}
-                    >
-                      {/* 项目封面卡片 */}
-                      <div className="h-48 overflow-hidden relative">
-                        <img 
-                          src={project.image} 
-                          alt={project.title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
-                      </div>
-                      
-                      <div className="p-6 flex flex-col flex-1">
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.tags.slice(0, 2).map(tag => (
-                            <span key={tag} className="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                          {project.title}
-                        </h3>
-                        <p className="text-sm text-slate-500 line-clamp-3 mb-6 flex-1">
-                          {project.summary}
-                        </p>
-                        
-                        <div className="mt-auto pt-4 border-t border-slate-100 flex items-center text-sm font-medium text-blue-600">
-                          查看详情 
-                          <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  </FadeInSection>
-                ))}
-              </div>
-            </FadeInSection>
-          </div>
-        </section>
+    <!-- 5. Experience 经历 -->
+    <section id="experience" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <h2 class="text-3xl font-bold mb-12 text-center">Work & Experience</h2>
+            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-100 before:via-blue-300 before:to-transparent" id="experience-list"></div>
+        </div>
+    </section>
 
-        {/* 5. Experience 经历 */}
-        <section id="experience" className="py-20 bg-slate-50">
-          <div className="max-w-4xl mx-auto px-6">
-            <FadeInSection>
-              <h2 className="text-3xl font-bold mb-12 text-center">Work & Experience</h2>
-              
-              <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-100 before:via-blue-300 before:to-transparent">
-                
-                {EXPERIENCES.map((exp, index) => (
-                  <FadeInSection key={index} delay={index * 100}>
-                    <div className="relative flex items-start md:justify-center">
-                      {/* 时间轴节点标记 */}
-                      <div className="absolute left-0 md:left-1/2 md:-ml-3 w-6 h-6 rounded-full bg-white border-4 border-blue-500 shadow-sm mt-1 z-10 flex items-center justify-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-                      </div>
-
-                      {/* 卡片容器 */}
-                      <div className={`w-full ml-10 md:ml-0 md:w-[45%] bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative ${
-                        index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
-                      }`}>
-                        
-                        {/* 小三角 */}
-                        <div className={`hidden md:block absolute top-4 w-4 h-4 bg-white border-t border-r border-slate-100 transform rotate-45 ${
-                          index % 2 === 0 ? '-right-2' : '-left-2 border-l border-b border-t-0 border-r-0'
-                        }`}></div>
-
-                        <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full mb-3">
-                          {exp.date}
-                        </span>
-                        <h3 className="text-xl font-bold text-slate-900 mb-1">{exp.company}</h3>
-                        <div className="text-sm font-medium text-slate-500 mb-4">{exp.role}</div>
-                        
-                        <ul className="space-y-3">
-                          {exp.achievements.map((item, idx) => {
-                            // 将成就描述中冒号前的内容加粗，强调核心贡献
-                            const [title, ...rest] = item.split("：");
-                            const content = rest.join("：");
-                            return (
-                              <li key={idx} className="text-sm text-slate-600 leading-relaxed flex items-start">
-                                <span className="text-blue-500 mr-2 mt-0.5">▪</span>
-                                <div>
-                                  {content ? (
-                                    <>
-                                      <strong className="text-slate-800">{title}：</strong>
-                                      {content}
-                                    </>
-                                  ) : (
-                                    item
-                                  )}
-                                </div>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    </div>
-                  </FadeInSection>
-                ))}
-              </div>
-            </FadeInSection>
-          </div>
-        </section>
-
-        {/* 6. Insights 思考板块 */}
-        <section id="insights" className="py-20 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            <FadeInSection>
-              <div className="flex items-center justify-between mb-10 border-b border-slate-100 pb-4">
-                <h2 className="text-2xl font-bold text-slate-900">思考与洞察</h2>
-                <span className="text-sm text-slate-500 hover:text-blue-600 cursor-pointer flex items-center">
-                  查看全部文章 <ExternalLink className="w-4 h-4 ml-1" />
+    <!-- 6. Insights 思考板块 -->
+    <section id="insights" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6 reveal">
+            <div class="flex items-center justify-between mb-10 border-b border-slate-100 pb-4">
+                <h2 class="text-2xl font-bold text-slate-900">思考与洞察</h2>
+                <span class="text-sm text-slate-500 hover:text-blue-600 cursor-pointer flex items-center">
+                    查看全部文章 <i data-lucide="external-link" class="w-4 h-4 ml-1"></i>
                 </span>
-              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="insights-grid"></div>
+        </div>
+    </section>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {INSIGHTS.map((insight, idx) => (
-                  <div key={idx} className="group p-6 rounded-xl border border-slate-100 hover:border-blue-100 bg-slate-50/50 hover:bg-blue-50/30 transition-colors cursor-pointer">
-                    <div className="text-xs text-slate-400 mb-2">{insight.date}</div>
-                    <h3 className="text-lg font-semibold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">
-                      {insight.title}
-                    </h3>
-                    <p className="text-sm text-slate-500 line-clamp-2">
-                      {insight.summary}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </FadeInSection>
-          </div>
-        </section>
-
-        {/* 7. Contact 联系板块 */}
-        <section id="contact" className="py-24 bg-slate-900 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
-          
-          <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-            <FadeInSection>
-              <h2 className="text-4xl font-bold mb-6">Let's Connect</h2>
-              <p className="text-slate-400 mb-12 max-w-xl mx-auto text-lg">
-                随时期待与您交流新的商业机会、数据见解或产品想法。
-              </p>
-              
-              <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
-                <a href={`mailto:${PERSONAL_INFO.email}`} className="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
-                  <Mail className="w-5 h-5 mr-3 text-blue-400" />
-                  <span className="font-medium">{PERSONAL_INFO.email}</span>
+    <!-- 7. Contact 联系板块 -->
+    <section id="contact" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal">
+            <h2 class="text-4xl font-bold mb-6">Let's Connect</h2>
+            <p class="text-slate-400 mb-12 max-w-xl mx-auto text-lg">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12" id="contact-info"></div>
+            <div class="flex items-center justify-center space-x-6">
+                <a id="linkedin-link" target="_blank" class="p-3 bg-white/5 rounded-full hover:bg-blue-600 hover:text-white transition-all text-slate-300">
+                    <i data-lucide="linkedin" class="w-6 h-6"></i>
                 </a>
-                <a href={`tel:${PERSONAL_INFO.phone}`} className="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
-                  <Phone className="w-5 h-5 mr-3 text-blue-400" />
-                  <span className="font-medium">{PERSONAL_INFO.phone}</span>
-                </a>
-              </div>
-
-              <div className="flex items-center justify-center space-x-6">
-                <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noreferrer" className="p-3 bg-white/5 rounded-full hover:bg-blue-600 hover:text-white transition-all text-slate-300">
-                  <Linkedin className="w-6 h-6" />
-                </a>
-                <button className="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full transition-colors shadow-lg shadow-blue-900/50">
-                  <Download className="w-4 h-4 mr-2" />
-                  下载 PDF 简历
+                <button class="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full transition-colors shadow-lg">
+                    <i data-lucide="download" class="w-4 h-4 mr-2"></i> 下载 PDF 简历
                 </button>
-              </div>
-            </FadeInSection>
-          </div>
-        </section>
-      </main>
+            </div>
+        </div>
+    </section>
 
-      {/* Footer */}
-      <footer className="py-6 bg-slate-950 text-center text-sm text-slate-500">
-        <p>© {new Date().getFullYear()} {PERSONAL_INFO.name}. Crafted with Product Thinking.</p>
-      </footer>
+    <footer class="py-6 bg-slate-950 text-center text-sm text-slate-500">
+        <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking.</p>
+    </footer>
 
-      {/* 项目详情 Modal */}
-      {activeProject && (
-        <ProjectModal 
-          project={activeProject} 
-          onClose={() => setActiveProject(null)} 
-        />
-      )}
+    <!-- 项目模态框 -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto project-modal">
+        <div class="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all">
+            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 bg-white/80 hover:bg-slate-100 rounded-full text-slate-600 transition-colors z-20">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="modal-body"></div>
+        </div>
     </div>
-  );
-}
+
+    <!-- 数据与逻辑脚本 -->
+    <script>
+        // 数据配置项
+        const DATA = {
+            personal: {
+                name: "彭羚",
+                title: "数据驱动的商业分析与数字营销候选人",
+                tags: ["商业分析", "用户洞察", "数据分析", "数字营销", "产品思维"],
+                email: "pengling2024uk@163.com",
+                phone: "15377614239",
+                linkedin: "https://linkedin.com/in/yourprofile",
+                about: [
+                    "关注用户行为与商业增长，致力于通过结构化思维拆解复杂业务问题。",
+                    "擅长用数据支持商业决策，具备从数据清洗、建模分析到策略落地的全链路能力。",
+                    "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目从 0 到 1 落地。"
+                ]
+            },
+            skills: [
+                { category: "商业分析", icon: "bar-chart-2", items: ["市场规模测算", "竞品分析", "商业模式拆解", "行业研究报告"] },
+                { category: "数据分析", icon: "pie-chart", items: ["Excel/SQL进阶", "R语言建模", "时间序列预测", "数据可视化"] },
+                { category: "营销策略", icon: "target", items: ["内容营销矩阵", "私域流量运营", "品牌心智建设", "多渠道分发"] },
+                { category: "产品思维", icon: "lightbulb", items: ["MVP敏捷验证", "平台生态思维", "用户体验旅程", "需求优先级梳理"] }
+            ],
+            projects: [
+                {
+                    id: 1,
+                    title: "Google Trends 宏观就业预测模型",
+                    tags: ["数据分析", "时间序列", "R语言"],
+                    summary: "利用 Google Trends 搜索指数构建预测模型，辅助宏观就业趋势研判与商业战略布局。",
+                    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
+                    background: "在宏观经济波动背景下，传统就业数据存在滞后性。利用搜索数据作为先行指标预测就业景气度。",
+                    role: "核心分析师：负责数据清洗、特征工程、模型构建与可视化。",
+                    method: "1. 爬取相关关键词数据；2. 构建 ARIMA 与 VAR 时间序列模型；3. 模型调优。",
+                    value: "成功验证相关性，准确率达到 85%，为战略制定提供数据支持。"
+                },
+                {
+                    id: 2,
+                    title: "PureFit+ 数字化健康产品方案",
+                    tags: ["产品战略", "商业模式", "用户体验"],
+                    summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理方案。",
+                    image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
+                    background: "针对健康管理中的数据孤岛与激励缺失问题提供 MVP 方案。",
+                    role: "产品负责人：主导用户调研、竞品分析、MVP 功能定义与商业路径规划。",
+                    method: "1. 用户画像与旅程图产出；2. KANO 需求优先级排序；3. 设计商业模式与原型。",
+                    value: "产出完整 BP 并在内部路演获得最高评级，明确三年变现路径。"
+                },
+                {
+                    id: 3,
+                    title: "Cadbury Champion’s Choice 品牌营销",
+                    tags: ["数字营销", "品牌重塑", "跨界合作"],
+                    summary: "为吉百利设计的整合数字营销战役，提升品牌在年轻体育圈层中的声量。",
+                    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=400",
+                    background: "品牌受众老龄化，需要触达 Z 世代圈层提升品牌活力。",
+                    role: "营销策略策划：负责数字渠道策略、互动玩法设计与媒介组合方案。",
+                    method: "1. 策划互动 H5 裂变玩法；2. 设计 O2O 闭环；3. 制定 KOL 矩阵投放策略。",
+                    value: "预期实现曝光超千万，互动率提升 30%，有效转化年轻潜在受众。"
+                }
+            ],
+            experiences: [
+                { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["制定战略路线图，平衡财务与能源转型。","数据驱动动态定价，实现企业增加值提升 170%。","89 支队伍中斩获第 14 名。"] },
+                { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2023.02 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业简报（阅读量 800+）。","组织 30+ 线上跨国会议（包含沙特阿美），促成战略合作。","策划国际学术活动与竞赛，覆盖 200+ 人次。"] },
+                { company: "SET校园营销大赛", role: "营销负责人 (自热火锅)", date: "2020.04", desc: ["从 0 到 1 校园创业，月销售额 5000+ 元。","制定多平台传播策略，吸纳 215 人私域社群。","优化产品卖点，复购率提升至 10%。"] }
+            ],
+            insights: [
+                { title: "AI驱动下的数据决策与业务重塑", date: "2024.11.02", summary: "探讨大模型技术如何从辅助决策演进至自动化行动。" },
+                { title: "从私域到全域：构建高留存运营体系", date: "2024.10.15", summary: "复盘多个校园案例，总结 AARRR 模型打法。" }
+            ]
+        };
+
+        // 初始化内容
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderContent();
+            setupAnimations();
+            
+            // 监听导航背景
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    nav.classList.add('glass-nav', 'shadow-sm', 'py-3');
+                    nav.classList.remove('py-5');
+                } else {
+                    nav.classList.remove('glass-nav', 'shadow-sm', 'py-3');
+                    nav.classList.add('py-5');
+                }
+            });
+
+            document.getElementById('year').innerText = new Date().getFullYear();
+        });
+
+        function renderContent() {
+            // Hero
+            document.getElementById('hero-title').innerText = DATA.personal.title;
+            const heroTags = document.getElementById('hero-tags');
+            DATA.personal.tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = "px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm rounded-md shadow-sm";
+                span.innerText = tag;
+                heroTags.appendChild(span);
+            });
+
+            // About
+            const aboutContent = document.getElementById('about-content');
+            DATA.personal.about.forEach(text => {
+                aboutContent.innerHTML += `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                        </div>
+                        <p class="ml-4 text-slate-700 leading-relaxed md:text-lg">${text}</p>
+                    </div>`;
+            });
+
+            // Skills
+            const skillsGrid = document.getElementById('skills-grid');
+            DATA.skills.forEach(skill => {
+                skillsGrid.innerHTML += `
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="${skill.icon}" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-4 text-slate-800">${skill.category}</h3>
+                        <ul class="space-y-3">
+                            ${skill.items.map(item => `<li class="text-sm text-slate-600 flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-slate-300 before:rounded-full before:mr-3">${item}</li>`).join('')}
+                        </ul>
+                    </div>`;
+            });
+            lucide.createIcons();
+
+            // Projects
+            const projectsGrid = document.getElementById('projects-grid');
+            DATA.projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = "group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full";
+                card.onclick = () => openModal(project);
+                card.innerHTML = `
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${project.tags.slice(0, 2).map(tag => `<span class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded">${tag}</span>`).join('')}
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">${project.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-3 mb-6 flex-1">${project.summary}</p>
+                        <div class="mt-auto pt-4 border-t border-slate-100 flex items-center text-sm font-medium text-blue-600">
+                            查看详情 <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>`;
+                projectsGrid.appendChild(card);
+            });
+            lucide.createIcons();
+
+            // Experience
+            const experienceList = document.getElementById('experience-list');
+            DATA.experiences.forEach((exp, index) => {
+                const isEven = index % 2 === 0;
+                experienceList.innerHTML += `
+                    <div class="relative flex items-start md:justify-center">
+                        <div class="absolute left-0 md:left-1/2 md:-ml-3 w-6 h-6 rounded-full bg-white border-4 border-blue-500 shadow-sm mt-1 z-10"></div>
+                        <div class="w-full ml-10 md:ml-0 md:w-[45%] bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow ${isEven ? 'md:mr-auto' : 'md:ml-auto'}">
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full mb-3">${exp.date}</span>
+                            <h3 class="text-xl font-bold text-slate-900 mb-1">${exp.company}</h3>
+                            <div class="text-sm font-medium text-slate-500 mb-4">${exp.role}</div>
+                            <ul class="space-y-3">
+                                ${exp.desc.map(item => `<li class="text-sm text-slate-600 leading-relaxed flex items-start"><span class="text-blue-500 mr-2 mt-0.5">▪</span>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>`;
+            });
+
+            // Insights
+            const insightsGrid = document.getElementById('insights-grid');
+            DATA.insights.forEach(insight => {
+                insightsGrid.innerHTML += `
+                    <div class="group p-6 rounded-xl border border-slate-100 hover:border-blue-100 bg-slate-50/50 hover:bg-blue-50/30 transition-colors cursor-pointer">
+                        <div class="text-xs text-slate-400 mb-2">${insight.date}</div>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">${insight.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2">${insight.summary}</p>
+                    </div>`;
+            });
+
+            // Contact
+            document.getElementById('contact-info').innerHTML = `
+                <a href="mailto:${DATA.personal.email}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
+                    <i data-lucide="mail" class="w-5 h-5 mr-3 text-blue-400"></i>
+                    <span class="font-medium">${DATA.personal.email}</span>
+                </a>
+                <a href="tel:${DATA.personal.phone}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
+                    <i data-lucide="phone" class="w-5 h-5 mr-3 text-blue-400"></i>
+                    <span class="font-medium">${DATA.personal.phone}</span>
+                </a>`;
+            document.getElementById('linkedin-link').href = DATA.personal.linkedin;
+            lucide.createIcons();
+        }
+
+        // 动画效果
+        function setupAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // 滚动跳转
+        function scrollToId(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 模态框逻辑
+        function openModal(project) {
+            const modal = document.getElementById('modal-overlay');
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `
+                <div class="w-full h-48 md:h-64 relative bg-slate-200">
+                    <img src="${project.image}" class="w-full h-full object-cover opacity-90">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex flex-col justify-end p-6 md:p-8">
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">${project.title}</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${project.tags.map(tag => `<span class="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-full">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 md:p-8 space-y-8 overflow-y-auto max-h-[60vh]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-blue-600 rounded-full mr-2"></span>项目背景</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">${project.background}</p>
+                        </div>
+                        <div class="space-y-3">
+                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-purple-600 rounded-full mr-2"></span>我的角色</h4>
+                            <p class="text-slate-600 text-sm font-medium leading-relaxed">${project.role}</p>
+                        </div>
+                        <div class="space-y-3">
+                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-indigo-500 rounded-full mr-2"></span>解决方案</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">${project.method}</p>
+                        </div>
+                        <div class="space-y-3">
+                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-green-500 rounded-full mr-2"></span>商业价值</h4>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-inner">
+                                <p class="text-slate-800 text-sm font-medium">${project.value}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.body.style.overflow = 'unset';
+        }
+
+        // 点击遮罩层关闭
+        document.getElementById('modal-overlay').onclick = (e) => {
+            if(e.target.id === 'modal-overlay') closeModal();
+        };
+    </script>
+</body>
+</html>
