@@ -36,7 +36,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* 首页背景容器 */
         .hero-section {
             position: relative;
             background-image: linear-gradient(to right, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0) 100%), 
@@ -53,7 +52,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- 教育背景板块背景布局 --- */
+        /* 教育背景背景布局 */
         .edu-bg-container {
             position: absolute;
             inset: 0;
@@ -82,7 +81,6 @@
             z-index: 1;
         }
 
-        /* 玻璃拟态卡片样式 */
         .glass-edu-card {
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(20px);
@@ -97,7 +95,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* 模态框样式 */
         .project-modal-container {
             display: none !important;
         }
@@ -146,6 +143,17 @@
             background-color: #050a18;
             background-image: radial-gradient(circle at top right, rgba(29, 78, 216, 0.15), transparent),
                               radial-gradient(circle at bottom left, rgba(88, 28, 135, 0.1), transparent);
+        }
+
+        /* 洞察板块卡片微调 */
+        .insight-card {
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+        .insight-card:hover {
+            border-color: #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            transform: translateY(-4px);
         }
     </style>
 </head>
@@ -209,16 +217,13 @@
 
     <!-- 3. Education 教育背景区 -->
     <section id="education" class="relative pt-32 pb-16 overflow-hidden bg-slate-950 text-white flex flex-col justify-between">
-        <!-- 背景层：左中右并排 -->
         <div class="edu-bg-container">
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/winball.jpg');"></div>
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/bip3.jpg');"></div>
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/Netherlands.jpg');"></div>
         </div>
-        <!-- 黑色半透明遮罩层 -->
         <div class="edu-global-overlay"></div>
 
-        <!-- 标题部分保持在顶部 -->
         <div class="max-w-6xl mx-auto px-6 relative z-10 reveal">
             <div class="text-center">
                 <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight drop-shadow-xl text-white">华威大学硕士</h2>
@@ -226,21 +231,17 @@
                 <div class="w-16 h-1 bg-[#2B6BF3] mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <!-- 卡片容器：通过 mt-24 下移位置，更加靠近底部 -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-                <!-- 卡片一：移除图标，文字居中，增加内边距 -->
                 <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
                     <h3 class="text-xl font-bold mb-4 text-white">国际商务</h3>
                     <p class="text-blue-300 text-xs font-mono mb-6">International Business</p>
                     <p class="text-slate-200 text-sm leading-relaxed">系统学习国际商务战略、全球人力资源管理，掌握复杂环境下的企业运营逻辑。</p>
                 </div>
-                <!-- 卡片二：移除图标，文字居中，增加内边距 -->
                 <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
                     <h3 class="text-xl font-bold mb-4 text-white">战略营销洞察</h3>
                     <p class="text-blue-300 text-xs font-mono mb-6">Strategic Marketing</p>
                     <p class="text-slate-200 text-sm leading-relaxed">深耕国际营销与战略分析实践，培养从市场数据中挖掘商业增长点的敏锐度。</p>
                 </div>
-                <!-- 卡片三：移除图标，文字居中，增加内边距 -->
                 <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
                     <h3 class="text-xl font-bold mb-4 text-white">全球足迹与跨文化沟通</h3>
                     <p class="text-blue-300 text-xs font-mono mb-6">Global Footprint</p>
@@ -284,6 +285,32 @@
         </div>
     </section>
 
+    <!-- 思考与洞察 -->
+    <section id="insights" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-6 reveal">
+            <div class="flex justify-between items-end mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">思考与洞察</h2>
+                <a href="#" class="text-sm font-medium text-slate-400 hover:text-slate-600 flex items-center transition-colors">
+                    查看全部文章 <i data-lucide="external-link" class="w-4 h-4 ml-1"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="insights-grid">
+                <!-- 文章 1 -->
+                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col">
+                    <span class="text-slate-300 font-mono text-xs mb-4">2024.11.02</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">AI 驱动下的数据决策与业务重塑</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">探讨大模型技术如何从辅助决策演进至自动化行动，以及在实际商业场景中的落地路径。</p>
+                </div>
+                <!-- 文章 2 -->
+                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col">
+                    <span class="text-slate-300 font-mono text-xs mb-4">2024.10.15</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">从私域到全域：构建高留存运营体系</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">复盘多个校园案例，总结 AARRR 模型打法，分析如何通过精细化触达提升用户终身价值。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 7. Contact 联系板块 -->
     <section id="contact" class="py-24 contact-tech-bg text-white relative overflow-hidden">
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal">
@@ -304,7 +331,7 @@
         </div>
     </footer>
 
-    <!-- 项目详情模态框 (逻辑保留) -->
+    <!-- 项目详情模态框 -->
     <div id="modal-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-slate-950/98 backdrop-blur-3xl project-modal-container overflow-hidden" style="display: none !important;">
         <button onclick="closeModal()" class="absolute top-6 right-6 p-4 bg-white/5 hover:bg-white/10 rounded-full text-white transition-all z-[60]">
             <i data-lucide="x" class="w-6 h-6"></i>
@@ -350,10 +377,19 @@
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力市场变化提供潜在领先信号。",
                     role: "多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
-                    value: "探索数字行为数据在宏观经济 nowcasting（实时监测） 中的作用",
+                    value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
                     placeholders: [
-                        { title: "搜索指数趋势图", desc: "展示核心关键词与就业率的强相关性", icon: "trending-up" },
-                        { title: "预测分析看板", desc: "模型输出的月度就业预警报告", icon: "layout" }
+                        { 
+                            title: "搜索指数趋势图", 
+                            desc: "展示核心关键词与就业率的强相关性", 
+                            icon: "trending-up",
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" 
+                        },
+                        { 
+                            title: "预测分析看板", 
+                            desc: "模型输出的月度就业预警报告", 
+                            icon: "layout" 
+                        }
                     ]
                 },
                 {
@@ -525,9 +561,15 @@
                     <div class="standard-card">
                         <div class="result-image-box flex-1">
                              <div class="absolute top-8 left-8 z-10">
-                                <span class="px-4 py-2 bg-slate-900 text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl">成果图 0${i+1}</span>
+                                <span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span>
                              </div>
-                             <div class="text-center p-12 opacity-30 select-none">
+                             <img 
+                                src="${p.imageUrl || 'https://placehold.co/1200x800/e2e8f0/64748b?text=Project+Result+0' + (i+1)}" 
+                                alt="${p.title}" 
+                                class="w-full h-full object-cover"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                             >
+                             <div class="hidden absolute inset-0 flex-col items-center justify-center opacity-30 select-none">
                                 <i data-lucide="${p.icon || 'image'}" class="w-16 h-16 text-slate-400 mx-auto mb-4"></i>
                                 <div class="text-lg font-bold text-slate-400 uppercase">${p.title}</div>
                              </div>
