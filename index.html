@@ -167,20 +167,21 @@
         <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal">
             <h2 class="text-4xl font-bold mb-6">Let's Connect</h2>
-            <p class="text-slate-400 mb-12 max-w-xl mx-auto text-lg">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12" id="contact-info"></div>
-            <div class="flex items-center justify-center space-x-6">
-                <a id="linkedin-link" target="_blank" class="p-3 bg-white/5 rounded-full hover:bg-blue-600 hover:text-white transition-all text-slate-300">
-                    <i data-lucide="linkedin" class="w-6 h-6"></i>
-                </a>
-                <button class="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full transition-colors shadow-lg">
-                    <i data-lucide="download" class="w-4 h-4 mr-2"></i> 下载 PDF 简历
+            <p class="text-slate-400 mb-12 max-w-xl mx-auto text-lg text-balance">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
+            
+            <!-- 邮箱和电话容器 (改回之前的简约排列) -->
+            <div id="contact-info" class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12"></div>
+            
+            <!-- 下载按钮 (移除 LinkedIn 后居中) -->
+            <div class="flex items-center justify-center">
+                <button class="flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full transition-all shadow-xl shadow-blue-900/20">
+                    <i data-lucide="download" class="w-5 h-5 mr-3"></i> 下载 PDF 完整简历
                 </button>
             </div>
         </div>
     </section>
 
-    <footer class="py-6 bg-slate-950 text-center text-sm text-slate-500">
+    <footer class="py-8 bg-slate-950 text-center text-sm text-slate-500 border-t border-white/5">
         <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking.</p>
     </footer>
 
@@ -204,7 +205,6 @@
                 tags: ["商业分析", "用户洞察", "数据分析", "数字营销", "产品思维"],
                 email: "pengling2024uk@163.com",
                 phone: "15377614239",
-                linkedin: "https://linkedin.com/in/yourprofile",
                 about: [
                     "关注用户行为与商业增长，致力于通过结构化思维拆解复杂业务问题。",
                     "擅长用数据支持商业决策，具备从数据清洗、建模分析到策略落地的全链路能力。",
@@ -265,7 +265,6 @@
 
         // 初始化内容
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
             renderContent();
             setupAnimations();
             
@@ -323,7 +322,6 @@
                         </ul>
                     </div>`;
             });
-            lucide.createIcons();
 
             // Projects
             const projectsGrid = document.getElementById('projects-grid');
@@ -348,7 +346,6 @@
                     </div>`;
                 projectsGrid.appendChild(card);
             });
-            lucide.createIcons();
 
             // Experience
             const experienceList = document.getElementById('experience-list');
@@ -379,7 +376,7 @@
                     </div>`;
             });
 
-            // Contact
+            // Contact (改回之前的横向简约样式)
             document.getElementById('contact-info').innerHTML = `
                 <a href="mailto:${DATA.personal.email}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
                     <i data-lucide="mail" class="w-5 h-5 mr-3 text-blue-400"></i>
@@ -389,7 +386,8 @@
                     <i data-lucide="phone" class="w-5 h-5 mr-3 text-blue-400"></i>
                     <span class="font-medium">${DATA.personal.phone}</span>
                 </a>`;
-            document.getElementById('linkedin-link').href = DATA.personal.linkedin;
+            
+            // Re-render icons
             lucide.createIcons();
         }
 
