@@ -53,23 +53,22 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- 修正后的教育背景板块：左中右并排背景 --- */
+        /* --- 教育背景板块背景布局 --- */
         .edu-bg-container {
             position: absolute;
             inset: 0;
-            display: flex; /* 使用 flex 确保横向并排 */
+            display: flex;
             flex-direction: row;
             z-index: 0;
         }
 
         .edu-bg-column {
-            flex: 1; /* 等宽 */
+            flex: 1;
             height: 100%;
             background-size: cover;
             background-position: center;
         }
 
-        /* 移动端改为垂直堆叠 */
         @media (max-width: 768px) {
             .edu-bg-container {
                 flex-direction: column;
@@ -79,25 +78,26 @@
         .edu-global-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55); /* 统一黑色半透明遮罩 (55% 盖度) */
+            background: rgba(0, 0, 0, 0.55);
             z-index: 1;
         }
 
+        /* 玻璃拟态卡片样式 */
         .glass-edu-card {
             background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
+            border-radius: 28px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .glass-edu-card:hover {
             background: rgba(255, 255, 255, 0.12);
             transform: translateY(-8px);
             border-color: rgba(43, 107, 243, 0.6);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* 模态框重构样式 */
+        /* 模态框样式 */
         .project-modal-container {
             display: none !important;
         }
@@ -207,50 +207,43 @@
         </div>
     </section>
 
-    <!-- 3. Education 教育背景区 - 修正后的三栏背景并排展示 -->
-    <section id="education" class="relative py-32 overflow-hidden bg-slate-950 text-white min-h-[650px] flex items-center">
+    <!-- 3. Education 教育背景区 -->
+    <section id="education" class="relative pt-32 pb-16 overflow-hidden bg-slate-950 text-white flex flex-col justify-between">
         <!-- 背景层：左中右并排 -->
         <div class="edu-bg-container">
-            <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/winterball.jpg');"></div>
-            <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/BIP.jpg');"></div>
+            <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/winball.jpg');"></div>
+            <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/bip3.jpg');"></div>
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/Netherlands.jpg');"></div>
         </div>
         <!-- 黑色半透明遮罩层 -->
         <div class="edu-global-overlay"></div>
 
+        <!-- 标题部分保持在顶部 -->
         <div class="max-w-6xl mx-auto px-6 relative z-10 reveal">
-            <div class="text-center mb-16">
+            <div class="text-center">
                 <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight drop-shadow-xl text-white">华威大学硕士</h2>
                 <p class="text-blue-400 font-bold tracking-[0.2em] uppercase text-sm">Master of Science, University of Warwick</p>
-                <div class="w-16 h-1 bg-[#2B6BF3] mx-auto mt-8 rounded-full"></div>
+                <div class="w-16 h-1 bg-[#2B6BF3] mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- 卡片一 -->
-                <div class="glass-edu-card p-10 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 rounded-2xl bg-[#2B6BF3]/30 flex items-center justify-center mb-6">
-                        <i data-lucide="globe" class="w-7 h-7 text-[#2B6BF3]"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">国际商务</h3>
-                    <p class="text-blue-300 text-xs font-mono mb-4">International Business</p>
+            <!-- 卡片容器：通过 mt-24 下移位置，更加靠近底部 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
+                <!-- 卡片一：移除图标，文字居中，增加内边距 -->
+                <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
+                    <h3 class="text-xl font-bold mb-4 text-white">国际商务</h3>
+                    <p class="text-blue-300 text-xs font-mono mb-6">International Business</p>
                     <p class="text-slate-200 text-sm leading-relaxed">系统学习国际商务战略、全球人力资源管理，掌握复杂环境下的企业运营逻辑。</p>
                 </div>
-                <!-- 卡片二 -->
-                <div class="glass-edu-card p-10 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 rounded-2xl bg-[#2B6BF3]/30 flex items-center justify-center mb-6">
-                        <i data-lucide="trending-up" class="w-7 h-7 text-[#2B6BF3]"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">战略营销洞察</h3>
-                    <p class="text-blue-300 text-xs font-mono mb-4">Strategic Marketing</p>
+                <!-- 卡片二：移除图标，文字居中，增加内边距 -->
+                <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
+                    <h3 class="text-xl font-bold mb-4 text-white">战略营销洞察</h3>
+                    <p class="text-blue-300 text-xs font-mono mb-6">Strategic Marketing</p>
                     <p class="text-slate-200 text-sm leading-relaxed">深耕国际营销与战略分析实践，培养从市场数据中挖掘商业增长点的敏锐度。</p>
                 </div>
-                <!-- 卡片三 -->
-                <div class="glass-edu-card p-10 flex flex-col items-center text-center">
-                    <div class="w-14 h-14 rounded-2xl bg-[#2B6BF3]/30 flex items-center justify-center mb-6">
-                        <i data-lucide="users" class="w-7 h-7 text-[#2B6BF3]"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">全球足迹与跨文化沟通</h3>
-                    <p class="text-blue-300 text-xs font-mono mb-4">Global Footprint</p>
+                <!-- 卡片三：移除图标，文字居中，增加内边距 -->
+                <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
+                    <h3 class="text-xl font-bold mb-4 text-white">全球足迹与跨文化沟通</h3>
+                    <p class="text-blue-300 text-xs font-mono mb-6">Global Footprint</p>
                     <p class="text-slate-200 text-sm leading-relaxed">立足于华威商学院的国际化平台，建立全球化视野，精进跨语言、跨背景的协作能力。</p>
                 </div>
             </div>
