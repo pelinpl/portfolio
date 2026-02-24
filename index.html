@@ -41,65 +41,39 @@
             backdrop-filter: blur(10px);
         }
 
-        /* 模态框重构样式 */
+        /* 模态框自定义样式 */
         .project-modal-container {
             display: none !important;
+            scrollbar-width: none;
         }
         
-        /* 强制卡片容器比例 - 移动端优先 */
-        .standard-card {
-            width: 100%;
-            height: 100%;
-            border-radius: 24px;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Swiper 尺寸规格控制 */
-        .swiper-container {
-            width: 100%;
-            max-width: 450px; /* 移动端最佳阅读宽度 */
-            aspect-ratio: 4 / 5; /* 统一卡片比例 */
-            margin: auto;
-        }
-
-        @media (min-width: 768px) {
-            .swiper-container {
-                max-width: 800px;
-                aspect-ratio: 16 / 10; /* PC端采用横向比例 */
-            }
-        }
-
-        /* 图片卡片填充模式 */
-        .result-image-box {
-            width: 100%;
-            height: 100%;
-            background-color: #f8fafc; /* 背景填充灰色防止白边视觉突兀 */
+        .image-placeholder {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-        }
-
-        .result-image-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* 保证展示完整且不变形 */
+            border-radius: 1rem;
+            color: #64748b;
         }
 
         /* Swiper 分页器定制 */
         .swiper-pagination-bullet {
-            background: rgba(255,255,255,0.3) !important;
+            background: #cbd5e1 !important;
             opacity: 1 !important;
             transition: all 0.3s ease;
         }
         .swiper-pagination-bullet-active {
-            background: #fff !important;
-            width: 20px !important;
+            background: #2563eb !important;
+            width: 24px !important;
             border-radius: 4px !important;
+        }
+
+        /* 卡片滑动吸附感 */
+        .swiper-slide {
+            height: auto !important;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -230,8 +204,10 @@
             <h2 class="text-4xl font-bold mb-6">Let's Connect</h2>
             <p class="text-slate-400 mb-12 max-w-xl mx-auto text-lg text-balance">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
             
+            <!-- 邮箱和电话容器 (简约排列) -->
             <div id="contact-info" class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12"></div>
             
+            <!-- 下载按钮 -->
             <div class="flex items-center justify-center">
                 <button class="flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full transition-all shadow-xl shadow-blue-900/20">
                     <i data-lucide="download" class="w-5 h-5 mr-3"></i> 下载 PDF 完整简历
@@ -244,26 +220,23 @@
         <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking.</p>
     </footer>
 
-    <!-- 项目详情模态框 - 重构后的视觉统一版 -->
-    <div id="modal-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-slate-950/95 backdrop-blur-2xl project-modal-container overflow-hidden" style="display: none !important;">
+    <!-- 项目详情模态框 - 重构为单页卡片流模式 -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-slate-900/90 backdrop-blur-xl project-modal-container overflow-hidden" style="display: none !important;">
         <!-- 关闭按钮 -->
-        <button onclick="closeModal()" class="absolute top-6 right-6 p-4 bg-white/5 hover:bg-white/10 rounded-full text-white transition-all z-[60]">
+        <button onclick="closeModal()" class="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all z-[60] backdrop-blur-md">
             <i data-lucide="x" class="w-6 h-6"></i>
         </button>
 
         <!-- Swiper 主容器 -->
-        <div class="swiper-container">
+        <div class="swiper-container w-full max-w-4xl h-full flex flex-col justify-center">
             <div id="modal-slides-wrapper" class="swiper-wrapper">
-                <!-- 这里由 JS 填充 -->
+                <!-- 这里由 JS 填充：简介卡片 + 成果卡片 -->
             </div>
-        </div>
-        
-        <!-- 底部导航 (位置恒定) -->
-        <div class="mt-12 flex flex-col items-center gap-6 z-10">
-            <div class="swiper-pagination"></div>
-            <div class="flex items-center gap-3 text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase bg-white/5 px-4 py-2 rounded-full border border-white/5">
-                <i data-lucide="mouse-pointer-2" class="w-3 h-3"></i>
-                左右滑动浏览项目详情与成果
+            
+            <!-- 底部导航定位 -->
+            <div class="mt-8 flex flex-col items-center gap-4">
+                <div class="swiper-pagination !static"></div>
+                <div class="text-white/40 text-[10px] font-bold tracking-widest uppercase">左右滑动切换详情与成果</div>
             </div>
         </div>
     </div>
@@ -292,58 +265,70 @@
                 {
                     id: 1,
                     title: "Google Trends 宏观就业预测模型",
-                    tags: ["数据分析", "时间序列"],
-                    summary: "利用 Google Trends 搜索指数构建预测模型，辅助宏观就业趋势研判与商业策略布局。",
+                    tags: ["数据分析", "时间序列", "R语言"],
+                    summary: "利用 Google Trends 搜索指数构建预测模型，辅助宏观就业趋势研判与商业战略布局。",
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "在宏观经济波动背景下，传统就业数据存在滞后性。利用搜索数据作为先行指标预测就业景气度。",
                     role: "核心分析师：负责数据清洗、特征工程、模型构建与可视化。",
-                    value: "准确率达 85%，为招聘策略提供有效前瞻性指标。",
+                    value: "准确率达 85%，为企业招聘策略及宏观经济观察提供有效的前瞻性指标。",
                     placeholders: [
                         { title: "搜索指数趋势图", desc: "展示核心关键词与就业率的强相关性", icon: "trending-up" },
-                        { title: "预测分析看板", desc: "模型输出的月度就业预警报告", icon: "layout" }
+                        { title: "模型相关性分析矩阵", desc: "特征提取与权重分配可视化", icon: "grid" },
+                        { title: "预测报告概览", desc: "最终输出的月度就业预警报告", icon: "file-text" }
                     ]
                 },
                 {
                     id: 2,
                     title: "PureFit+ 数字化健康产品方案",
-                    tags: ["产品战略", "商业模式"],
+                    tags: ["产品战略", "商业模式", "用户体验"],
                     summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理方案。",
                     image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "解决现代都市青年在健康管理中面临的数据碎片化与缺乏社交激励的问题。",
                     role: "产品负责人：主导用户调研、功能矩阵定义及商业变现路径规划。",
-                    value: "产出完整商业计划书，并在内部路演获得高分评价。",
+                    value: "产出完整商业计划书并在内部路演获得高分评价，初步完成硬件供应链调研。",
                     placeholders: [
-                        { title: "用户旅程地图", desc: "用户在产品生态中的核心触点分析", icon: "map" },
-                        { title: "App 原型设计", desc: "核心运动激励模块交互逻辑展示", icon: "smartphone" }
+                        { title: "App 交互原型图", desc: "展示核心运动激励模块与社区交互界面", icon: "smartphone" },
+                        { title: "智能硬件渲染图", desc: "配套健康检测传感器外观与佩戴效果", icon: "watch" }
                     ]
                 },
                 {
                     id: 3,
-                    title: "吉百利 Champion’s Choice 品牌营销",
-                    tags: ["数字营销", "品牌重塑"],
+                    title: "Cadbury Champion’s Choice 品牌营销",
+                    tags: ["数字营销", "品牌重塑", "跨界合作"],
                     summary: "为吉百利设计的整合数字营销战役，提升品牌在年轻体育圈层中的声量。",
                     image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "品牌需打破“传统节日零食”刻板印象，在日常体育运动场景中建立消费连接。",
                     role: "营销策划：负责全渠道传播策略、KOL 矩阵筛选及社交互动玩法设计。",
-                    value: "品牌社交媒体讨论热度提升 40%，年轻群体转化率显著提高。",
+                    value: "预计曝光量千万级，品牌社交媒体讨论热度提升 40%，年轻群体转化率显著提高。",
                     placeholders: [
-                        { title: "传播策略概览", desc: "多维联动的全渠道媒介投放矩阵图", icon: "layers" },
-                        { title: "品牌传播海报", desc: "品牌与体育运动场景的视觉融合设计", icon: "image" }
+                        { title: "品牌主视觉海报", desc: "融合巧克力能量与体育激情的视觉传达", icon: "palette" },
+                        { title: "社交媒体传播效果图", desc: "KOL 矩阵分布与互动评论数据看板", icon: "share-2" }
                     ]
                 }
             ],
             experiences: [
-                { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["数据驱动动态定价，实现企业增加值提升 170%。"] },
-                { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2024.06 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业洞察简报。"] }
+                { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["制定战略路线图，平衡财务与能源转型。","数据驱动动态定价，实现企业增加值提升 170%。","89 支队伍中斩获第 14 名。"] },
+                { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2024.06 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业洞察简报（月均阅读量 800+）。","组织 30+ 线上跨国会议（包含沙特阿美），促成战略合作。","策划国际学术活动与竞赛，覆盖 200+ 人次。"] },
+                { company: "SET校园营销大赛", role: "营销负责人 (自热火锅)", date: "2020.04", desc: ["从 0 到 1 校园创业，月销售额 5000+ 元。","制定多平台传播策略，吸纳 215 人私域社群。","优化产品卖点，复购率提升至 10%。"] }
             ],
             insights: [
-                { title: "AI驱动下的数据决策与业务重塑", date: "2024.11.02", summary: "探讨大模型技术如何从辅助决策演进至自动化行动。" }
+                { title: "AI驱动下的数据决策与业务重塑", date: "2024.11.02", summary: "探讨大模型技术如何从辅助决策演进至自动化行动。" },
+                { title: "从私域到全域：构建高留存运营体系", date: "2024.10.15", summary: "复盘多个校园案例，总结 AARRR 模型打法。" }
             ]
         };
 
         document.addEventListener('DOMContentLoaded', () => {
             renderBase();
             setupAnimations();
+            
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    nav.classList.add('glass-nav', 'shadow-sm', 'py-3');
+                } else {
+                    nav.classList.remove('glass-nav', 'shadow-sm', 'py-3');
+                }
+            });
             document.getElementById('year').innerText = new Date().getFullYear();
         });
 
@@ -367,7 +352,7 @@
             DATA.skills.forEach(skill => {
                 document.getElementById('skills-grid').innerHTML += `
                     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-5">
+                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                             <i data-lucide="${skill.icon}" class="w-5 h-5 text-blue-600"></i>
                         </div>
                         <h3 class="font-bold mb-3">${skill.category}</h3>
@@ -386,10 +371,13 @@
                         <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     </div>
                     <div class="p-6 flex flex-col flex-1">
+                        <div class="flex gap-2 mb-3">
+                            ${project.tags.slice(0, 2).map(tag => `<span class="px-2 py-0.5 bg-slate-50 text-slate-500 text-[10px] uppercase font-bold rounded">${tag}</span>`).join('')}
+                        </div>
                         <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">${project.title}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2 mb-4">${project.summary}</p>
+                        <p class="text-sm text-slate-500 line-clamp-2 flex-1 mb-4">${project.summary}</p>
                         <div class="pt-4 border-t border-slate-100 text-sm font-semibold text-blue-600 flex items-center">
-                            查看详情 <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                            查看详情 <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
                         </div>
                     </div>`;
                 document.getElementById('projects-grid').appendChild(card);
@@ -410,48 +398,58 @@
                     </div>`;
             });
 
+            DATA.insights.forEach(insight => {
+                document.getElementById('insights-grid').innerHTML += `
+                    <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md transition-all cursor-pointer">
+                        <div class="text-xs text-slate-400 mb-1">${insight.date}</div>
+                        <h3 class="font-bold mb-2">${insight.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2">${insight.summary}</p>
+                    </div>`;
+            });
+
             document.getElementById('contact-info').innerHTML = `
-                <a href="mailto:${DATA.personal.email}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors text-blue-400">
-                    <i data-lucide="mail" class="w-5 h-5 mr-3"></i>
+                <a href="mailto:${DATA.personal.email}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
+                    <i data-lucide="mail" class="w-5 h-5 mr-3 text-blue-400"></i>
                     <span class="font-medium">${DATA.personal.email}</span>
                 </a>
-                <a href="tel:${DATA.personal.phone}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors text-blue-400">
-                    <i data-lucide="phone" class="w-5 h-5 mr-3"></i>
+                <a href="tel:${DATA.personal.phone}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
+                    <i data-lucide="phone" class="w-5 h-5 mr-3 text-blue-400"></i>
                     <span class="font-medium">${DATA.personal.phone}</span>
                 </a>`;
             
             lucide.createIcons();
         }
 
-        let currentSwiper = null;
-
+        // 详情模态框 - 修改为单页卡片流
         function openModal(project) {
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
             
-            // 1. 简介卡片 (Slide 1) - 文字垂直居中对齐
+            // 1. 构建简介卡片 (Slide 1)
             const introSlide = `
-                <div class="swiper-slide p-0">
-                    <div class="standard-card">
-                        <div class="flex-1 p-8 md:p-14 flex flex-col justify-center overflow-y-auto no-scrollbar">
-                            <div class="flex gap-2 mb-6">
-                                ${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}
+                <div class="swiper-slide px-2">
+                    <div class="w-full bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 overflow-y-auto max-h-[75vh] no-scrollbar">
+                        <div class="flex gap-2 mb-6">
+                            ${project.tags.map(tag => `<span class="px-2.5 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded tracking-widest">${tag}</span>`).join('')}
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">${project.title}</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="flex items-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
+                                    <i data-lucide="info" class="w-4 h-4 mr-2"></i> 项目背景与简介
+                                </h4>
+                                <p class="text-slate-600 leading-relaxed text-lg">${project.background}</p>
                             </div>
-                            <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">${project.title}</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                                <div class="space-y-6">
-                                    <div>
-                                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">项目背景</div>
-                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base">${project.background}</p>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">我的角色</div>
-                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base">${project.role}</p>
-                                    </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="flex items-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
+                                        <i data-lucide="user" class="w-4 h-4 mr-2"></i> 我的角色
+                                    </h4>
+                                    <p class="text-slate-600 leading-relaxed">${project.role}</p>
                                 </div>
-                                <div class="bg-blue-600/5 p-8 rounded-[2rem] border border-blue-100/50 flex flex-col justify-center">
-                                    <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">商业价值</div>
-                                    <p class="text-blue-900 text-lg md:text-2xl font-bold leading-snug">${project.value}</p>
+                                <div class="bg-blue-600 p-8 rounded-3xl shadow-xl shadow-blue-600/20 text-white">
+                                    <h4 class="text-blue-200 font-bold uppercase tracking-widest text-[10px] mb-3">核心商业价值</h4>
+                                    <p class="text-xl font-medium leading-relaxed">${project.value}</p>
                                 </div>
                             </div>
                         </div>
@@ -459,22 +457,22 @@
                 </div>
             `;
 
-            // 2. 成果图卡片 (Slide 2-N) - 强制比例并填充背景色
+            // 2. 构建成果图卡片 (Slide 2-N)
             const resultSlides = project.placeholders.map((p, i) => `
-                <div class="swiper-slide p-0">
-                    <div class="standard-card">
-                        <div class="result-image-box flex-1">
-                             <div class="absolute top-8 left-8 z-10">
-                                <span class="px-4 py-2 bg-slate-900 text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl">成果 0${i+1}</span>
-                             </div>
-                             <div class="text-center p-12 opacity-40 select-none">
-                                <i data-lucide="${p.icon || 'image'}" class="w-16 h-16 text-slate-400 mx-auto mb-4"></i>
-                                <div class="text-lg font-bold text-slate-400 uppercase">${p.title}</div>
-                             </div>
+                <div class="swiper-slide px-2">
+                    <div class="w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col h-full max-h-[75vh]">
+                        <div class="image-placeholder flex-1 p-12">
+                            <div class="text-center group">
+                                <div class="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center mx-auto mb-8 transform group-hover:scale-110 transition-transform">
+                                    <i data-lucide="${p.icon || 'image'}" class="w-10 h-10 text-blue-600"></i>
+                                </div>
+                                <div class="text-[12px] font-bold text-slate-300 uppercase tracking-widest mb-2">成果展示 0${i+1}</div>
+                                <h3 class="text-2xl font-bold text-slate-800 mb-4">${p.title}</h3>
+                                <p class="text-slate-500 max-w-md mx-auto leading-relaxed">${p.desc}</p>
+                            </div>
                         </div>
-                        <div class="p-8 md:p-10 bg-white border-t border-slate-100">
-                             <h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3>
-                             <p class="text-sm text-slate-500 leading-relaxed">${p.desc}</p>
+                        <div class="px-8 py-6 bg-slate-50 border-t border-slate-100 text-center">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">可视化数据分析结果与方案细节</span>
                         </div>
                     </div>
                 </div>
@@ -484,22 +482,22 @@
             modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
             
-            // 每次打开时销毁旧的 Swiper 实例防止冲突
-            if(currentSwiper) currentSwiper.destroy();
-
-            currentSwiper = new Swiper('.swiper-container', {
+            // 初始化 Swiper 
+            const swiper = new Swiper('.swiper-container', {
                 slidesPerView: 1,
-                spaceBetween: 24, // 卡片间距
+                spaceBetween: 0,
                 centeredSlides: true,
                 grabCursor: true,
-                speed: 800,
+                speed: 600,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
                 },
-                resistanceRatio: 0,
+                // 启用吸附效果 (Snap)
+                touchRatio: 1,
+                touchAngle: 45,
+                resistanceRatio: 0.5,
                 mousewheel: true,
-                keyboard: true,
             });
 
             lucide.createIcons();
