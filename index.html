@@ -30,15 +30,45 @@
             transform: translateY(0);
         }
 
-        .gradient-text {
-            background: linear-gradient(to right, #2563eb, #9333ea);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+        /* 腾讯风首页背景容器 */
+        .hero-section {
+            position: relative;
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0) 100%), 
+                              url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        /* 移动端背景优化：确保人像居中 */
+        @media (max-width: 768px) {
+            .hero-section {
+                background-image: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.5) 60%, rgba(15, 23, 42, 0.2) 100%), 
+                                  url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/hero-bg.jpg');
+                background-position: 65% center; /* 针对人像位置微调 */
+            }
+        }
+
+        /* 科技感玻璃拟态卡片 */
+        .glass-card-tech {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-text-light {
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* 模态框重构样式 */
@@ -46,7 +76,6 @@
             display: none !important;
         }
         
-        /* 强制卡片容器比例 - 移动端优先 */
         .standard-card {
             width: 100%;
             height: 100%;
@@ -58,26 +87,24 @@
             flex-direction: column;
         }
 
-        /* Swiper 尺寸规格控制 */
         .swiper-container {
             width: 100%;
-            max-width: 450px; /* 移动端最佳阅读宽度 */
-            aspect-ratio: 4 / 5; /* 统一卡片比例 */
+            max-width: 450px;
+            aspect-ratio: 4 / 5;
             margin: auto;
         }
 
         @media (min-width: 768px) {
             .swiper-container {
                 max-width: 800px;
-                aspect-ratio: 16 / 10; /* PC端采用更宽的商业报告比例 */
+                aspect-ratio: 16 / 10;
             }
         }
 
-        /* 图片卡片填充模式 */
         .result-image-box {
             width: 100%;
             height: 100%;
-            background-color: #f1f5f9; /* 环境灰色消除白边突兀感 */
+            background-color: #f1f5f9;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -88,10 +115,9 @@
         .result-image-box img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 保证展示完整且不变形 */
+            object-fit: contain;
         }
 
-        /* Swiper 分页器定制 - 固定在底部 */
         .swiper-pagination-bullet {
             background: rgba(255,255,255,0.3) !important;
             opacity: 1 !important;
@@ -110,176 +136,176 @@
 </head>
 <body class="bg-slate-50 text-slate-900 selection:bg-blue-100">
 
-    <!-- 导航栏 -->
+    <!-- 导航栏 (升级为透明玻璃感) -->
     <nav id="navbar" class="fixed top-0 w-full z-40 transition-all duration-300 py-5">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-            <div class="text-xl font-bold tracking-tight cursor-pointer" onclick="scrollToId('hero')">
+            <div class="text-xl font-bold tracking-tight cursor-pointer text-white" onclick="scrollToId('hero')">
                 彭羚<span class="text-blue-600">.</span>
             </div>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-                <a href="#about" class="hover:text-blue-600 transition-colors">关于我</a>
-                <a href="#skills" class="hover:text-blue-600 transition-colors">专业技能</a>
-                <a href="#projects" class="hover:text-blue-600 transition-colors">项目作品</a>
-                <a href="#experience" class="hover:text-blue-600 transition-colors">工作经历</a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-200">
+                <a href="#about" class="hover:text-white transition-colors">关于我</a>
+                <a href="#skills" class="hover:text-white transition-colors">专业技能</a>
+                <a href="#projects" class="hover:text-white transition-colors">项目作品</a>
+                <a href="#experience" class="hover:text-white transition-colors">工作经历</a>
             </div>
-            <button onclick="scrollToId('contact')" class="px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-full hover:bg-slate-800 transition-colors shadow-lg">
+            <button onclick="scrollToId('contact')" class="px-5 py-2 text-sm font-medium text-slate-900 bg-white rounded-full hover:bg-slate-100 transition-all shadow-lg">
                 联系我
             </button>
         </div>
     </nav>
 
-    <!-- 1. Hero 首页区 (保持原样) -->
-    <section id="hero" class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-        <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-        <div class="absolute bottom-[-10%] left-[-5%] w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-        
-        <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 space-y-8 reveal">
+    <!-- 1. Hero 首页区 (替换为腾讯风格背景) -->
+    <section id="hero" class="hero-section flex items-center">
+        <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12 w-full">
+            <div class="flex-1 space-y-8 reveal active">
                 <div>
-                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-medium mb-4 border border-blue-100">
-                        <span class="flex w-2 h-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 text-sm font-medium mb-4 border border-blue-400/30 backdrop-blur-md">
+                        <span class="flex w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
                         正在寻找 2026 届商业分析/产品岗位
                     </div>
-                    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                        Hi，我是 <span class="gradient-text">彭羚</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                        Hi，我是 <span class="gradient-text-light">彭羚</span>
                     </h1>
-                    <p class="text-xl md:text-2xl text-slate-600 font-light max-w-2xl" id="hero-title"></p>
+                    <p class="text-xl md:text-2xl text-slate-200 font-light max-w-2xl" id="hero-title">数据驱动的商业分析与数字营销候选人</p>
                 </div>
                 
-                <div class="flex flex-wrap gap-2" id="hero-tags"></div>
+                <div class="flex flex-wrap gap-2" id="hero-tags">
+                    <!-- 标签将由 JS 渲染，这里预留样式 -->
+                </div>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <button onclick="scrollToId('projects')" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 group">
+                    <button onclick="scrollToId('projects')" class="flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20 group">
                         查看精选项目 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </button>
-                    <button class="flex items-center justify-center px-6 py-3 bg-white text-slate-700 font-medium rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+                    <button class="flex items-center justify-center px-8 py-4 bg-white/10 text-white font-semibold rounded-xl border border-white/20 backdrop-blur-md hover:bg-white/20 transition-all shadow-sm">
                         <i data-lucide="download" class="w-4 h-4 mr-2"></i> 下载完整简历
                     </button>
                 </div>
             </div>
             
-            <div class="flex-1 hidden md:flex justify-center items-center reveal" style="transition-delay: 200ms;">
-                <div class="relative w-80 h-80">
-                   <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-50 rounded-[2rem] transform rotate-3 shadow-inner"></div>
-                   <div class="absolute inset-0 bg-white rounded-[2rem] transform -rotate-3 shadow-xl border border-white/50 flex flex-col items-center justify-center p-8 text-center gap-4">
-                      <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-2 shadow-lg flex items-center justify-center">
-                         <i data-lucide="target" class="w-8 h-8 text-white"></i>
+            <!-- 右侧玻璃感卡片 -->
+            <div class="flex-1 hidden md:flex justify-center items-center reveal active" style="transition-delay: 200ms;">
+                <div class="relative w-80 h-96">
+                   <!-- 动态背景装饰 -->
+                   <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
+                   <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div>
+                   
+                   <div class="absolute inset-0 glass-card-tech rounded-[2.5rem] p-10 flex flex-col items-center justify-center text-center gap-6 transform hover:scale-105 transition-transform duration-500">
+                      <div class="w-24 h-24 bg-gradient-to-br from-blue-400/40 to-purple-400/40 rounded-3xl rotate-12 flex items-center justify-center shadow-2xl border border-white/20">
+                         <i data-lucide="target" class="w-10 h-10 text-white -rotate-12"></i>
                       </div>
-                      <h3 class="text-xl font-bold text-slate-800">增长思维</h3>
-                      <p class="text-sm text-slate-500">连接数据、商业与用户价值的桥梁。</p>
+                      <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white tracking-wide">增长思维</h3>
+                        <div class="h-1 w-12 bg-blue-500 mx-auto rounded-full"></div>
+                      </div>
+                      <p class="text-slate-300 leading-relaxed text-sm">连接数据、商业与用户价值的桥梁，以终为始驱动业务闭环。</p>
                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. About Me 区 (保持原样) -->
-    <section id="about" class="py-20 bg-white">
+    <!-- 2. About Me 区 -->
+    <section id="about" class="py-24 bg-white">
         <div class="max-w-4xl mx-auto px-6 reveal">
             <h2 class="text-3xl font-bold mb-10 text-center">About Me</h2>
-            <div class="bg-slate-50 border border-slate-100 rounded-2xl p-8 md:p-10 shadow-sm space-y-6" id="about-content"></div>
+            <div class="bg-slate-50 border border-slate-100 rounded-3xl p-8 md:p-12 shadow-sm space-y-6" id="about-content"></div>
         </div>
     </section>
 
-    <!-- 3. Skills 能力区 (保持原样) -->
-    <section id="skills" class="py-20 bg-slate-50">
+    <!-- 3. Skills 能力区 -->
+    <section id="skills" class="py-24 bg-slate-50">
         <div class="max-w-6xl mx-auto px-6 reveal">
-            <div class="mb-12 text-center md:text-left">
+            <div class="mb-16 text-center">
                 <h2 class="text-3xl font-bold mb-4">Core Skills</h2>
-                <p class="text-slate-500">专业技能与工具栈，构建扎实的执行力壁垒。</p>
+                <div class="h-1.5 w-16 bg-blue-600 mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-500 max-w-lg mx-auto">专业技能与工具栈，构建扎实的执行力壁垒。</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="skills-grid"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="skills-grid"></div>
         </div>
     </section>
 
-    <!-- 4. Projects 项目区 (保持原样) -->
+    <!-- 4. Projects 项目区 -->
     <section id="projects" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6 reveal">
-            <div class="mb-12">
-                <h2 class="text-3xl font-bold mb-4">Featured Projects</h2>
-                <p class="text-slate-500">从数据洞察到商业落地，精选实战案例。</p>
+            <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">Featured Projects</h2>
+                    <p class="text-slate-500">从数据洞察到商业落地，精选实战案例。</p>
+                </div>
+                <div class="hidden md:block text-slate-300 font-mono text-5xl">01</div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="projects-grid"></div>
         </div>
     </section>
 
-    <!-- 5. Experience 经历 (保持原样) -->
-    <section id="experience" class="py-20 bg-slate-50">
+    <!-- 5. Experience 经历 -->
+    <section id="experience" class="py-24 bg-slate-50">
         <div class="max-w-4xl mx-auto px-6 reveal">
-            <h2 class="text-3xl font-bold mb-12 text-center">Work & Experience</h2>
-            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-100 before:via-blue-300 before:to-transparent" id="experience-list"></div>
+            <h2 class="text-3xl font-bold mb-16 text-center">Work & Experience</h2>
+            <div class="space-y-12 relative before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:h-full before:w-0.5 before:bg-slate-200" id="experience-list"></div>
         </div>
     </section>
 
-    <!-- 6. Insights 思考板块 (保持原样) -->
-<section id="insights" class="py-20 bg-slate-50 border-t border-slate-100">
-    <div class="max-w-6xl mx-auto px-6 reveal active">
-        <!-- 头部栏 -->
-        <div class="flex items-center justify-between mb-10 border-b border-slate-200 pb-4">
-            <h2 class="text-2xl font-bold text-slate-900">思考与洞察</h2>
-            <span class="text-sm text-slate-500 hover:text-blue-600 cursor-pointer flex items-center">
-                查看全部文章 <i data-lucide="external-link" class="w-4 h-4 ml-1"></i>
-            </span>
-        </div>
-        
-        <!-- 恢复的两个卡片 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- 卡片 1 -->
-            <div class="bg-white p-10 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group cursor-pointer relative overflow-hidden">
-                <!-- 悬停可见的蓝色侧边条 -->
-                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <span class="text-xs font-bold text-slate-400 tracking-widest block mb-4 uppercase">2024.11.02</span>
-                <h3 class="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">AI驱动下的数据决策与业务重塑</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">探讨大模型技术如何从辅助决策演进至自动化行动。</p>
+    <!-- 6. Insights 思考板块 -->
+    <section id="insights" class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 reveal">
+            <div class="flex items-center justify-between mb-12 border-b border-slate-100 pb-6">
+                <h2 class="text-2xl font-bold text-slate-900">思考与洞察</h2>
+                <span class="text-sm font-semibold text-blue-600 hover:opacity-70 cursor-pointer flex items-center transition-opacity">
+                    查看全部文章 <i data-lucide="external-link" class="w-4 h-4 ml-1"></i>
+                </span>
             </div>
-
-            <!-- 卡片 2 -->
-            <div class="bg-white p-10 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group cursor-pointer relative overflow-hidden">
-                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <span class="text-xs font-bold text-slate-400 tracking-widest block mb-4">2024.10.15</span>
-                <h3 class="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">从私域到全域：构建高留存运营体系</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">复盘多个校园案例，总结 AARRR 模型打法。</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!-- 7. Contact 联系板块 (保持原样) -->
-    <section id="contact" class="py-24 bg-slate-900 text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal">
-            <h2 class="text-4xl font-bold mb-6">Let's Connect</h2>
-            <p class="text-slate-400 mb-12 max-w-xl mx-auto text-lg text-balance">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
             
-            <div id="contact-info" class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-slate-50 p-10 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group cursor-pointer relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <span class="text-xs font-bold text-slate-400 tracking-widest block mb-4 uppercase">2024.11.02</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">AI驱动下的数据决策与业务重塑</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">探讨大模型技术如何从辅助决策演进至自动化行动。</p>
+                </div>
+
+                <div class="bg-slate-50 p-10 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group cursor-pointer relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <span class="text-xs font-bold text-slate-400 tracking-widest block mb-4 uppercase">2024.10.15</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">从私域到全域：构建高留存运营体系</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">复盘多个校园案例，总结 AARRR 模型打法。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Contact 联系板块 -->
+    <section id="contact" class="py-24 bg-slate-950 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20 opacity-50"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-8 tracking-tight">Let's Connect</h2>
+            <p class="text-slate-400 mb-16 max-w-xl mx-auto text-lg font-light leading-relaxed">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
+            
+            <div id="contact-info" class="flex flex-col md:flex-row justify-center items-center gap-8 mb-16"></div>
             
             <div class="flex items-center justify-center">
-                <button class="flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full transition-all shadow-xl shadow-blue-900/20">
-                    <i data-lucide="download" class="w-5 h-5 mr-3"></i> 下载 PDF 完整简历
+                <button class="flex items-center px-10 py-5 bg-white text-slate-900 font-bold rounded-2xl hover:bg-slate-100 transition-all shadow-2xl shadow-blue-900/20">
+                    <i data-lucide="download" class="w-5 h-5 mr-3 group-hover:translate-y-1 transition-transform"></i> 下载 PDF 完整简历
                 </button>
             </div>
         </div>
     </section>
 
-    <footer class="py-8 bg-slate-950 text-center text-sm text-slate-500 border-t border-white/5">
-        <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking.</p>
+    <footer class="py-12 bg-slate-950 text-center text-xs text-slate-600 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6">
+            <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking & Visual Design.</p>
+        </div>
     </footer>
 
-    <!-- 项目详情模态框 - 重构后的视觉统一版 -->
-    <div id="modal-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-slate-950/95 backdrop-blur-2xl project-modal-container overflow-hidden" style="display: none !important;">
-        <!-- 关闭按钮 -->
+    <!-- 项目详情模态框 (保持原逻辑) -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-slate-950/98 backdrop-blur-3xl project-modal-container overflow-hidden" style="display: none !important;">
         <button onclick="closeModal()" class="absolute top-6 right-6 p-4 bg-white/5 hover:bg-white/10 rounded-full text-white transition-all z-[60]">
             <i data-lucide="x" class="w-6 h-6"></i>
         </button>
-
-        <!-- Swiper 主容器 -->
         <div class="swiper-container">
-            <div id="modal-slides-wrapper" class="swiper-wrapper">
-                <!-- 这里由 JS 填充 -->
-            </div>
+            <div id="modal-slides-wrapper" class="swiper-wrapper"></div>
         </div>
-        
-        <!-- 底部导航 (位置恒定，防止随高度跳动) -->
         <div class="mt-12 flex flex-col items-center gap-6 z-10">
             <div class="swiper-pagination"></div>
             <div class="flex items-center gap-3 text-white/30 text-[10px] font-bold tracking-[0.2em] uppercase bg-white/5 px-4 py-2 rounded-full border border-white/5">
@@ -357,90 +383,108 @@
                 { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["制定战略路线图，平衡财务与能源转型。","数据驱动动态定价，实现企业增加值提升 170%。","89 支队伍中斩获第 14 名。"] },
                 { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2024.06 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业洞察简报（月均阅读量 800+）。","组织 30+ 线上跨国会议（包含沙特阿美），促成战略合作。","策划国际学术活动与竞赛，覆盖 200+ 人次。"] },
                 { company: "SET校园营销大赛", role: "营销负责人 (自热火锅)", date: "2020.04", desc: ["从 0 到 1 校园创业，月销售额 5000+ 元。","制定多平台传播策略，吸纳 215 人私域社群。","优化产品卖点，复购率提升至 10%。"] }
-            ],
-            insights: [
-                { title: "AI驱动下的数据决策与业务重塑", date: "2024.11.02", summary: "探讨大模型技术如何从辅助决策演进至自动化行动。" },
-                { title: "从私域到全域：构建高留存运营体系", date: "2024.10.15", summary: "复盘多个校园案例，总结 AARRR 模型打法。" }
             ]
         };
 
         document.addEventListener('DOMContentLoaded', () => {
             renderBase();
             setupAnimations();
+            setupScrollEffects();
             document.getElementById('year').innerText = new Date().getFullYear();
         });
 
+        function setupScrollEffects() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('glass-nav', 'py-4');
+                    navbar.classList.remove('py-5');
+                } else {
+                    navbar.classList.remove('glass-nav', 'py-4');
+                    navbar.classList.add('py-5');
+                }
+            });
+        }
+
         function renderBase() {
-            document.getElementById('hero-title').innerText = DATA.personal.title;
+            // 渲染标签
             DATA.personal.tags.forEach(tag => {
                 const span = document.createElement('span');
-                span.className = "px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm rounded-md shadow-sm";
+                span.className = "px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-lg shadow-sm";
                 span.innerText = tag;
                 document.getElementById('hero-tags').appendChild(span);
             });
 
+            // 关于我
             DATA.personal.about.forEach(text => {
                 document.getElementById('about-content').innerHTML += `
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full bg-blue-600"></div>
-                        <p class="ml-4 text-slate-700 leading-relaxed md:text-lg">${text}</p>
+                        <div class="flex-shrink-0 mt-2 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                        <p class="ml-6 text-slate-700 leading-relaxed md:text-lg">${text}</p>
                     </div>`;
             });
 
+            // 技能
             DATA.skills.forEach(skill => {
                 document.getElementById('skills-grid').innerHTML += `
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-5">
-                            <i data-lucide="${skill.icon}" class="w-5 h-5 text-blue-600"></i>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
+                            <i data-lucide="${skill.icon}" class="w-6 h-6 text-blue-600 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold mb-3">${skill.category}</h3>
-                        <ul class="space-y-2">
-                            ${skill.items.map(item => `<li class="text-sm text-slate-500 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>${item}</li>`).join('')}
+                        <h3 class="font-bold text-lg mb-4 text-slate-900">${skill.category}</h3>
+                        <ul class="space-y-3">
+                            ${skill.items.map(item => `<li class="text-sm text-slate-500 flex items-center"><span class="w-1 h-1 bg-blue-400 rounded-full mr-3"></span>${item}</li>`).join('')}
                         </ul>
                     </div>`;
             });
 
+            // 项目
             DATA.projects.forEach(project => {
                 const card = document.createElement('div');
-                card.className = "group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col";
+                card.className = "group bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all cursor-pointer flex flex-col";
                 card.onclick = () => openModal(project);
                 card.innerHTML = `
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                            <span class="text-white text-xs font-bold uppercase tracking-widest">点击查看案例研究</span>
+                        </div>
                     </div>
-                    <div class="p-6 flex flex-col flex-1">
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">${project.title}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2 mb-4">${project.summary}</p>
-                        <div class="pt-4 border-t border-slate-100 text-sm font-semibold text-blue-600 flex items-center">
-                            查看详情 <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    <div class="p-8 flex flex-col flex-1">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">${project.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2 mb-6 leading-relaxed">${project.summary}</p>
+                        <div class="mt-auto pt-6 border-t border-slate-50 text-sm font-bold text-blue-600 flex items-center">
+                            Case Study <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </div>
                     </div>`;
                 document.getElementById('projects-grid').appendChild(card);
             });
 
+            // 经历
             DATA.experiences.forEach((exp, idx) => {
                 document.getElementById('experience-list').innerHTML += `
                     <div class="relative flex items-start md:justify-center">
-                        <div class="absolute left-0 md:left-1/2 md:-ml-2 w-4 h-4 rounded-full bg-blue-600 shadow mt-2 z-10"></div>
-                        <div class="w-full ml-8 md:ml-0 md:w-[45%] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm ${idx % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}">
-                            <span class="text-xs font-bold text-blue-600 uppercase mb-2 block">${exp.date}</span>
-                            <h3 class="font-bold text-slate-900">${exp.company}</h3>
-                            <div class="text-sm text-slate-500 mb-4">${exp.role}</div>
-                            <ul class="space-y-2">
-                                ${exp.desc.map(d => `<li class="text-sm text-slate-600 flex items-start"><span class="text-blue-600 mr-2 mt-1">▪</span>${d}</li>`).join('')}
+                        <div class="absolute left-0 md:left-1/2 md:-ml-2 w-4 h-4 rounded-full bg-white border-4 border-blue-600 shadow-sm mt-2 z-10"></div>
+                        <div class="w-full ml-10 md:ml-0 md:w-[45%] bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-lg transition-shadow ${idx % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}">
+                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-3 block">${exp.date}</span>
+                            <h3 class="font-bold text-lg text-slate-900 mb-1">${exp.company}</h3>
+                            <div class="text-sm font-medium text-slate-400 mb-6">${exp.role}</div>
+                            <ul class="space-y-3">
+                                ${exp.desc.map(d => `<li class="text-sm text-slate-600 flex items-start leading-relaxed"><span class="text-blue-600/30 mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0"></span>${d}</li>`).join('')}
                             </ul>
                         </div>
                     </div>`;
             });
 
+            // 联系信息
             document.getElementById('contact-info').innerHTML = `
-                <a href="mailto:${DATA.personal.email}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors text-blue-400">
-                    <i data-lucide="mail" class="w-5 h-5 mr-3"></i>
-                    <span class="font-medium">${DATA.personal.email}</span>
+                <a href="mailto:${DATA.personal.email}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
+                    <i data-lucide="mail" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium tracking-wide">${DATA.personal.email}</span>
                 </a>
-                <a href="tel:${DATA.personal.phone}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors text-blue-400">
-                    <i data-lucide="phone" class="w-5 h-5 mr-3"></i>
-                    <span class="font-medium">${DATA.personal.phone}</span>
+                <a href="tel:${DATA.personal.phone}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
+                    <i data-lucide="phone" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium tracking-wide">${DATA.personal.phone}</span>
                 </a>`;
             
             lucide.createIcons();
@@ -452,7 +496,6 @@
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
             
-            // 1. 简介卡片 (Slide 1) - 文字垂直居中对齐，内边距充足
             const introSlide = `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -482,22 +525,19 @@
                 </div>
             `;
 
-            // 2. 成果图卡片 (Slide 2-N) - 强制比例并填充背景色，内容展示完整
             const resultSlides = project.placeholders.map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
                         <div class="result-image-box flex-1">
-                             <!-- 预留图片位置，当前使用图标作为占位 -->
                              <div class="absolute top-8 left-8 z-10">
                                 <span class="px-4 py-2 bg-slate-900 text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl">成果图 0${i+1}</span>
                              </div>
                              <div class="text-center p-12 opacity-30 select-none">
                                 <i data-lucide="${p.icon || 'image'}" class="w-16 h-16 text-slate-400 mx-auto mb-4"></i>
                                 <div class="text-lg font-bold text-slate-400 uppercase">${p.title}</div>
-                                <p class="text-xs text-slate-300 mt-2">此处展示分析看板、图表或产品原型截图</p>
                              </div>
                         </div>
-                        <div class="p-8 md:p-10 bg-white border-t border-slate-100">
+                        <div class="p-8 md:p-12 bg-white border-t border-slate-100">
                              <h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3>
                              <p class="text-sm text-slate-500 leading-relaxed">${p.desc}</p>
                         </div>
@@ -509,20 +549,15 @@
             modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
             
-            // 每次打开时重置 Swiper
             if(currentSwiper) currentSwiper.destroy();
 
             currentSwiper = new Swiper('.swiper-container', {
                 slidesPerView: 1,
-                spaceBetween: 32, 
+                spaceBetween: 40, 
                 centeredSlides: true,
                 grabCursor: true,
-                speed: 800,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                resistanceRatio: 0,
+                speed: 1000,
+                pagination: { el: '.swiper-pagination', clickable: true },
                 mousewheel: true,
                 keyboard: true,
             });
