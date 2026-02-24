@@ -41,9 +41,9 @@
             backdrop-filter: blur(10px);
         }
 
-        /* 模态框自定义样式 */
+        /* 模态框自定义样式 - 初始状态强制隐藏 */
         .project-modal-container {
-            display: none;
+            display: none !important;
             scrollbar-width: none;
         }
         .project-modal-container::-webkit-scrollbar {
@@ -217,8 +217,8 @@
         <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking.</p>
     </footer>
 
-    <!-- 项目详情全屏模态框 -->
-    <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md project-modal-container overflow-y-auto">
+    <!-- 项目详情全屏模态框 - 修改点：初始状态强制不显示 -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md project-modal-container overflow-y-auto" style="display: none !important;">
         <div class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all my-8">
             <!-- 关闭按钮 -->
             <button onclick="closeModal()" class="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition-colors z-40">
@@ -301,7 +301,7 @@
             ],
             experiences: [
                 { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["制定战略路线图，平衡财务与能源转型。","数据驱动动态定价，实现企业增加值提升 170%。","89 支队伍中斩获第 14 名。"] },
-                { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2023.02 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业简报（阅读量 800+）。","组织 30+ 线上跨国会议（包含沙特阿美），促成战略合作。","策划国际学术活动与竞赛，覆盖 200+ 人次。"] },
+                { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2024.06 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业洞察简报（月均阅读量 800+）。","组织 30+ 线上跨国会议（包含沙特阿美），促成战略合作。","策划国际学术活动与竞赛，覆盖 200+ 人次。"] },
                 { company: "SET校园营销大赛", role: "营销负责人 (自热火锅)", date: "2020.04", desc: ["从 0 到 1 校园创业，月销售额 5000+ 元。","制定多平台传播策略，吸纳 215 人私域社群。","优化产品卖点，复购率提升至 10%。"] }
             ],
             insights: [
@@ -493,7 +493,8 @@
             `;
 
             body.innerHTML = detailsHtml + swiperHtml;
-            modal.style.display = 'flex';
+            // 打开时移除强制隐藏样式
+            modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
             
             // 初始化 Swiper
@@ -515,7 +516,8 @@
         }
 
         function closeModal() {
-            document.getElementById('modal-overlay').style.display = 'none';
+            const modal = document.getElementById('modal-overlay');
+            modal.style.setProperty('display', 'none', 'important');
             document.body.style.overflow = 'unset';
         }
 
