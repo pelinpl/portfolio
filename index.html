@@ -63,18 +63,33 @@
         /* Swiper 自定义样式 */
         .swiper-button-next, .swiper-button-prev {
             background: white;
-            width: 40px !important;
-            height: 40px !important;
+            width: 36px !important;
+            height: 36px !important;
             border-radius: 50%;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             color: #2563eb !important;
         }
         .swiper-button-next:after, .swiper-button-prev:after {
-            font-size: 18px !important;
+            font-size: 14px !important;
             font-weight: bold;
+        }
+        .swiper-pagination-bullet {
+            background: #cbd5e1 !important;
+            opacity: 1 !important;
         }
         .swiper-pagination-bullet-active {
             background: #2563eb !important;
+            width: 20px !important;
+            border-radius: 4px !important;
+        }
+
+        /* 隐藏滚动条但保留功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -219,12 +234,12 @@
 
     <!-- 项目详情全屏模态框 - 修改点：初始状态强制不显示 -->
     <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md project-modal-container overflow-y-auto" style="display: none !important;">
-        <div class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all my-8">
+        <div class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all my-8 flex flex-col">
             <!-- 关闭按钮 -->
-            <button onclick="closeModal()" class="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition-colors z-40">
-                <i data-lucide="x" class="w-6 h-6"></i>
+            <button onclick="closeModal()" class="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition-colors z-50">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
-            <div id="modal-body" class="flex flex-col md:flex-row h-full md:h-[80vh]">
+            <div id="modal-body" class="overflow-y-auto max-h-[90vh] no-scrollbar">
                 <!-- 这里由 JS 填充 -->
             </div>
         </div>
@@ -421,87 +436,95 @@
             lucide.createIcons();
         }
 
-        // 详情模态框
+        // 详情模态框 - 修改点：垂直流式布局 + 横向滑动成果流
         function openModal(project) {
             const modal = document.getElementById('modal-overlay');
             const body = document.getElementById('modal-body');
             
-            // 构建左侧详情内容
-            const detailsHtml = `
-                <div class="flex-1 p-8 md:p-12 overflow-y-auto">
-                    <div class="mb-10">
-                        <div class="flex gap-2 mb-4">
-                            ${project.tags.map(tag => `<span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-md tracking-wider">${tag}</span>`).join('')}
-                        </div>
-                        <h2 class="text-3xl font-extrabold text-slate-900 mb-4">${project.title}</h2>
-                        <p class="text-slate-500 leading-relaxed">${project.summary}</p>
+            // 构建垂直流布局
+            body.innerHTML = `
+                <!-- 项目基础信息 -->
+                <div class="p-8 md:p-12 pb-6 border-b border-slate-50">
+                    <div class="flex gap-2 mb-4">
+                        ${project.tags.map(tag => `<span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded tracking-wider">${tag}</span>`).join('')}
                     </div>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-4">${project.title}</h2>
+                    <p class="text-slate-500 leading-relaxed text-lg mb-8 max-w-3xl">${project.summary}</p>
                     
-                    <div class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div>
-                            <h4 class="flex items-center text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">
+                            <h4 class="flex items-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
                                 <i data-lucide="info" class="w-4 h-4 mr-2"></i> 项目背景
                             </h4>
                             <p class="text-slate-700 leading-relaxed">${project.background}</p>
                         </div>
                         <div>
-                            <h4 class="flex items-center text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">
+                            <h4 class="flex items-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
                                 <i data-lucide="user" class="w-4 h-4 mr-2"></i> 我的角色
                             </h4>
                             <p class="text-slate-700 leading-relaxed">${project.role}</p>
                         </div>
-                        <div class="bg-blue-600 p-8 rounded-2xl shadow-xl shadow-blue-600/20 text-white">
-                            <h4 class="text-blue-100 font-bold uppercase tracking-widest text-xs mb-3">商业价值与产出</h4>
-                            <p class="text-lg font-medium leading-relaxed">${project.value}</p>
-                        </div>
+                    </div>
+
+                    <div class="bg-blue-600 p-6 md:p-10 rounded-2xl shadow-xl shadow-blue-600/10 text-white mb-12">
+                        <h4 class="text-blue-200 font-bold uppercase tracking-widest text-[10px] mb-3">核心商业价值</h4>
+                        <p class="text-xl font-medium leading-relaxed">${project.value}</p>
                     </div>
                 </div>
-            `;
 
-            // 构建右侧滑动展示区 (Swiper)
-            const swiperHtml = `
-                <div class="flex-1 bg-slate-50 relative overflow-hidden flex flex-col">
-                    <div class="p-6 border-b border-slate-200 bg-white/50 backdrop-blur-sm flex justify-between items-center">
-                        <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">成果可视化展示</h4>
+                <!-- 成果可视化展示：横向卡片流 (Swiper) -->
+                <div class="bg-slate-50 pt-10 pb-16">
+                    <div class="px-8 md:px-12 mb-6 flex justify-between items-end">
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">成果可视化</h4>
+                            <p class="text-sm text-slate-500">向左滑动查看更多产出细节</p>
+                        </div>
                     </div>
-                    <div class="swiper-container flex-1 w-full h-full">
+                    
+                    <div class="swiper-container px-8 md:px-12">
                         <div class="swiper-wrapper">
                             ${project.placeholders.map((p, i) => `
-                                <div class="swiper-slide p-8 flex flex-col justify-center">
-                                    <div class="image-placeholder w-full aspect-[4/3] shadow-lg mb-8 relative group">
-                                        <div class="text-center p-8">
-                                            <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 transform group-hover:scale-110 transition-transform">
-                                                <i data-lucide="${p.icon || 'image'}" class="w-8 h-8 text-blue-600"></i>
+                                <div class="swiper-slide w-[300px] md:w-[450px]">
+                                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="image-placeholder w-full aspect-video">
+                                            <div class="text-center p-6">
+                                                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                                    <i data-lucide="${p.icon || 'image'}" class="w-6 h-6 text-blue-600"></i>
+                                                </div>
+                                                <div class="text-[10px] font-bold text-slate-300 uppercase mb-1">Result 0${i+1}</div>
                                             </div>
-                                            <h5 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h5>
-                                            <p class="text-slate-500 max-w-xs mx-auto text-sm leading-relaxed">${p.desc}</p>
                                         </div>
-                                        <div class="absolute top-4 left-4 px-3 py-1 bg-slate-900/10 backdrop-blur-md rounded-full text-[10px] font-bold text-slate-600">
-                                            IMAGE 0${i+1}
+                                        <div class="p-5">
+                                            <h5 class="font-bold text-slate-800 mb-1">${p.title}</h5>
+                                            <p class="text-xs text-slate-500 leading-relaxed">${p.desc}</p>
                                         </div>
                                     </div>
                                 </div>
                             `).join('')}
                         </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                        <!-- Add Pagination -->
-                        <div class="swiper-pagination"></div>
+                        
+                        <!-- 底部小圆点进度条 -->
+                        <div class="swiper-pagination !static mt-10"></div>
+                        
+                        <!-- 导航按钮 (仅在大屏幕显示) -->
+                        <div class="hidden md:block">
+                            <div class="swiper-button-next !-right-4"></div>
+                            <div class="swiper-button-prev !-left-4"></div>
+                        </div>
                     </div>
                 </div>
             `;
 
-            body.innerHTML = detailsHtml + swiperHtml;
-            // 打开时移除强制隐藏样式
+            // 打开模态框
             modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
             
             // 初始化 Swiper
             new Swiper('.swiper-container', {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: true,
+                slidesPerView: 'auto',
+                spaceBetween: 20,
+                centeredSlides: false,
+                grabCursor: true,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
@@ -510,6 +533,12 @@
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 'auto',
+                        spaceBetween: 24,
+                    }
+                }
             });
 
             lucide.createIcons();
