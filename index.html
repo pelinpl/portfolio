@@ -8,6 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -37,12 +41,40 @@
             backdrop-filter: blur(10px);
         }
 
-        .project-modal {
+        /* 模态框自定义样式 */
+        .project-modal-container {
             display: none;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
-        .project-modal::-webkit-scrollbar {
-            display: none; /* Safari and Chrome */
+        .project-modal-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.25rem;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Swiper 自定义样式 */
+        .swiper-button-next, .swiper-button-prev {
+            background: white;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #2563eb !important;
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 18px !important;
+            font-weight: bold;
+        }
+        .swiper-pagination-bullet-active {
+            background: #2563eb !important;
         }
     </style>
 </head>
@@ -55,10 +87,10 @@
                 彭羚<span class="text-blue-600">.</span>
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
-                <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
-                <a href="#skills" class="hover:text-blue-600 transition-colors">Skills</a>
-                <a href="#projects" class="hover:text-blue-600 transition-colors">Projects</a>
-                <a href="#experience" class="hover:text-blue-600 transition-colors">Experience</a>
+                <a href="#about" class="hover:text-blue-600 transition-colors">关于我</a>
+                <a href="#skills" class="hover:text-blue-600 transition-colors">专业技能</a>
+                <a href="#projects" class="hover:text-blue-600 transition-colors">项目作品</a>
+                <a href="#experience" class="hover:text-blue-600 transition-colors">工作经历</a>
             </div>
             <button onclick="scrollToId('contact')" class="px-4 py-2 text-sm font-medium text-white bg-slate-900 rounded-full hover:bg-slate-800 transition-colors shadow-lg">
                 联系我
@@ -169,10 +201,10 @@
             <h2 class="text-4xl font-bold mb-6">Let's Connect</h2>
             <p class="text-slate-400 mb-12 max-w-xl mx-auto text-lg text-balance">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
             
-            <!-- 邮箱和电话容器 (改回之前的简约排列) -->
+            <!-- 邮箱和电话容器 (简约排列) -->
             <div id="contact-info" class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12"></div>
             
-            <!-- 下载按钮 (移除 LinkedIn 后居中) -->
+            <!-- 下载按钮 -->
             <div class="flex items-center justify-center">
                 <button class="flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full transition-all shadow-xl shadow-blue-900/20">
                     <i data-lucide="download" class="w-5 h-5 mr-3"></i> 下载 PDF 完整简历
@@ -185,17 +217,19 @@
         <p>© <span id="year"></span> 彭羚. Crafted with Product Thinking.</p>
     </footer>
 
-    <!-- 项目模态框 -->
-    <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto project-modal">
-        <div class="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all">
-            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 bg-white/80 hover:bg-slate-100 rounded-full text-slate-600 transition-colors z-20">
-                <i data-lucide="x" class="w-5 h-5"></i>
+    <!-- 项目详情全屏模态框 -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md project-modal-container overflow-y-auto">
+        <div class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all my-8">
+            <!-- 关闭按钮 -->
+            <button onclick="closeModal()" class="absolute top-6 right-6 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition-colors z-40">
+                <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            <div id="modal-body"></div>
+            <div id="modal-body" class="flex flex-col md:flex-row h-full md:h-[80vh]">
+                <!-- 这里由 JS 填充 -->
+            </div>
         </div>
     </div>
 
-    <!-- 数据与逻辑脚本 -->
     <script>
         // 数据配置项
         const DATA = {
@@ -226,8 +260,13 @@
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "在宏观经济波动背景下，传统就业数据存在滞后性。利用搜索数据作为先行指标预测就业景气度。",
                     role: "核心分析师：负责数据清洗、特征工程、模型构建与可视化。",
-                    method: "1. 爬取相关关键词数据；2. 构建 ARIMA 与 VAR 时间序列模型；3. 模型调优。",
-                    value: "成功验证相关性，准确率达到 85%，为战略制定提供数据支持。"
+                    method: "1. 爬取关键词搜索指数；2. 构建 ARIMA 与 VAR 模型；3. 交叉验证模型准确性。",
+                    value: "准确率达 85%，为企业招聘策略及宏观经济观察提供有效的前瞻性指标。",
+                    placeholders: [
+                        { title: "搜索指数趋势图", desc: "展示核心关键词与就业率的强相关性", icon: "trending-up" },
+                        { title: "模型相关性分析矩阵", desc: "特征提取与权重分配可视化", icon: "grid" },
+                        { title: "预测报告概览", desc: "最终输出的月度就业预警报告", icon: "file-text" }
+                    ]
                 },
                 {
                     id: 2,
@@ -235,10 +274,14 @@
                     tags: ["产品战略", "商业模式", "用户体验"],
                     summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理方案。",
                     image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
-                    background: "针对健康管理中的数据孤岛与激励缺失问题提供 MVP 方案。",
-                    role: "产品负责人：主导用户调研、竞品分析、MVP 功能定义与商业路径规划。",
-                    method: "1. 用户画像与旅程图产出；2. KANO 需求优先级排序；3. 设计商业模式与原型。",
-                    value: "产出完整 BP 并在内部路演获得最高评级，明确三年变现路径。"
+                    background: "解决现代都市青年在健康管理中面临的数据碎片化与缺乏社交激励的问题。",
+                    role: "产品负责人：主导用户调研、功能矩阵定义及商业变现路径规划。",
+                    method: "1. 深度访谈定义 User Persona；2. 绘制用户旅程图；3. 规划 MVP 版核心功能。",
+                    value: "产出完整商业计划书并在内部路演获得高分评价，初步完成硬件供应链调研。",
+                    placeholders: [
+                        { title: "App 交互原型图", desc: "展示核心运动激励模块与社区交互界面", icon: "smartphone" },
+                        { title: "智能硬件渲染图", desc: "配套健康检测传感器外观与佩戴效果", icon: "watch" }
+                    ]
                 },
                 {
                     id: 3,
@@ -246,10 +289,14 @@
                     tags: ["数字营销", "品牌重塑", "跨界合作"],
                     summary: "为吉百利设计的整合数字营销战役，提升品牌在年轻体育圈层中的声量。",
                     image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=400",
-                    background: "品牌受众老龄化，需要触达 Z 世代圈层提升品牌活力。",
-                    role: "营销策略策划：负责数字渠道策略、互动玩法设计与媒介组合方案。",
-                    method: "1. 策划互动 H5 裂变玩法；2. 设计 O2O 闭环；3. 制定 KOL 矩阵投放策略。",
-                    value: "预期实现曝光超千万，互动率提升 30%，有效转化年轻潜在受众。"
+                    background: "品牌需打破“传统节日零食”刻板印象，在日常体育运动场景中建立消费连接。",
+                    role: "营销策划：负责全渠道传播策略、KOL 矩阵筛选及社交互动玩法设计。",
+                    method: "1. 设计“冠军挑战”社交互动；2. 跨界体育 IP 联名；3. 抖音/Instagram 双端分发。",
+                    value: "预计曝光量千万级，品牌社交媒体讨论热度提升 40%，年轻群体转化率显著提高。",
+                    placeholders: [
+                        { title: "品牌主视觉海报", desc: "融合巧克力能量与体育激情的视觉传达", icon: "palette" },
+                        { title: "社交媒体传播效果图", desc: "KOL 矩阵分布与互动评论数据看板", icon: "share-2" }
+                    ]
                 }
             ],
             experiences: [
@@ -263,120 +310,104 @@
             ]
         };
 
-        // 初始化内容
+        // 初始化渲染
         document.addEventListener('DOMContentLoaded', () => {
-            renderContent();
+            renderBase();
             setupAnimations();
             
-            // 监听导航背景
             window.addEventListener('scroll', () => {
                 const nav = document.getElementById('navbar');
                 if (window.scrollY > 50) {
                     nav.classList.add('glass-nav', 'shadow-sm', 'py-3');
-                    nav.classList.remove('py-5');
                 } else {
                     nav.classList.remove('glass-nav', 'shadow-sm', 'py-3');
-                    nav.classList.add('py-5');
                 }
             });
-
             document.getElementById('year').innerText = new Date().getFullYear();
         });
 
-        function renderContent() {
+        function renderBase() {
             // Hero
             document.getElementById('hero-title').innerText = DATA.personal.title;
-            const heroTags = document.getElementById('hero-tags');
             DATA.personal.tags.forEach(tag => {
                 const span = document.createElement('span');
                 span.className = "px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm rounded-md shadow-sm";
                 span.innerText = tag;
-                heroTags.appendChild(span);
+                document.getElementById('hero-tags').appendChild(span);
             });
 
             // About
-            const aboutContent = document.getElementById('about-content');
             DATA.personal.about.forEach(text => {
-                aboutContent.innerHTML += `
+                document.getElementById('about-content').innerHTML += `
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1">
-                            <div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200">
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                            </div>
-                        </div>
+                        <div class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full bg-blue-600"></div>
                         <p class="ml-4 text-slate-700 leading-relaxed md:text-lg">${text}</p>
                     </div>`;
             });
 
             // Skills
-            const skillsGrid = document.getElementById('skills-grid');
             DATA.skills.forEach(skill => {
-                skillsGrid.innerHTML += `
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
-                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <i data-lucide="${skill.icon}" class="w-6 h-6 text-blue-600"></i>
+                document.getElementById('skills-grid').innerHTML += `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <i data-lucide="${skill.icon}" class="w-5 h-5 text-blue-600"></i>
                         </div>
-                        <h3 class="text-lg font-bold mb-4 text-slate-800">${skill.category}</h3>
-                        <ul class="space-y-3">
-                            ${skill.items.map(item => `<li class="text-sm text-slate-600 flex items-center before:content-[''] before:w-1.5 before:h-1.5 before:bg-slate-300 before:rounded-full before:mr-3">${item}</li>`).join('')}
+                        <h3 class="font-bold mb-3">${skill.category}</h3>
+                        <ul class="space-y-2">
+                            ${skill.items.map(item => `<li class="text-sm text-slate-500 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>${item}</li>`).join('')}
                         </ul>
                     </div>`;
             });
 
             // Projects
-            const projectsGrid = document.getElementById('projects-grid');
             DATA.projects.forEach(project => {
                 const card = document.createElement('div');
-                card.className = "group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full";
+                card.className = "group bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer flex flex-col";
                 card.onclick = () => openModal(project);
                 card.innerHTML = `
                     <div class="h-48 overflow-hidden relative">
                         <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors"></div>
                     </div>
                     <div class="p-6 flex flex-col flex-1">
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            ${project.tags.slice(0, 2).map(tag => `<span class="px-2.5 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded">${tag}</span>`).join('')}
+                        <div class="flex gap-2 mb-3">
+                            ${project.tags.slice(0, 2).map(tag => `<span class="px-2 py-0.5 bg-slate-50 text-slate-500 text-[10px] uppercase font-bold rounded">${tag}</span>`).join('')}
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">${project.title}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-3 mb-6 flex-1">${project.summary}</p>
-                        <div class="mt-auto pt-4 border-t border-slate-100 flex items-center text-sm font-medium text-blue-600">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">${project.title}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2 flex-1 mb-4">${project.summary}</p>
+                        <div class="pt-4 border-t border-slate-100 text-sm font-semibold text-blue-600 flex items-center">
                             查看详情 <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
                         </div>
                     </div>`;
-                projectsGrid.appendChild(card);
+                document.getElementById('projects-grid').appendChild(card);
             });
 
             // Experience
-            const experienceList = document.getElementById('experience-list');
-            DATA.experiences.forEach((exp, index) => {
-                const isEven = index % 2 === 0;
-                experienceList.innerHTML += `
+            DATA.experiences.forEach((exp, idx) => {
+                document.getElementById('experience-list').innerHTML += `
                     <div class="relative flex items-start md:justify-center">
-                        <div class="absolute left-0 md:left-1/2 md:-ml-3 w-6 h-6 rounded-full bg-white border-4 border-blue-500 shadow-sm mt-1 z-10"></div>
-                        <div class="w-full ml-10 md:ml-0 md:w-[45%] bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow ${isEven ? 'md:mr-auto' : 'md:ml-auto'}">
-                            <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full mb-3">${exp.date}</span>
-                            <h3 class="text-xl font-bold text-slate-900 mb-1">${exp.company}</h3>
-                            <div class="text-sm font-medium text-slate-500 mb-4">${exp.role}</div>
-                            <ul class="space-y-3">
-                                ${exp.desc.map(item => `<li class="text-sm text-slate-600 leading-relaxed flex items-start"><span class="text-blue-500 mr-2 mt-0.5">▪</span>${item}</li>`).join('')}
+                        <div class="absolute left-0 md:left-1/2 md:-ml-2 w-4 h-4 rounded-full bg-blue-600 shadow mt-2 z-10"></div>
+                        <div class="w-full ml-8 md:ml-0 md:w-[45%] bg-white p-6 rounded-2xl border border-slate-100 shadow-sm ${idx % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}">
+                            <span class="text-xs font-bold text-blue-600 uppercase mb-2 block">${exp.date}</span>
+                            <h3 class="font-bold text-slate-900">${exp.company}</h3>
+                            <div class="text-sm text-slate-500 mb-4">${exp.role}</div>
+                            <ul class="space-y-2">
+                                ${exp.desc.map(d => `<li class="text-sm text-slate-600 flex items-start"><span class="text-blue-600 mr-2 mt-1">▪</span>${d}</li>`).join('')}
                             </ul>
                         </div>
                     </div>`;
             });
 
             // Insights
-            const insightsGrid = document.getElementById('insights-grid');
             DATA.insights.forEach(insight => {
-                insightsGrid.innerHTML += `
-                    <div class="group p-6 rounded-xl border border-slate-100 hover:border-blue-100 bg-slate-50/50 hover:bg-blue-50/30 transition-colors cursor-pointer">
-                        <div class="text-xs text-slate-400 mb-2">${insight.date}</div>
-                        <h3 class="text-lg font-semibold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">${insight.title}</h3>
+                document.getElementById('insights-grid').innerHTML += `
+                    <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md transition-all cursor-pointer">
+                        <div class="text-xs text-slate-400 mb-1">${insight.date}</div>
+                        <h3 class="font-bold mb-2">${insight.title}</h3>
                         <p class="text-sm text-slate-500 line-clamp-2">${insight.summary}</p>
                     </div>`;
             });
 
-            // Contact (改回之前的横向简约样式)
+            // Contact
             document.getElementById('contact-info').innerHTML = `
                 <a href="mailto:${DATA.personal.email}" class="flex items-center px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm transition-colors w-full md:w-auto justify-center">
                     <i data-lucide="mail" class="w-5 h-5 mr-3 text-blue-400"></i>
@@ -387,66 +418,99 @@
                     <span class="font-medium">${DATA.personal.phone}</span>
                 </a>`;
             
-            // Re-render icons
             lucide.createIcons();
         }
 
-        // 动画效果
-        function setupAnimations() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        }
-
-        // 滚动跳转
-        function scrollToId(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // 模态框逻辑
+        // 详情模态框
         function openModal(project) {
             const modal = document.getElementById('modal-overlay');
             const body = document.getElementById('modal-body');
-            body.innerHTML = `
-                <div class="w-full h-48 md:h-64 relative bg-slate-200">
-                    <img src="${project.image}" class="w-full h-full object-cover opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex flex-col justify-end p-6 md:p-8">
-                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">${project.title}</h3>
-                        <div class="flex flex-wrap gap-2">
-                            ${project.tags.map(tag => `<span class="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-full">${tag}</span>`).join('')}
+            
+            // 构建左侧详情内容
+            const detailsHtml = `
+                <div class="flex-1 p-8 md:p-12 overflow-y-auto">
+                    <div class="mb-10">
+                        <div class="flex gap-2 mb-4">
+                            ${project.tags.map(tag => `<span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-md tracking-wider">${tag}</span>`).join('')}
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-slate-900 mb-4">${project.title}</h2>
+                        <p class="text-slate-500 leading-relaxed">${project.summary}</p>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="flex items-center text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">
+                                <i data-lucide="info" class="w-4 h-4 mr-2"></i> 项目背景
+                            </h4>
+                            <p class="text-slate-700 leading-relaxed">${project.background}</p>
+                        </div>
+                        <div>
+                            <h4 class="flex items-center text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">
+                                <i data-lucide="user" class="w-4 h-4 mr-2"></i> 我的角色
+                            </h4>
+                            <p class="text-slate-700 leading-relaxed">${project.role}</p>
+                        </div>
+                        <div class="bg-blue-600 p-8 rounded-2xl shadow-xl shadow-blue-600/20 text-white">
+                            <h4 class="text-blue-100 font-bold uppercase tracking-widest text-xs mb-3">商业价值与产出</h4>
+                            <p class="text-lg font-medium leading-relaxed">${project.value}</p>
                         </div>
                     </div>
                 </div>
-                <div class="p-6 md:p-8 space-y-8 overflow-y-auto max-h-[60vh]">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-3">
-                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-blue-600 rounded-full mr-2"></span>项目背景</h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">${project.background}</p>
-                        </div>
-                        <div class="space-y-3">
-                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-purple-600 rounded-full mr-2"></span>我的角色</h4>
-                            <p class="text-slate-600 text-sm font-medium leading-relaxed">${project.role}</p>
-                        </div>
-                        <div class="space-y-3">
-                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-indigo-500 rounded-full mr-2"></span>解决方案</h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">${project.method}</p>
-                        </div>
-                        <div class="space-y-3">
-                            <h4 class="flex items-center text-lg font-semibold text-slate-800 border-b pb-2"><span class="w-1.5 h-5 bg-green-500 rounded-full mr-2"></span>商业价值</h4>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-inner">
-                                <p class="text-slate-800 text-sm font-medium">${project.value}</p>
-                            </div>
-                        </div>
+            `;
+
+            // 构建右侧滑动展示区 (Swiper)
+            const swiperHtml = `
+                <div class="flex-1 bg-slate-50 relative overflow-hidden flex flex-col">
+                    <div class="p-6 border-b border-slate-200 bg-white/50 backdrop-blur-sm flex justify-between items-center">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">成果可视化展示</h4>
                     </div>
-                </div>`;
+                    <div class="swiper-container flex-1 w-full h-full">
+                        <div class="swiper-wrapper">
+                            ${project.placeholders.map((p, i) => `
+                                <div class="swiper-slide p-8 flex flex-col justify-center">
+                                    <div class="image-placeholder w-full aspect-[4/3] shadow-lg mb-8 relative group">
+                                        <div class="text-center p-8">
+                                            <div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 transform group-hover:scale-110 transition-transform">
+                                                <i data-lucide="${p.icon || 'image'}" class="w-8 h-8 text-blue-600"></i>
+                                            </div>
+                                            <h5 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h5>
+                                            <p class="text-slate-500 max-w-xs mx-auto text-sm leading-relaxed">${p.desc}</p>
+                                        </div>
+                                        <div class="absolute top-4 left-4 px-3 py-1 bg-slate-900/10 backdrop-blur-md rounded-full text-[10px] font-bold text-slate-600">
+                                            IMAGE 0${i+1}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            `;
+
+            body.innerHTML = detailsHtml + swiperHtml;
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            
+            // 初始化 Swiper
+            new Swiper('.swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
             lucide.createIcons();
         }
 
@@ -455,10 +519,23 @@
             document.body.style.overflow = 'unset';
         }
 
-        // 点击遮罩层关闭
         document.getElementById('modal-overlay').onclick = (e) => {
             if(e.target.id === 'modal-overlay') closeModal();
         };
+
+        function scrollToId(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function setupAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
     </script>
 </body>
 </html>
