@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peng Ling | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: rgba(28, 28, 30, 0.7);
+            --accent-purple: #bf5af2;
+            --text-main: #f5f5f7;
+            --text-dim: #86868b;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; line-height: 1.5; }
+
+        /* 背景流体动画 */
+        .ambient-light {
+            position: fixed;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(191, 90, 242, 0.12) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            top: -10%;
+            right: -10%;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; width: 100%; height: 48px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            border-bottom: 0.5px solid var(--glass-border);
+        }
+
+        nav a { color: var(--text-dim); text-decoration: none; margin: 0 15px; font-size: 13px; transition: 0.3s; }
+
+        .hero {
+            height: 80vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 10vw, 80px);
+            font-weight: 700;
+            background: linear-gradient(180deg, #fff 30%, #86868b 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { font-size: clamp(16px, 4vw, 24px); color: var(--accent-purple); margin-top: 10px; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+
+        h2 { font-size: 32px; margin-bottom: 30px; font-weight: 600; }
+
+        /* 便当盒布局 - 核心适配 */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .bento-item {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+
+        /* 霓虹呼吸灯 */
+        .bento-item:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(191, 90, 242, 0.2);
+        }
+
+        .large { grid-column: span 2; }
+        .tall { grid-row: span 2; }
+
+        /* 移动端适配关键查询 */
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; } /* 切换为单列 */
+            .large, .tall { grid-column: span 1; grid-row: span 1; }
+            .hero { height: 60vh; }
+            nav a { margin: 0 10px; font-size: 12px; }
+        }
+
+        .tag {
+            font-size: 11px; color: var(--accent-purple);
+            background: rgba(191, 90, 242, 0.1);
+            padding: 4px 10px; border-radius: 12px;
+            margin-top: auto; width: fit-content;
+        }
+
+        .edu-flex { display: flex; gap: 16px; flex-wrap: wrap; }
+        .edu-card {
+            flex: 1; min-width: 280px;
+            padding: 24px; background: #1c1c1e;
+            border-radius: 20px; border: 1px solid var(--glass-border);
+        }
+
+        .skill-list { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag {
+            padding: 8px 16px; background: rgba(255,255,255,0.05);
+            border-radius: 50px; font-size: 14px; border: 0.5px solid var(--glass-border);
+        }
+
+        footer { text-align: center; padding: 40px; color: var(--text-dim); font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-light"></div>
+
+    <nav>
+        <a href="#exp">项目经历</a>
+        <a href="#edu">教育背景</a>
+        <a href="#skill">个人技能</a>
+    </nav>
+
+    <section class="hero">
+        <h1>彭 羚</h1>
+        <p>华威大学 · 国际商务硕士</p>
+        <div style="margin-top: 20px; font-size: 14px; color: var(--text-dim)">
+            <i class="fas fa-location-dot"></i> 2001.02 [cite: 2] | 雅思 7.0 [cite: 10]
+        </div>
+    </section>
+
+    <section class="container" id="exp">
+        <h2>项目经历</h2>
+        <div class="bento-grid">
+            <div class="bento-item large">
+                <h3 style="color:var(--accent-purple)">中建材总院 · 国际合作 [cite: 6]</h3>
+                <p style="font-size:14px; margin: 10px 0; color: #d1d1d6">调研目标市场并产出行业洞察简报（月均阅读量800+），为海外投资提供依据 [cite: 6]。</p>
+                <div class="tag">市场调研与报告</div>
+            </div>
+            <div class="bento-item">
+                <h3>跨国协调 [cite: 6]</h3>
+                <p style="font-size:13px">推进沙特阿美等30+线上会议，负责双语物料与纪要 [cite: 6]。</p>
+                <div class="tag">海外项目</div>
+            </div>
+            <div class="bento-item tall">
+                <h3 style="color:var(--accent-purple)">华威商学院模拟 </h3>
+                <p style="font-size:14px; margin: 10px 0">作为市场部门协作，制定战略路线图，企业增加值提升170% 。</p>
+                <div class="tag">团队排名 14/89</div>
+            </div>
+            <div class="bento-item">
+                <h3>校园营销 </h3>
+                <p style="font-size:13px">多渠道内容推广，私域社群转化，复购率10% 。</p>
+                <div class="tag">SET营销大赛</div>
+            </div>
+            <div class="bento-item">
+                <h3>活动策划 [cite: 6, 8]</h3>
+                <p style="font-size:13px">执行国际学术交流及校内特色活动，覆盖人员300+ [cite: 6, 8]。</p>
+                <div class="tag">全流程统筹</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="edu">
+        <h2>教育背景</h2>
+        <div class="edu-flex">
+            <div class="edu-card">
+                <h4 style="color:var(--accent-purple)">华威大学 [cite: 4]</h4>
+                <p>硕士 | 国际商务 (专业前10%) [cite: 4]</p>
+                <p style="font-size:12px; color:var(--text-dim); margin-top:8px">2024.09 - 2025.12 [cite: 4]</p>
+            </div>
+            <div class="edu-card">
+                <h4 style="color:var(--accent-purple)">武汉理工大学 [cite: 4]</h4>
+                <p>本科 | 国际经济与贸易 [cite: 4]</p>
+                <p style="font-size:12px; color:var(--text-dim); margin-top:8px">2019.09 - 2023.06 [cite: 4]</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="skill">
+        <h2>技能储备</h2>
+        <div class="skill-list">
+            <div class="skill-tag">英语 (雅思7 / BEC中级) [cite: 10]</div>
+            <div class="skill-tag">SPSS / Stata / R语言 [cite: 10]</div>
+            <div class="skill-tag">MS Office [cite: 10]</div>
+            <div class="skill-tag">跨境电子商务 [cite: 4]</div>
+            <div class="skill-tag">国际商务战略 [cite: 4]</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Email: pengling2024uk@163.com | Phone: 15377614239 [cite: 2]</p>
+    </footer>
+
+</body>
+</html>
