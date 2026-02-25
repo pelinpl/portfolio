@@ -77,23 +77,39 @@
         .edu-global-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
 
-        .glass-edu-card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 28px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* 极简悬浮球样式 */
+        .floating-orb {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1px solid rgba(43, 107, 243, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            animation: floating 4s ease-in-out infinite;
         }
-        .glass-edu-card:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-8px);
-            border-color: rgba(43, 107, 243, 0.6);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        
+        .floating-orb:hover {
+            border-color: rgba(43, 107, 243, 0.8);
+            background: rgba(43, 107, 243, 0.1);
+            transform: scale(1.1);
         }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .orb-delay-1 { animation-delay: 0s; }
+        .orb-delay-2 { animation-delay: 1.5s; }
+        .orb-delay-3 { animation-delay: 0.8s; }
 
         .project-modal-container {
             display: none !important;
@@ -124,11 +140,10 @@
             }
         }
 
-        /* 成果图容器：优化为 contain 模式，确保 100% 完整显示 */
         .result-image-box {
             width: 100%;
             height: 100%;
-            background-color: #f8fafc; /* 极浅灰背景 */
+            background-color: #f8fafc;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -139,8 +154,8 @@
         .result-image-box img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 核心修改：不裁剪，完整显示 */
-            padding: 20px; /* 增加边距，使图表呼吸感更好 */
+            object-fit: contain;
+            padding: 20px;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -163,7 +178,6 @@
             transform: translateY(-4px);
         }
 
-        /* Swiper 分页器颜色适配 */
         .swiper-pagination-bullet-active {
             background: #2B6BF3 !important;
         }
@@ -228,7 +242,7 @@
     </section>
 
     <!-- 3. Education 教育背景区 -->
-    <section id="education" class="relative pt-32 pb-16 overflow-hidden bg-slate-950 text-white flex flex-col justify-between">
+    <section id="education" class="relative min-h-[90vh] overflow-hidden bg-slate-950 text-white flex flex-col pt-32 pb-16">
         <div class="edu-bg-container">
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/winball.jpg');"></div>
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/bip3.jpg');"></div>
@@ -236,28 +250,22 @@
         </div>
         <div class="edu-global-overlay"></div>
 
-        <div class="max-w-6xl mx-auto px-6 relative z-10 reveal">
-            <div class="text-center">
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight drop-shadow-xl text-white">华威大学硕士</h2>
+        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full flex-1 flex flex-col justify-between">
+            <div class="text-center reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight drop-shadow-2xl text-white">华威大学硕士</h2>
                 <p class="text-blue-400 font-bold tracking-[0.2em] uppercase text-sm">Master of Science, University of Warwick</p>
                 <div class="w-16 h-1 bg-[#2B6BF3] mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
-                <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
-                    <h3 class="text-xl font-bold mb-4 text-white">国际商务</h3>
-                    <p class="text-blue-300 text-xs font-mono mb-6">International Business</p>
-                    <p class="text-slate-200 text-sm leading-relaxed">系统学习国际商务战略、全球人力资源管理，掌握复杂环境下的企业运营逻辑。</p>
+            <div class="flex justify-center items-end gap-12 md:gap-32 mb-16 md:mb-24 reveal">
+                <div class="floating-orb orb-delay-1">
+                    <span class="text-[#2B6BF3] font-bold text-base tracking-widest">国际商务</span>
                 </div>
-                <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
-                    <h3 class="text-xl font-bold mb-4 text-white">战略营销洞察</h3>
-                    <p class="text-blue-300 text-xs font-mono mb-6">Strategic Marketing</p>
-                    <p class="text-slate-200 text-sm leading-relaxed">深耕国际营销与战略分析实践，培养从市场数据中挖掘商业增长点的敏锐度。</p>
+                <div class="floating-orb orb-delay-2">
+                    <span class="text-[#2B6BF3] font-bold text-base tracking-widest">国际商务</span>
                 </div>
-                <div class="glass-edu-card p-12 flex flex-col items-center justify-center text-center">
-                    <h3 class="text-xl font-bold mb-4 text-white">全球足迹与跨文化沟通</h3>
-                    <p class="text-blue-300 text-xs font-mono mb-6">Global Footprint</p>
-                    <p class="text-slate-200 text-sm leading-relaxed">立足于华威商学院的国际化平台，建立全球化视野，精进跨语言、跨背景的协作能力。</p>
+                <div class="floating-orb orb-delay-3">
+                    <span class="text-[#2B6BF3] font-bold text-base tracking-widest">国际商务</span>
                 </div>
             </div>
         </div>
@@ -451,8 +459,7 @@
                         { 
                             title: "碳足迹与低碳追踪", 
                             desc: "将运动消耗转化为环保碳积分，建立可持续发展的品牌心智。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" 
-                        }
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" }
                     ]
                 }
             ],
@@ -484,76 +491,88 @@
         }
 
         function renderBase() {
-            DATA.personal.tags.forEach(tag => {
-                const span = document.createElement('span');
-                span.className = "px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-lg shadow-sm";
-                span.innerText = tag;
-                document.getElementById('hero-tags').appendChild(span);
-            });
+            if (document.getElementById('hero-tags')) {
+                DATA.personal.tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.className = "px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-lg shadow-sm";
+                    span.innerText = tag;
+                    document.getElementById('hero-tags').appendChild(span);
+                });
+            }
 
-            DATA.personal.about.forEach(text => {
-                document.getElementById('about-content').innerHTML += `
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-2 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
-                        <p class="ml-6 text-slate-700 leading-relaxed md:text-lg">${text}</p>
-                    </div>`;
-            });
+            if (document.getElementById('about-content')) {
+                DATA.personal.about.forEach(text => {
+                    document.getElementById('about-content').innerHTML += `
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-2 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                            <p class="ml-6 text-slate-700 leading-relaxed md:text-lg">${text}</p>
+                        </div>`;
+                });
+            }
 
-            DATA.skills.forEach(skill => {
-                document.getElementById('skills-grid').innerHTML += `
-                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
-                        <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#2B6BF3] transition-colors">
-                            <i data-lucide="${skill.icon}" class="w-6 h-6 text-[#2B6BF3] group-hover:text-white transition-colors"></i>
-                        </div>
-                        <h3 class="font-bold text-lg mb-4 text-slate-900">${skill.category}</h3>
-                        <ul class="space-y-3">
-                            ${skill.items.map(item => `<li class="text-sm text-slate-500 flex items-center"><span class="w-1 h-1 bg-blue-400 rounded-full mr-3"></span>${item}</li>`).join('')}
-                        </ul>
-                    </div>`;
-            });
-
-            DATA.projects.forEach(project => {
-                const card = document.createElement('div');
-                card.className = "group bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all cursor-pointer flex flex-col";
-                card.onclick = () => openModal(project);
-                card.innerHTML = `
-                    <div class="h-56 overflow-hidden relative">
-                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    </div>
-                    <div class="p-8 flex flex-col flex-1">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#2B6BF3] transition-colors">${project.title}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2 mb-6 leading-relaxed">${project.summary}</p>
-                        <div class="mt-auto pt-6 border-t border-slate-50 text-sm font-bold text-[#2B6BF3] flex items-center">
-                            Case Study <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
-                        </div>
-                    </div>`;
-                document.getElementById('projects-grid').appendChild(card);
-            });
-
-            DATA.experiences.forEach((exp, idx) => {
-                document.getElementById('experience-list').innerHTML += `
-                    <div class="relative flex items-start md:justify-center">
-                        <div class="absolute left-0 md:left-1/2 md:-ml-2 w-4 h-4 rounded-full bg-white border-4 border-[#2B6BF3] shadow-sm mt-2 z-10"></div>
-                        <div class="w-full ml-10 md:ml-0 md:w-[45%] bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-lg transition-shadow ${idx % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}">
-                            <span class="text-[10px] font-bold text-[#2B6BF3] uppercase tracking-widest mb-3 block">${exp.date}</span>
-                            <h3 class="font-bold text-lg text-slate-900 mb-1">${exp.company}</h3>
-                            <div class="text-sm font-medium text-slate-400 mb-6">${exp.role}</div>
+            if (document.getElementById('skills-grid')) {
+                DATA.skills.forEach(skill => {
+                    document.getElementById('skills-grid').innerHTML += `
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#2B6BF3] transition-colors">
+                                <i data-lucide="${skill.icon}" class="w-6 h-6 text-[#2B6BF3] group-hover:text-white transition-colors"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-4 text-slate-900">${skill.category}</h3>
                             <ul class="space-y-3">
-                                ${exp.desc.map(d => `<li class="text-sm text-slate-600 flex items-start leading-relaxed"><span class="text-[#2B6BF3]/30 mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#2B6BF3] flex-shrink-0"></span>${d}</li>`).join('')}
+                                ${skill.items.map(item => `<li class="text-sm text-slate-500 flex items-center"><span class="w-1 h-1 bg-blue-400 rounded-full mr-3"></span>${item}</li>`).join('')}
                             </ul>
-                        </div>
-                    </div>`;
-            });
+                        </div>`;
+                });
+            }
 
-            document.getElementById('contact-info').innerHTML = `
-                <a href="mailto:${DATA.personal.email}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
-                    <i data-lucide="mail" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
-                    <span class="font-medium tracking-wide">${DATA.personal.email}</span>
-                </a>
-                <a href="tel:${DATA.personal.phone}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
-                    <i data-lucide="phone" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
-                    <span class="font-medium tracking-wide">${DATA.personal.phone}</span>
-                </a>`;
+            if (document.getElementById('projects-grid')) {
+                DATA.projects.forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = "group bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all cursor-pointer flex flex-col";
+                    card.onclick = () => openModal(project);
+                    card.innerHTML = `
+                        <div class="h-56 overflow-hidden relative">
+                            <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="p-8 flex flex-col flex-1">
+                            <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#2B6BF3] transition-colors">${project.title}</h3>
+                            <p class="text-sm text-slate-500 line-clamp-2 mb-6 leading-relaxed">${project.summary}</p>
+                            <div class="mt-auto pt-6 border-t border-slate-50 text-sm font-bold text-[#2B6BF3] flex items-center">
+                                Case Study <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </div>`;
+                    document.getElementById('projects-grid').appendChild(card);
+                });
+            }
+
+            if (document.getElementById('experience-list')) {
+                DATA.experiences.forEach((exp, idx) => {
+                    document.getElementById('experience-list').innerHTML += `
+                        <div class="relative flex items-start md:justify-center">
+                            <div class="absolute left-0 md:left-1/2 md:-ml-2 w-4 h-4 rounded-full bg-white border-4 border-[#2B6BF3] shadow-sm mt-2 z-10"></div>
+                            <div class="w-full ml-10 md:ml-0 md:w-[45%] bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-lg transition-shadow ${idx % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}">
+                                <span class="text-[10px] font-bold text-[#2B6BF3] uppercase tracking-widest mb-3 block">${exp.date}</span>
+                                <h3 class="font-bold text-lg text-slate-900 mb-1">${exp.company}</h3>
+                                <div class="text-sm font-medium text-slate-400 mb-6">${exp.role}</div>
+                                <ul class="space-y-3">
+                                    ${exp.desc.map(d => `<li class="text-sm text-slate-600 flex items-start leading-relaxed"><span class="text-[#2B6BF3]/30 mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#2B6BF3] flex-shrink-0"></span>${d}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>`;
+                });
+            }
+
+            if (document.getElementById('contact-info')) {
+                document.getElementById('contact-info').innerHTML = `
+                    <a href="mailto:${DATA.personal.email}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
+                        <i data-lucide="mail" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-medium tracking-wide">${DATA.personal.email}</span>
+                    </a>
+                    <a href="tel:${DATA.personal.phone}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
+                        <i data-lucide="phone" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
+                        <span class="font-medium tracking-wide">${DATA.personal.phone}</span>
+                    </a>`;
+            }
             
             lucide.createIcons();
         }
@@ -564,7 +583,6 @@
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
             
-            // 介绍页
             const introSlide = `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -593,15 +611,13 @@
                     </div>
                 </div>`;
 
-            // 成果展示页
-            const resultSlides = project.placeholders.map((p, i) => `
+            const resultSlides = (project.placeholders || []).map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
                         <div class="result-image-box flex-1">
                              <div class="absolute top-8 left-8 z-10">
                                 <span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span>
                              </div>
-                             <!-- 核心逻辑：object-fit: contain 显示完整原型图细节 -->
                              <img 
                                 src="${p.imageUrl || 'https://placehold.co/1200x800/e2e8f0/64748b?text=Project+Result+0' + (i+1)}" 
                                 alt="${p.title}" 
