@@ -124,15 +124,23 @@
             }
         }
 
+        /* 成果图容器：优化为 contain 模式，确保 100% 完整显示 */
         .result-image-box {
             width: 100%;
             height: 100%;
-            background-color: #f1f5f9;
+            background-color: #f8fafc; /* 极浅灰背景 */
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .result-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 核心修改：不裁剪，完整显示 */
+            padding: 20px; /* 增加边距，使图表呼吸感更好 */
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -145,7 +153,6 @@
                               radial-gradient(circle at bottom left, rgba(88, 28, 135, 0.1), transparent);
         }
 
-        /* 洞察板块卡片微调 */
         .insight-card {
             transition: all 0.3s ease;
             border: 1px solid #f1f5f9;
@@ -154,6 +161,11 @@
             border-color: #e2e8f0;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             transform: translateY(-4px);
+        }
+
+        /* Swiper 分页器颜色适配 */
+        .swiper-pagination-bullet-active {
+            background: #2B6BF3 !important;
         }
     </style>
 </head>
@@ -295,13 +307,11 @@
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="insights-grid">
-                <!-- 文章 1 -->
                 <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col">
                     <span class="text-slate-300 font-mono text-xs mb-4">2024.11.02</span>
                     <h3 class="text-xl font-bold text-slate-900 mb-4">AI 驱动下的数据决策与业务重塑</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6">探讨大模型技术如何从辅助决策演进至自动化行动，以及在实际商业场景中的落地路径。</p>
                 </div>
-                <!-- 文章 2 -->
                 <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col">
                     <span class="text-slate-300 font-mono text-xs mb-4">2024.10.15</span>
                     <h3 class="text-xl font-bold text-slate-900 mb-4">从私域到全域：构建高留存运营体系</h3>
@@ -380,15 +390,14 @@
                     value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
                     placeholders: [
                         { 
-                            title: "搜索指数趋势图", 
-                            desc: "展示核心关键词与就业率的强相关性", 
-                            icon: "trending-up",
+                            title: "Google Trends 搜索指数对比", 
+                            desc: "对比核心关键词搜索指数与实际失业人数变动曲线，揭示搜索行为的领先特征。", 
                             imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" 
                         },
                         { 
-                            title: "预测分析看板", 
-                            desc: "模型输出的月度就业预警报告", 
-                            icon: "layout" 
+                            title: "相关性散点分析", 
+                            desc: "通过散点图与回归线量化搜索指数与失业数据的相关强度，验证模型的解释力。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/scatter.png" 
                         }
                     ]
                 },
@@ -402,22 +411,48 @@
                     role: "产品负责人：主导用户调研、功能矩阵定义及商业变现路径规划。",
                     value: "产出完整商业计划书，并在内部路演获得高分评价。",
                     placeholders: [
-                        { title: "用户旅程地图", desc: "用户在产品生态中的核心触点分析", icon: "map" },
-                        { title: "App 原型设计", desc: "核心运动激励模块交互逻辑展示", icon: "smartphone" }
+                        { 
+                            title: "AI 个性化健身方案", 
+                            desc: "基于用户体征与目标的个性化课程自动生成界面。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" 
+                        },
+                        { 
+                            title: "社区社交与挑战", 
+                            desc: "通过好友排名与勋章体系构建高留存的运动社区氛围。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/community.png" 
+                        },
+                        { 
+                            title: "碳足迹与低碳追踪", 
+                            desc: "将运动消耗转化为环保碳积分，建立可持续发展的品牌心智。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" 
+                        }
                     ]
                 },
                 {
                     id: 3,
-                    title: "吉百利 Champion’s Choice 品牌营销",
-                    tags: ["数字营销", "品牌重塑"],
-                    summary: "为吉百利设计的整合数字营销战役，提升品牌在年轻体育圈层中的声量。",
-                    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=400",
-                    background: "品牌需打破“传统节日零食”刻板印象，在日常体育运动场景中建立消费连接。",
-                    role: "营销策划：负责全渠道传播策略、KOL 矩阵筛选及社交互动玩法设计。",
-                    value: "品牌社交媒体讨论热度提升 40%，年轻群体转化率显著提高。",
+                    title: "PureFit+ 数字化健康产品方案",
+                    tags: ["产品战略", "商业模式"],
+                    summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理方案。",
+                    image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
+                    background: "解决现代都市青年在健康管理中面临的数据碎片化与缺乏社交激励的问题。",
+                    role: "产品负责人：主导用户调研、功能矩阵定义及商业变现路径规划。",
+                    value: "产出完整商业计划书，并在内部路演获得高分评价。",
                     placeholders: [
-                        { title: "传播策略概览", desc: "多维联动的全渠道媒介投放矩阵图", icon: "layers" },
-                        { title: "品牌传播海报", desc: "品牌与体育运动场景的视觉融合设计", icon: "image" }
+                        { 
+                            title: "AI 个性化健身方案", 
+                            desc: "基于用户体征与目标的个性化课程自动生成界面。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" 
+                        },
+                        { 
+                            title: "社区社交与挑战", 
+                            desc: "通过好友排名与勋章体系构建高留存的运动社区氛围。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/community.png" 
+                        },
+                        { 
+                            title: "碳足迹与低碳追踪", 
+                            desc: "将运动消耗转化为环保碳积分，建立可持续发展的品牌心智。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" 
+                        }
                     ]
                 }
             ],
@@ -528,6 +563,8 @@
         function openModal(project) {
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
+            
+            // 介绍页
             const introSlide = `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -556,6 +593,7 @@
                     </div>
                 </div>`;
 
+            // 成果展示页
             const resultSlides = project.placeholders.map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -563,16 +601,12 @@
                              <div class="absolute top-8 left-8 z-10">
                                 <span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span>
                              </div>
+                             <!-- 核心逻辑：object-fit: contain 显示完整原型图细节 -->
                              <img 
                                 src="${p.imageUrl || 'https://placehold.co/1200x800/e2e8f0/64748b?text=Project+Result+0' + (i+1)}" 
                                 alt="${p.title}" 
-                                class="w-full h-full object-cover"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                onerror="this.src='https://placehold.co/1200x800/e2e8f0/64748b?text=Image+Load+Error'"
                              >
-                             <div class="hidden absolute inset-0 flex-col items-center justify-center opacity-30 select-none">
-                                <i data-lucide="${p.icon || 'image'}" class="w-16 h-16 text-slate-400 mx-auto mb-4"></i>
-                                <div class="text-lg font-bold text-slate-400 uppercase">${p.title}</div>
-                             </div>
                         </div>
                         <div class="p-8 md:p-12 bg-white border-t border-slate-100">
                              <h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3>
