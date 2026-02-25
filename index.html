@@ -171,14 +171,21 @@
                               radial-gradient(circle at bottom left, rgba(88, 28, 135, 0.1), transparent);
         }
 
+        /* 职业期待卡片交互效果增强 */
         .insight-card {
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border: 1px solid #f1f5f9;
         }
+        .insight-card h3 {
+            transition: color 0.3s ease;
+        }
         .insight-card:hover {
-            border-color: #e2e8f0;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            transform: translateY(-4px);
+            border-color: rgba(43, 107, 243, 0.3);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02);
+        }
+        .insight-card:hover h3 {
+            color: #2B6BF3;
         }
 
         .swiper-pagination-bullet-active {
@@ -335,11 +342,11 @@
                 <!-- 已删除“查看全部文章”及跳转图标 -->
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="insights-grid">
-                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col">
+                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col cursor-pointer">
                     <h3 class="text-xl font-bold text-slate-900 mb-4">成为兼具战略与执行力的业务人才</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6">既能洞察方向，也能推动落地。</p>
                 </div>
-                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col">
+                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col cursor-pointer">
                     <h3 class="text-xl font-bold text-slate-900 mb-4">在真实业务中持续成长</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6">用数据理解市场，用实践推动价值创造。</p>
                 </div>
@@ -489,31 +496,31 @@
             ],
             experienceGallery: [
                 {
-                    title: "连接职场与未来",
-                    subtitle: "跨越科研院校、顶尖学府与实战赛场",
-                    images: [
-                        { url: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=800", title: "行业洞察" },
-                        { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800", title: "跨国协作" },
-                        { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", title: "数据战略" },
-                        { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800", title: "商业落地" }
-                    ]
-                },
-                {
                     title: "国际合作与洞察",
-                    subtitle: "中国建材科学研究总院，科研与行业分析",
+                    subtitle: "中国建筑材料科学研究总院，华为商学院商业模拟运营",
                     images: [
-                        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800", title: "科研分析" },
-                        { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800", title: "行业报告" },
-                        { url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800", title: "国际会议" },
-                        { url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800", title: "市场洞察" }
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业洞察" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/diversity.jpg", title: "文化协作" },
+                        { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", title: "数据战略" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "合作落地" }
                     ]
                 },
                 {
                     title: "商业战略与增长",
-                    subtitle: "华威商学院与营销大赛，数据驱动决策",
+                    subtitle: "华为商学院商业模拟运营，校园创业项目",
                     images: [
-                        { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800", title: "战略规划" },
-                        { url: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=800", title: "营销增长" },
+                        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800", title: "科研分析" },
+                        { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800", title: "行业报告" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "营销宣传" },
+                        { url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800", title: "市场洞察" }
+                    ]
+                },
+                {
+                    title: "活动策划与执行",
+                    subtitle: "中国建筑材料科学研究总院",
+                    images: [
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/yue.jpg", title: "国际交流" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "主题活动" },
                         { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&q=80&w=800", title: "数据决策" },
                         { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800", title: "团队共创" }
                     ]
