@@ -86,8 +86,11 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            border: 1px solid rgba(43, 107, 243, 0.4);
-            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(43, 107, 243, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -181,6 +184,11 @@
         .swiper-pagination-bullet-active {
             background: #2B6BF3 !important;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 selection:bg-blue-100">
@@ -257,15 +265,22 @@
                 <div class="w-16 h-1 bg-[#2B6BF3] mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <div class="flex justify-center items-end gap-12 md:gap-32 mb-16 md:mb-24 reveal">
-                <div class="floating-orb orb-delay-1">
-                    <span class="text-[#2B6BF3] font-bold text-base tracking-widest">国际商务</span>
+            <!-- 将原本的 flex 布局改为了 grid 三等分布局，完美对齐背景的三列 -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 mb-4 md:mb-8 reveal">
+                <div class="flex justify-center">
+                    <div class="floating-orb orb-delay-1">
+                        <span class="text-white font-bold text-base tracking-widest drop-shadow-md">国际商务</span>
+                    </div>
                 </div>
-                <div class="floating-orb orb-delay-2">
-                    <span class="text-[#2B6BF3] font-bold text-base tracking-widest">国际商务</span>
+                <div class="flex justify-center">
+                    <div class="floating-orb orb-delay-2">
+                        <span class="text-white font-bold text-base tracking-widest drop-shadow-md">商业决策</span>
+                    </div>
                 </div>
-                <div class="floating-orb orb-delay-3">
-                    <span class="text-[#2B6BF3] font-bold text-base tracking-widest">国际商务</span>
+                <div class="flex justify-center">
+                    <div class="floating-orb orb-delay-3">
+                        <span class="text-white font-bold text-base tracking-widest drop-shadow-md">数据分析</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -297,11 +312,18 @@
         </div>
     </section>
 
-    <!-- 6. Experience 经历 -->
-    <section id="experience" class="py-24 bg-slate-50">
-        <div class="max-w-4xl mx-auto px-6 reveal">
-            <h2 class="text-3xl font-bold mb-16 text-center text-slate-900">Work & Experience</h2>
-            <div class="space-y-12 relative before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:h-full before:w-0.5 before:bg-slate-200" id="experience-list"></div>
+    <!-- 6. Experience 工作经历 (参考图重构布局) -->
+    <section id="experience" class="bg-[#181a20] reveal">
+        <div class="flex flex-col lg:flex-row w-full min-h-[600px]">
+            <!-- 左侧文字导航区 -->
+            <div id="exp-nav-container" class="w-full lg:w-[40%] xl:w-[35%] flex flex-col justify-center px-10 py-16 lg:px-16 xl:px-24 lg:py-0 space-y-12 bg-[#181a20]">
+                <!-- 将通过 JS 动态渲染 -->
+            </div>
+
+            <!-- 右侧图片拼接区 (无缝田字格) -->
+            <div id="exp-img-container" class="w-full lg:w-[60%] xl:w-[65%] grid grid-cols-2 grid-rows-2 h-[60vh] lg:h-auto min-h-[500px]">
+                <!-- 将通过 JS 动态渲染 -->
+            </div>
         </div>
     </section>
 
@@ -335,11 +357,6 @@
             <h2 class="text-4xl md:text-5xl font-extrabold mb-8 tracking-tight">Let's Connect</h2>
             <p class="text-slate-400 mb-16 max-w-xl mx-auto text-lg font-light leading-relaxed">随时期待与您交流新的商业机会、数据见解或产品想法。</p>
             <div id="contact-info" class="flex flex-col md:flex-row justify-center items-center gap-8 mb-16"></div>
-            <div class="flex items-center justify-center">
-                <button class="flex items-center px-10 py-5 bg-white text-[#050a18] font-bold rounded-2xl hover:bg-slate-100 transition-all shadow-2xl shadow-blue-900/40 group">
-                    <i data-lucide="download" class="w-5 h-5 mr-3 group-hover:translate-y-1 transition-transform"></i> 下载 PDF 完整简历
-                </button>
-            </div>
         </div>
     </section>
 
@@ -467,6 +484,38 @@
                 { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["制定战略路线图，平衡财务与能源转型。","数据驱动动态定价，实现企业增加值提升 170%。","在 89 支队伍中斩获第 14 名。"] },
                 { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2024.06 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业洞察简报（月均阅读量 800+）。","组织 30+ 线上跨国会议，负责协议审核与进度跟踪。"] },
                 { company: "SET校园营销大赛", role: "营销负责人 (自热火锅)", date: "2020.04", desc: ["从 0 到 1 校园创业，月销售额 5000+ 元。","制定多平台传播策略，吸纳 215 人私域社群。"] }
+            ],
+            experienceGallery: [
+                {
+                    title: "连接职场与未来",
+                    subtitle: "跨越科研院校、顶尖学府与实战赛场",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=800", title: "行业洞察" },
+                        { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800", title: "跨国协作" },
+                        { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", title: "数据战略" },
+                        { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800", title: "商业落地" }
+                    ]
+                },
+                {
+                    title: "国际合作与洞察",
+                    subtitle: "中国建材科学研究总院，科研与行业分析",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800", title: "科研分析" },
+                        { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800", title: "行业报告" },
+                        { url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800", title: "国际会议" },
+                        { url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800", title: "市场洞察" }
+                    ]
+                },
+                {
+                    title: "商业战略与增长",
+                    subtitle: "华威商学院与营销大赛，数据驱动决策",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800", title: "战略规划" },
+                        { url: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=800", title: "营销增长" },
+                        { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&q=80&w=800", title: "数据决策" },
+                        { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800", title: "团队共创" }
+                    ]
+                }
             ]
         };
 
@@ -474,6 +523,7 @@
             renderBase();
             setupAnimations();
             setupScrollEffects();
+            switchExperienceTab(0);
             document.getElementById('year').innerText = new Date().getFullYear();
         });
 
@@ -574,6 +624,46 @@
                     </a>`;
             }
             
+            lucide.createIcons();
+        }
+
+        function switchExperienceTab(index) {
+            const navContainer = document.getElementById('exp-nav-container');
+            const imgContainer = document.getElementById('exp-img-container');
+            
+            if (!navContainer || !imgContainer) return;
+
+            // 渲染左侧导航（根据点击的 index 应用选中或未选中的样式）
+            navContainer.innerHTML = DATA.experienceGallery.map((tab, i) => {
+                const isActive = i === index;
+                if (isActive) {
+                    return `
+                    <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
+                        <div class="absolute left-0 top-1.5 w-[3px] h-6 bg-[#2B6BF3] shadow-[0_0_10px_rgba(43,107,243,0.5)]"></div>
+                        <h2 class="text-2xl font-bold text-white mb-2 tracking-wide">${tab.title}</h2>
+                        <p class="text-[13px] text-slate-400 mb-6 font-light">${tab.subtitle}</p>
+                        <i data-lucide="arrow-right" class="w-5 h-5 text-white font-light group-hover:translate-x-2 transition-transform"></i>
+                    </div>`;
+                } else {
+                    return `
+                    <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
+                        <h2 class="text-xl font-bold text-slate-500 group-hover:text-slate-300 transition-colors mb-2 tracking-wide">${tab.title}</h2>
+                        <p class="text-[13px] text-slate-600 font-light group-hover:text-slate-400 transition-colors">${tab.subtitle}</p>
+                    </div>`;
+                }
+            }).join('');
+
+            // 渲染右侧图片（切换时带有 fadeIn 淡入动画）
+            imgContainer.innerHTML = DATA.experienceGallery[index].images.map(img => `
+                <div class="relative group overflow-hidden bg-slate-800 animate-[fadeIn_0.5s_ease-out]">
+                    <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#181a20]/90 via-[#181a20]/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
+                        <h3 class="text-white text-lg md:text-xl font-medium tracking-wide">${img.title}</h3>
+                    </div>
+                </div>
+            `).join('');
+
             lucide.createIcons();
         }
 
