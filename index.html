@@ -405,38 +405,44 @@
                 {
                     id: 1,
                     title: "Google Trends 宏观失业预测模型",
-                    tags: ["数据分析", "时间序列"],
-                    summary: "检验 Google 搜索行为是否能够在时间上领先并解释美国失业申领波动，并评估其在实时劳动力 market 监测中的应用价值。",
+                    tags: ["数据分析", "R语言"],
+                    summary: "检验 Google 搜索行为是否能够在时间上领先并解释美国失业申领波动。",
                     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
                     background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力市场变化提供潜在领先信号。",
-                    role: "多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
+                    role: "构建行为假设、多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
                     value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
                     placeholders: [
                         { 
-                            title: "Google Trends 搜索指数对比", 
-                            desc: "对比核心关键词搜索指数与实际失业人数变动曲线，揭示搜索行为的领先特征。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" 
+                            title: "交叉相关分析", 
+                            desc: "相关性峰值出现在同期（Lag=0），未观察到稳定的领先或滞后关系。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/ccanalysis.png"  
                         },
                         { 
                             title: "相关性散点分析", 
                             desc: "通过散点图与回归线量化搜索指数与失业数据的相关强度，验证模型的解释力。", 
                             imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/scatter.png" 
+                        },
+                        { 
+                            title: "Google Trends 搜索指数对比", 
+                            desc: "对比核心关键词搜索指数与实际失业人数变动曲线，揭示搜索行为的领先特征。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" 
                         }
+                        
                     ]
                 },
                 {
                     id: 2,
-                    title: "PureFit+ 数字化健康产品方案",
-                    tags: ["产品战略", "商业模式"],
-                    summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理方案。",
+                    title: "PureFit+｜AI 驱动的数字健身生态产品设计",
+                    tags: ["产品战略", "营销设计"],
+                    summary: "通过 AI 个性化、社区激励与碳足迹追踪，设计 PureGym 数字健身生态，提升用户留存并探索多边平台商业模式。",
                     image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
-                    background: "解决现代都市青年在健康管理中面临的数据碎片化与缺乏社交激励的问题。",
-                    role: "产品负责人：主导用户调研、功能矩阵定义及商业变现路径规划。",
-                    value: "产出完整商业计划书，并在内部路演获得高分评价。",
+                    background: "PureGym 作为英国最大平价连锁健身品牌，拥有超过 150 万会员，但其数字服务仍停留在预约与会员管理层面，缺乏个性化训练、社区互动及可持续行为激励。",
+                    role: "用户需求洞察与竞品分析、AI 个性化健身模块功能拆解、多边平台商业模式设计、碳足迹追踪与可持续价值体系构建、MVP 路线图与敏捷实施方案规划",
+                    value: "构建 AI 个性化 + 社区激励 + 可持续行为反馈 的数字健身生态，推动 PureGym 从 低价健身房 → 数据驱动健康平台 的战略升级。",
                     placeholders: [
                         { 
                             title: "AI 个性化健身方案", 
-                            desc: "基于用户体征与目标的个性化课程自动生成界面。", 
+                            desc: "基于用户健身目标、历史训练记录与可穿戴设备数据，构建 AI 自适应训练方案，实现动态强度调整与行为预测，提升用户训练坚持率与效果反馈。", 
                             imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" 
                         },
                         { 
@@ -446,35 +452,35 @@
                         },
                         { 
                             title: "碳足迹与低碳追踪", 
-                            desc: "将运动消耗转化为环保碳积分，建立可持续发展的品牌心智。", 
+                            desc: "将运动消耗转化为环保碳积分，构建可视化反馈机制，建立可持续发展的品牌心智。", 
                             imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" 
                         }
                     ]
                 },
                 {
                     id: 3,
-                    title: "PureFit+ 数字化健康产品方案",
-                    tags: ["产品战略", "商业模式"],
-                    summary: "针对 Z 世代健康焦虑痛点，设计的一套软硬件结合的数字化健康管理方案。",
+                    title: "车企商业战略与市场模拟项目",
+                    tags: ["战略制定", "商业模式"],
+                    summary: "在华威商学院 89 支队伍的模拟竞争中，主导市场部门策略制定，驱动营收增长 100%、企业增加值提升 261%，团队排名 14/89。",
                     image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
-                    background: "解决现代都市青年在健康管理中面临的数据碎片化与缺乏社交激励的问题。",
-                    role: "产品负责人：主导用户调研、功能矩阵定义及商业变现路径规划。",
-                    value: "产出完整商业计划书，并在内部路演获得高分评价。",
+                    background: "在新能源转型和可持续发展背景下，公司需在市场窗口期内平衡增长速度、盈利能力与资源约束。",
+                    role: "设计跨周期营销资源配置策略、基于营销效率、利润率与需求变化识别投入产出拐点、参与制定增长与盈利并行的跨周期战略路线图。",
+                    value: "企业增加值提升 261% 、电动车业务实现规模化落地并支撑 ESG 转型。",
                     placeholders: [
                         { 
-                            title: "AI 个性化健身方案", 
-                            desc: "基于用户体征与目标的个性化课程自动生成界面。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" 
+                            title: "营销节奏：窗口期进攻与利润收割", 
+                            desc: "早期以略高于行业均值投入建立认知，中期在电动化窗口期集中加码以获取市场份额，后期在竞争地位确立后主动收缩投入，实现利润回升与增长稳定。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2marketing_efficiency.png" 
                         },
                         { 
-                            title: "社区社交与挑战", 
-                            desc: "通过好友排名与勋章体系构建高留存的运动社区氛围。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/community.png" 
+                            title: "效率矩阵：高投入不等于低利润", 
+                            desc: "跨团队对标显示，多数高营销支出团队未获得相应利润回报，而我队同时实现高投入与高利润，验证高支出集中于关键增长窗口、并通过后期收缩避免边际回报递减。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/chart2_efficiency_matrix.png" 
                         },
                         { 
-                            title: "碳足迹与低碳追踪", 
-                            desc: "将运动消耗转化为环保碳积分，建立可持续发展的品牌心智。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" }
+                            title: "增长代价与战略回报", 
+                            desc: "盈利曲线呈现典型转型轨迹：早期因人才与能力投入导致利润承压，中期随着电动车规模化实现收入加速，后期通过成本结构优化与需求匹配完成盈利能力恢复，形成“先承压、后释放”的增长路径。", 
+                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2profitability_arc.png" }
                     ]
                 }
             ],
@@ -686,16 +692,16 @@
                                 <div class="space-y-6">
                                     <div>
                                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">项目背景</div>
-                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base">${project.background}</p>
+                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.background}</p>
                                     </div>
                                     <div>
                                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">我的角色</div>
-                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base">${project.role}</p>
+                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.role}</p>
                                     </div>
                                 </div>
                                 <div class="bg-blue-600/5 p-8 rounded-[2rem] border border-blue-100/50 flex flex-col justify-center">
-                                    <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">商业价值</div>
-                                    <p class="text-blue-900 text-lg md:text-2xl font-bold leading-snug">${project.value}</p>
+                                    <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">项目价值</div>
+                                    <p class="text-blue-900 text-lg md:text-2xl font-bold leading-snug text-justify">${project.value}</p>
                                 </div>
                             </div>
                         </div>
