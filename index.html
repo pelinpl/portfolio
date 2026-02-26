@@ -6,12 +6,12 @@
     <title>彭羚 | 个人作品集</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (Updated to stable UMD version) -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Swiper CSS - 使用更稳定的 jsDelivr CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Swiper JS - 使用更稳定的 jsDelivr CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
         
@@ -191,14 +191,12 @@
 
         /* 新增：微微跳动的打招呼效果 (逐字跳动) */
         @keyframes char-jump {
-            /* 将跳动动作压缩在前8%的时间内，其余时间保持静止（约11秒） */
             0%, 8%, 100% { transform: translateY(0); }
             4% { transform: translateY(-10px); }
         }
 
         .wave-char {
             display: inline-block;
-            /* 动画总时长从 6s 延长到 12s，增加静止等待的时间 */
             animation: char-jump 12s ease-in-out infinite;
         }
 
@@ -222,8 +220,8 @@
 
         .hi-wrapper {
             display: inline-block;
-            transform-origin: bottom right; /* 从右下角倾斜更有招手的感觉 */
-            animation: tilt-hello 0.7s ease-in-out 1.2s both; /* 增加0.5s延迟：0.7s -> 1.2s */
+            transform-origin: bottom right;
+            animation: tilt-hello 0.7s ease-in-out 1.2s both;
         }
     </style>
 </head>
@@ -240,7 +238,7 @@
                 <a href="#education" class="hover:text-white transition-colors">全球化视野</a>
                 <a href="#skills" class="hover:text-white transition-colors">专业技能</a>
                 <a href="#projects" class="hover:text-white transition-colors">项目作品</a>
-                <a href="#experience" class="hover:text-white transition-colors">工作经历</a>
+                <a href="#experience" class="hover:text-white transition-colors">实践经历</a>
             </div>
             <button onclick="scrollToId('contact')" class="px-5 py-2 text-sm font-medium text-slate-900 bg-white rounded-full hover:bg-slate-100 transition-all shadow-lg">
                 联系我
@@ -255,7 +253,7 @@
                 <div>
                     <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 text-sm font-medium mb-4 border border-blue-400/30 backdrop-blur-md">
                         <span class="flex w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
-                        正在寻找 2026 届市场类岗位
+                        正在寻找 2026 届市场/运营/产品类岗位
                     </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
                         <span class="hi-wrapper">
@@ -286,7 +284,7 @@
         </div>
     </section>
 
-    <!-- 3. Education 教育背景区 - 优化布局结构 -->
+    <!-- 3. Education 教育背景区 -->
     <section id="education" class="relative min-h-[90vh] overflow-hidden bg-slate-950 text-white flex flex-col pt-8">
         <div class="edu-bg-container">
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/winball.jpg');"></div>
@@ -296,26 +294,24 @@
         <div class="edu-global-overlay"></div>
 
         <div class="max-w-6xl mx-auto px-6 relative z-10 w-full flex-1 flex flex-col">
-            <!-- 标题微调：位置下移一点，副标题大小适应性调整 -->
             <div class="text-center mt-20 mb-auto reveal">
                 <h2 class="text-5xl md:text-7xl font-light tracking-[0.5em] tech-silver-blue uppercase opacity-70">全球化视野</h2>
                 <p class="text-blue-400/40 font-semibold tracking-[0.6em] uppercase text-[10px] md:text-sm mt-4">Global Perspective</p>
                 <div class="w-16 h-[0.5px] bg-blue-500/20 mx-auto mt-8"></div>
             </div>
 
-            <!-- 底部字块：同一高度，进一步下移位置 -->
             <div class="w-full flex justify-around items-end mb-20 reveal">
                 <div class="flex flex-col items-center group">
                     <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
-                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">国际商务</span>
+                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">国际商务学习</span>
                 </div>
                 <div class="flex flex-col items-center group">
                     <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
-                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">商业决策</span>
+                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">商业模拟运营</span>
                 </div>
                 <div class="flex flex-col items-center group">
                     <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
-                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">多元文化</span>
+                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">多元文化体验</span>
                 </div>
             </div>
         </div>
@@ -346,30 +342,24 @@
         </div>
     </section>
 
-    <!-- 6. Experience 工作经历 (升级为可左右滑动的双页结构) -->
+    <!-- 6. Experience 实践经历 -->
     <section id="experience" class="bg-[#181a20] reveal relative">
-        <!-- 悬浮提示：左右滑动切换 -->
         <div class="absolute top-8 right-6 md:right-10 z-20 flex items-center gap-2 text-white bg-black/30 backdrop-blur-md px-4 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase pointer-events-none md:animate-pulse border border-white/10 shadow-lg">
             <i data-lucide="mouse-pointer-2" class="w-3 h-3 md:w-4 md:h-4"></i> 滑动查看更多经历
         </div>
 
         <div class="swiper-container-exp w-full overflow-hidden pb-12">
             <div class="swiper-wrapper">
-                <!-- 第一页：时间轴经历卡片 (原第二页) -->
+                <!-- 第一页：时间轴经历卡片 -->
                 <div class="swiper-slide bg-slate-50 flex items-center justify-center py-20 px-6 md:px-10 h-auto">
                     <div class="w-full max-w-6xl mx-auto flex flex-col pt-8">
-                        
-                        <!-- 新增：工作经历标题 -->
                         <div class="text-center mb-12">
-                            <h2 class="text-3xl font-bold text-slate-900 mb-4">工作经历</h2>
+                            <h2 class="text-3xl font-bold text-slate-900 mb-4">实践经历</h2>
                             <div class="h-1.5 w-16 bg-[#2B6BF3] mx-auto rounded-full"></div>
                         </div>
 
-                        <!-- 顶部的横向时间轴 (在移动端隐藏，只在平板/桌面端展示) -->
                         <div class="hidden md:flex relative w-full items-center mb-10 px-16">
-                            <!-- 连线 (适配白底) -->
                             <div class="absolute left-[15%] right-[15%] h-[2px] bg-slate-200 top-1/2 -translate-y-1/2 z-0"></div>
-                            <!-- 节点 (适配白底) -->
                             <div class="flex w-full justify-around z-10">
                                 <div class="w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-[0_0_12px_rgba(59,130,246,0.6)]"></div>
                                 <div class="w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow-[0_0_12px_rgba(59,130,246,0.6)]"></div>
@@ -377,9 +367,43 @@
                             </div>
                         </div>
 
-                        <!-- 卡片行 -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 flex-1">
-                            <!-- Card 1 -->
+                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2025.06</div>
+                                <h3 class="text-2xl font-bold text-slate-900 mb-1">华威商学院</h3>
+                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">市场部负责人</div>
+                                <ul class="space-y-4 flex-1">
+                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
+                                        制定战略路线图，平衡财务与能源转型。
+                                    </li>
+                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
+                                        数据驱动动态定价，实现企业增加值提升 170%。
+                                    </li>
+                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
+                                        在 89 支队伍中获第 14 名。
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2024.06 - 2024.09 & 2023.02 - 2023.03</div>
+                                <h3 class="text-2xl font-bold text-slate-900 mb-1">中国建材科学研究总院</h3>
+                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">科技部国际合作实习生</div>
+                                <ul class="space-y-4 flex-1">
+                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
+                                        输出海外市场分析报告，编制 3 期行业洞察简报 (月均阅读量 800+)。
+                                    </li>
+                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
+                                        组织 30+ 线上跨国会议，负责协议审核与进度跟踪。
+                                    </li>
+                                </ul>
+                            </div>
+
                             <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
                                 <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2020.04</div>
                                 <h3 class="text-2xl font-bold text-slate-900 mb-1">SET校园营销大赛</h3>
@@ -395,54 +419,15 @@
                                     </li>
                                 </ul>
                             </div>
-
-                            <!-- Card 2 -->
-                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2024.06 - 2024.09</div>
-                                <h3 class="text-2xl font-bold text-slate-900 mb-1">中国建材科学研究总院</h3>
-                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">科技部国际合作实习生</div>
-                                <ul class="space-y-4 flex-1">
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        输出海外市场分析报告，编制 3 期行业洞察简报 (月均阅读量 800+)。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        组织 30+ 线上跨国会议，负责协议审核与进度跟踪。
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <!-- Card 3 -->
-                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2025.06</div>
-                                <h3 class="text-2xl font-bold text-slate-900 mb-1">华威商学院</h3>
-                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">商业战略与市场模拟项目核心成员</div>
-                                <ul class="space-y-4 flex-1">
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        制定战略路线图，平衡财务与能源转型。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        数据驱动动态定价，实现企业增加值提升 170%。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        在 89 支队伍中斩获第 14 名。
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- 第二页：图文导航布局 (原第一页) -->
-                <div class="swiper-slide h-auto">
+                <!-- 第二页：图文导航布局 -->
+                 <div class="swiper-slide h-auto">
                     <div class="flex flex-col lg:flex-row w-full min-h-[600px] h-full">
-                        <!-- 左侧文字导航区 -->
-                        <div id="exp-nav-container" class="w-full lg:w-[40%] xl:w-[35%] flex flex-col justify-center px-10 py-16 lg:px-16 xl:px-24 lg:py-0 space-y-12 bg-[#181a20]">
+                        <!-- 左侧文字导航区 (将 space-y-12 修改为了 space-y-20 拉大间距) -->
+                        <div id="exp-nav-container" class="w-full lg:w-[40%] xl:w-[35%] flex flex-col justify-center px-10 py-16 lg:px-16 xl:px-24 lg:py-0 space-y-20 bg-[#181a20]">
                             <!-- 将通过 JS 动态渲染 -->
                         </div>
 
@@ -513,20 +498,19 @@
         const DATA = {
             personal: {
                 name: "彭羚",
-                title: "数据驱动的商业分析与数字营销候选人",
-                tags: ["华威大学国际商务硕士", "武汉理工大学国际经济与贸易本科", "商业分析", "用户洞察", "数据分析"],
+                tags: ["华威大学国际商务硕士", "武汉理工大学国际经济与贸易本科", "国际商务战略", "跨文化管理", "经济金融基础", "大数据分析"],
                 email: "pengling2024uk@163.com",
                 phone: "15377614239",
                 about: [
                     "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目落地。",
                     "关注用户行为与市场变化，擅长通过数据洞察识别需求机会并支持营销与产品决策。",
-                    "在商业模拟与产品项目中，形成以增长为导向的战略思维，能够通过资源配置与策略节奏提升市场表现。"
+                    "在专业学习与商业模拟中，形成以增长为导向的战略思维，能够通过资源配置与策略节奏提升市场表现。"
                 ]
             },
             skills: [
-                { category: "商业分析", icon: "bar-chart-2", items: ["市场调研", "竞品分析", "商业模式拆解", "战略支持"] },
-                { category: "数据分析", icon: "pie-chart", items: ["Excel", "R语言建模", "时间序列预测", "数据可视化"] },
-                { category: "品牌传播", icon: "target", items: ["企业文化建设", "活动策划执行", "客服需求发掘", "多渠道运营"] },
+                { category: "商业分析", icon: "bar-chart-2", items: ["市场调研", "竞品分析", "战略支持"] },
+                { category: "数据分析", icon: "pie-chart", items: ["Excel", "R语言应用", "数据可视化"] },
+                { category: "品牌传播", icon: "target", items: ["企业文化建设", "活动策划执行", "多渠道运营"] },
                 { category: "语言能力", icon: "lightbulb", items: ["英语雅思7分", "BEC商务英语中级", "跨国沟通经验"] }
             ],
             projects: [
@@ -561,7 +545,7 @@
                     id: 2,
                     title: "PureFit+｜AI 驱动的数字健身生态产品设计",
                     tags: ["产品设计", "AI应用"],
-                    summary: "通过 AI 个性化、社区激励与碳足迹追踪，设计 PureGym 数字健身生态，提升用户留存并探索多边平台商业模式。",
+                    summary: "通过 AI 个性化、社区激励与碳足迹追踪，设计 PureGym 数字健身生态。",
                     image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/purefit%2B.jpg",
                     background: "PureGym 作为英国最大平价连锁健身品牌，拥有超过 150 万会员，但其数字服务仍停留在预约与会员管理层面，缺乏个性化训练、社区互动及可持续行为激励。",
                     role: "用户需求洞察与竞品分析、AI 个性化健身模块功能拆解、多边平台商业模式设计、碳足迹追踪与可持续价值体系构建、MVP 路线图与敏捷实施方案规划",
@@ -588,7 +572,7 @@
                     id: 3,
                     title: "车企商业模拟运营项目",
                     tags: ["战略制定", "需求分析"],
-                    summary: "在华威商学院 89 支队伍的模拟竞争中，主导市场部门策略制定，驱动营收增长 100%、企业增加值提升 261%，团队排名 14/89。",
+                    summary: "在华威商学院 89 支队伍的模拟竞争中，企业增加值提升 261%，团队排名 14/89。",
                     image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project3.jpg",
                     background: "在新能源转型和可持续发展背景下，公司需在市场窗口期内平衡增长速度、盈利能力与资源约束。",
                     role: "设计跨周期营销资源配置策略、基于营销效率、利润率与需求变化识别投入产出拐点、参与制定增长与盈利并行的跨周期战略路线图。",
@@ -614,41 +598,32 @@
             experienceGallery: [
                 {
                     title: "国际合作与洞察",
-                    subtitle: "中国建筑材料科学研究总院，华为商学院商业模拟运营",
                     images: [
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业洞察" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/diversity.jpg", title: "跨文化协作" },
-                        { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800", title: "数据战略" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业跟踪" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/cooperation.jpg", title: "跨国合作" },
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "合作落地" }
                     ]
                 },
                 {
                     title: "商业战略与增长",
-                    subtitle: "华为商学院商业模拟运营，校园创业项目",
                     images: [
-                        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800", title: "科研分析" },
-                        { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800", title: "行业报告" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "营销宣传" },
-                        { url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800", title: "市场洞察" }
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/setmkt.jpg", title: "市场洞察" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "平台宣传" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/revenue.png", title: "促进盈利" }
                     ]
                 },
                 {
                     title: "活动策划与执行",
-                    subtitle: "中国建筑材料科学研究总院",
                     images: [
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/yue.jpg", title: "国际交流" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "主题活动" },
-                        { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=800", title: "数据决策" },
-                        { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800", title: "团队共创" }
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "主题活动" }
                     ]
                 }
             ]
         };
 
         function initLucideIcons() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -657,18 +632,20 @@
             setupScrollEffects();
             switchExperienceTab(0);
             
-            // 初始化工作经历的横向滑动效果
-            new Swiper('.swiper-container-exp', {
-                slidesPerView: 1,
-                spaceBetween: 0,
-                autoHeight: true, // 适应两页不同的高度
-                pagination: {
-                    el: '.swiper-pagination-exp',
-                    clickable: true,
-                },
-                grabCursor: true,
-                speed: 600,
-            });
+            // 安全初始化 Swiper
+            const checkSwiper = setInterval(() => {
+                if (typeof Swiper !== 'undefined') {
+                    clearInterval(checkSwiper);
+                    new Swiper('.swiper-container-exp', {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                        autoHeight: true,
+                        pagination: { el: '.swiper-pagination-exp', clickable: true },
+                        grabCursor: true,
+                        speed: 600,
+                    });
+                }
+            }, 100);
 
             document.getElementById('year').innerText = new Date().getFullYear();
         });
@@ -719,7 +696,7 @@
                                 <i data-lucide="${skill.icon}" class="w-6 h-6 text-[#2B6BF3] group-hover:text-white transition-colors"></i>
                             </div>
                             <h3 class="font-bold text-lg mb-4 text-slate-900">${skill.category}</h3>
-                            <ul class="space-y-3">
+                            <ul class="space-y-5">
                                 ${skill.items.map(item => `<li class="text-sm text-slate-500 flex items-center"><span class="w-1 h-1 bg-blue-400 rounded-full mr-3"></span>${item}</li>`).join('')}
                             </ul>
                         </div>`;
@@ -772,23 +749,45 @@
                 return isActive ? `
                     <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
                         <div class="absolute left-0 top-1.5 w-[3px] h-6 bg-[#2B6BF3] shadow-[0_0_10px_rgba(43,107,243,0.5)]"></div>
-                        <h2 class="text-2xl font-bold text-white mb-2 tracking-wide">${tab.title}</h2>
-                        <p class="text-[13px] text-slate-400 mb-6 font-light text-justify">${tab.subtitle}</p>
+                        <h2 class="text-2xl font-bold text-white mb-4 tracking-wide">${tab.title}</h2>
                         <i data-lucide="arrow-right" class="w-5 h-5 text-white font-light group-hover:translate-x-2 transition-transform"></i>
                     </div>` : `
                     <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
                         <h2 class="text-xl font-bold text-slate-500 group-hover:text-slate-300 transition-colors mb-2 tracking-wide">${tab.title}</h2>
-                        <p class="text-[13px] text-slate-600 font-light group-hover:text-slate-400 transition-colors text-justify">${tab.subtitle}</p>
                     </div>`;
             }).join('');
-            imgContainer.innerHTML = DATA.experienceGallery[index].images.map(img => `
-                <div class="relative group overflow-hidden bg-slate-800 animate-[fadeIn_0.5s_ease-out]">
+            
+            const images = DATA.experienceGallery[index]?.images || [];
+            
+            // 动态调整网格布局：如果是2张图，则只渲染1行（让2张图等分整个高度）；否则渲染2行
+            if (images.length === 2) {
+                imgContainer.className = "w-full lg:w-[60%] xl:w-[65%] grid grid-cols-2 grid-rows-1 h-[60vh] lg:h-auto min-h-[500px]";
+            } else {
+                imgContainer.className = "w-full lg:w-[60%] xl:w-[65%] grid grid-cols-2 grid-rows-2 h-[60vh] lg:h-auto min-h-[500px]";
+            }
+
+            imgContainer.innerHTML = images.map((img, idx) => {
+                let spanClass = "";
+                // 动态分配跨列布局：不同板块呈现不同的3图排版
+                if (images.length === 3) {
+                    if (index === 0 && idx === 2) {
+                        // 国际合作板块：第3张跨列 (上2下1)
+                        spanClass = " col-span-2";
+                    } else if (index === 1 && idx === 0) {
+                        // 商业战略板块：第1张跨列 (上1下2)
+                        spanClass = " col-span-2";
+                    }
+                }
+                
+                return `
+                <div class="relative group overflow-hidden bg-slate-800 animate-[fadeIn_0.5s_ease-out]${spanClass}">
                     <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-[#181a20]/90 via-[#181a20]/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300"></div>
                     <div class="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
                         <h3 class="text-white text-lg md:text-xl font-medium tracking-wide">${img.title}</h3>
                     </div>
-                </div>`).join('');
+                </div>`;
+            }).join('');
             initLucideIcons();
         }
 
@@ -800,20 +799,12 @@
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
                         <div class="flex-1 p-8 md:p-14 flex flex-col justify-center overflow-y-auto no-scrollbar">
-                            <div class="flex gap-2 mb-6">
-                                ${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}
-                            </div>
+                            <div class="flex gap-2 mb-6">${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}</div>
                             <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">${project.title}</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                                 <div class="space-y-6">
-                                    <div>
-                                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">项目背景</div>
-                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.background}</p>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">我的角色</div>
-                                        <p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.role}</p>
-                                    </div>
+                                    <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">项目背景</div><p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.background}</p></div>
+                                    <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">我的角色</div><p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.role}</p></div>
                                 </div>
                                 <div class="bg-blue-600/5 p-8 rounded-[2rem] border border-blue-100/50 flex flex-col justify-center">
                                     <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">项目价值</div>
@@ -826,26 +817,21 @@
             const resultSlides = (project.placeholders || []).map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
-                        <div class="result-image-box flex-1">
-                             <div class="absolute top-8 left-8 z-10">
-                                <span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span>
-                             </div>
-                             <img src="${p.imageUrl}" alt="${p.title}">
-                        </div>
-                        <div class="p-8 md:p-12 bg-white border-t border-slate-100">
-                             <h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3>
-                             <p class="text-sm text-slate-500 leading-relaxed text-justify">${p.desc}</p>
-                        </div>
+                        <div class="result-image-box flex-1"><div class="absolute top-8 left-8 z-10"><span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span></div><img src="${p.imageUrl}" alt="${p.title}"></div>
+                        <div class="p-8 md:p-12 bg-white border-t border-slate-100"><h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3><p class="text-sm text-slate-500 leading-relaxed text-justify">${p.desc}</p></div>
                     </div>
                 </div>`).join('');
             wrapper.innerHTML = introSlide + resultSlides;
             modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
+            
             if(currentSwiper) currentSwiper.destroy();
-            currentSwiper = new Swiper('.swiper-container', {
-                slidesPerView: 1, spaceBetween: 40, centeredSlides: true, grabCursor: true, speed: 1000,
-                pagination: { el: '.swiper-pagination', clickable: true }, mousewheel: true, keyboard: true,
-            });
+            if(typeof Swiper !== 'undefined') {
+                currentSwiper = new Swiper('.swiper-container', {
+                    slidesPerView: 1, spaceBetween: 40, centeredSlides: true, grabCursor: true, speed: 1000,
+                    pagination: { el: '.swiper-pagination', clickable: true }, mousewheel: true, keyboard: true,
+                });
+            }
             initLucideIcons();
         }
 
