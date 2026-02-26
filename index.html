@@ -235,7 +235,7 @@
             <div class="text-xl font-bold tracking-tight cursor-pointer text-white" onclick="scrollToId('hero')">
                 彭羚<span class="text-blue-400">.</span>
             </div>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-200">
+            <div class="hidden md:flex space-x-8 text-base font-medium text-slate-200">
                 <a href="#about" class="hover:text-white transition-colors">关于我</a>
                 <a href="#education" class="hover:text-white transition-colors">全球化视野</a>
                 <a href="#skills" class="hover:text-white transition-colors">专业技能</a>
@@ -466,12 +466,12 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="insights-grid">
                 <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col cursor-pointer">
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">成为兼具战略与执行力的业务人才</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">既能洞察方向，也能推动落地。</p>
-                </div>
-                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col cursor-pointer">
                     <h3 class="text-xl font-bold text-slate-900 mb-4">在真实业务中持续成长</h3>
                     <p class="text-slate-500 text-sm leading-relaxed mb-6">用数据理解市场，用实践推动价值创造。</p>
+                </div>
+                <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col cursor-pointer">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">成为兼具战略与执行力的业务人才</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">既能洞察方向，也能推动落地。</p>
                 </div>
             </div>
         </div>
@@ -689,13 +689,13 @@
         function renderBase() {
             if (document.getElementById('hero-tags')) {
                 DATA.personal.tags.forEach((tag, index) => {
-                    if (index === 3) {
+                    if (index === 2) {
                         const lineBreak = document.createElement('div');
                         lineBreak.className = "w-full h-0"; 
                         document.getElementById('hero-tags').appendChild(lineBreak);
                     }
                     const span = document.createElement('span');
-                    span.className = "px-5 py-2.5 bg-white/5 backdrop-blur-md border border-white/10 text-white text-[11px] font-medium rounded-full shadow-lg tracking-wider transition-all hover:bg-white/10 hover:border-white/20";
+                    span.className = "px-5 py-2.5 bg-white/5 backdrop-blur-md border border-white/10 text-white text-sm font-medium rounded-full shadow-lg tracking-wider transition-all hover:bg-white/10 hover:border-white/20";
                     span.innerText = tag;
                     document.getElementById('hero-tags').appendChild(span);
                 });
