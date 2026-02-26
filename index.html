@@ -13,7 +13,7 @@
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -81,43 +81,14 @@
             z-index: 1;
         }
 
-        /* 极简悬浮球样式 */
-        .floating-orb {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 1px solid rgba(43, 107, 243, 0.6);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s ease;
-            animation: floating 4s ease-in-out infinite;
-        }
-        
-        .floating-orb:hover {
-            border-color: rgba(43, 107, 243, 0.8);
-            background: rgba(43, 107, 243, 0.1);
-            transform: scale(1.1);
+        /* 银蓝色科技感文字渐变 - 强化亮度和立体感 */
+        .tech-silver-blue {
+            background: linear-gradient(to bottom, #ffffff 0%, #cbd5e1 45%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.25));
         }
 
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .orb-delay-1 { animation-delay: 0s; }
-        .orb-delay-2 { animation-delay: 1.5s; }
-        .orb-delay-3 { animation-delay: 0.8s; }
-
-        .project-modal-container {
-            display: none !important;
-        }
-        
         .standard-card {
             width: 100%;
             height: 100%;
@@ -196,6 +167,41 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        /* 新增：微微跳动的打招呼效果 (逐字跳动) */
+        @keyframes char-jump {
+            0%, 40%, 100% { transform: translateY(0); }
+            20% { transform: translateY(-10px); }
+        }
+
+        .wave-char {
+            display: inline-block;
+            animation: char-jump 2.5s ease-in-out infinite;
+        }
+
+        /* 新增：掉落与倾斜打招呼动画 */
+        @keyframes drop-in {
+            0% { transform: translateY(-40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes tilt-hello {
+            0% { transform: rotate(0deg); }
+            30% { transform: rotate(15deg); }
+            60% { transform: rotate(-5deg); }
+            80% { transform: rotate(2deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .drop-char {
+            display: inline-block;
+        }
+
+        .hi-wrapper {
+            display: inline-block;
+            transform-origin: bottom right; /* 从右下角倾斜更有招手的感觉 */
+            animation: tilt-hello 0.7s ease-in-out 0.7s both; /* 等待掉落完毕后倾斜 */
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 selection:bg-blue-100">
@@ -229,7 +235,10 @@
                         正在寻找 2026 届市场类岗位
                     </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-                        Hi，我是 <span class="gradient-text-light">彭羚</span>
+                        <span class="hi-wrapper">
+                            <span class="drop-char" style="animation: drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s both;">H</span><span class="drop-char" style="animation: drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.15s both;">i</span>
+                        </span><span>，</span><span class="wave-char" style="animation-delay: 1.4s;">我</span><span class="wave-char" style="animation-delay: 1.48s;">是</span> 
+                        <span class="wave-char" style="animation-delay: 1.56s;">彭</span><span class="wave-char" style="animation-delay: 1.64s;">羚</span>
                     </h1>
                     <p class="text-xl md:text-2xl text-slate-200 font-light max-w-2xl" id="hero-title">数据驱动的商业分析与战略执行候选人</p>
                 </div>
@@ -241,7 +250,6 @@
                     <button onclick="scrollToId('projects')" class="flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20 group">
                         查看精选项目 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </button>
-                    <!-- 删除了下载简历按钮 -->
                 </div>
             </div>
         </div>
@@ -255,8 +263,8 @@
         </div>
     </section>
 
-    <!-- 3. Education 教育背景区 -->
-    <section id="education" class="relative min-h-[90vh] overflow-hidden bg-slate-950 text-white flex flex-col pt-32 pb-16">
+    <!-- 3. Education 教育背景区 - 优化布局结构 -->
+    <section id="education" class="relative min-h-[90vh] overflow-hidden bg-slate-950 text-white flex flex-col pt-8">
         <div class="edu-bg-container">
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/winball.jpg');"></div>
             <div class="edu-bg-column" style="background-image: url('https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/bip3.jpg');"></div>
@@ -264,29 +272,27 @@
         </div>
         <div class="edu-global-overlay"></div>
 
-        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full flex-1 flex flex-col justify-between">
-            <div class="text-center reveal">
-                <h2 class="text-5xl md:text-6xl font-bold mb-4 tracking-[0.15em] drop-shadow-lg text-white/90">全球化视野</h2>
-                <p class="text-blue-300/80 font-medium tracking-[0.3em] uppercase text-sm mt-2">Global Perspective</p>
-                <div class="w-20 h-[2px] bg-blue-400/50 mx-auto mt-6 rounded-full"></div>
+        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full flex-1 flex flex-col">
+            <!-- 标题微调：位置下移一点，副标题大小适应性调整 -->
+            <div class="text-center mt-20 mb-auto reveal">
+                <h2 class="text-5xl md:text-7xl font-light tracking-[0.5em] tech-silver-blue uppercase opacity-70">全球化视野</h2>
+                <p class="text-blue-400/40 font-semibold tracking-[0.6em] uppercase text-[10px] md:text-sm mt-4">Global Perspective</p>
+                <div class="w-16 h-[0.5px] bg-blue-500/20 mx-auto mt-8"></div>
             </div>
 
-            <!-- 将原本的 flex 布局改为了 grid 三等分布局，完美对齐背景的三列 -->
-            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 mb-4 md:mb-8 reveal">
-                <div class="flex justify-center">
-                    <div class="floating-orb orb-delay-1">
-                        <span class="text-white font-bold text-base tracking-widest drop-shadow-md">国际商务</span>
-                    </div>
+            <!-- 底部字块：同一高度，进一步下移位置 -->
+            <div class="w-full flex justify-around items-end mb-20 reveal">
+                <div class="flex flex-col items-center group">
+                    <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
+                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">国际商务</span>
                 </div>
-                <div class="flex justify-center">
-                    <div class="floating-orb orb-delay-2">
-                        <span class="text-white font-bold text-base tracking-widest drop-shadow-md">商业决策</span>
-                    </div>
+                <div class="flex flex-col items-center group">
+                    <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
+                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">商业决策</span>
                 </div>
-                <div class="flex justify-center">
-                    <div class="floating-orb orb-delay-3">
-                        <span class="text-white font-bold text-base tracking-widest drop-shadow-md">多元文化</span>
-                    </div>
+                <div class="flex flex-col items-center group">
+                    <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
+                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">多元文化</span>
                 </div>
             </div>
         </div>
@@ -304,7 +310,7 @@
         </div>
     </section>
 
-    <!-- 5. Projects 项目区 -->
+    <!-- 5. Projects 项目作品区 -->
     <section id="projects" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6 reveal">
             <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -312,13 +318,12 @@
                     <h2 class="text-3xl font-bold mb-4 text-slate-900">Featured Projects</h2>
                     <p class="text-slate-500">从数据洞察到项目实践，精选案例。</p>
                 </div>
-                <!-- 已删除装饰性数字 01 -->
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="projects-grid"></div>
         </div>
     </section>
 
-    <!-- 6. Experience 工作经历 (参考图重构布局) -->
+    <!-- 6. Experience 工作经历 -->
     <section id="experience" class="bg-[#181a20] reveal">
         <div class="flex flex-col lg:flex-row w-full min-h-[600px]">
             <!-- 左侧文字导航区 -->
@@ -326,7 +331,7 @@
                 <!-- 将通过 JS 动态渲染 -->
             </div>
 
-            <!-- 右侧图片拼接区 (无缝田字格) -->
+            <!-- 右侧图片拼接区 -->
             <div id="exp-img-container" class="w-full lg:w-[60%] xl:w-[65%] grid grid-cols-2 grid-rows-2 h-[60vh] lg:h-auto min-h-[500px]">
                 <!-- 将通过 JS 动态渲染 -->
             </div>
@@ -338,7 +343,6 @@
         <div class="max-w-6xl mx-auto px-6 reveal">
             <div class="flex justify-between items-end mb-12">
                 <h2 class="text-3xl font-bold text-slate-900">职业期待</h2>
-                <!-- 已删除“查看全部文章”及跳转图标 -->
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="insights-grid">
                 <div class="insight-card bg-white p-10 rounded-[2rem] flex flex-col cursor-pointer">
@@ -412,7 +416,7 @@
                     tags: ["数据分析", "R语言"],
                     summary: "检验 Google 搜索行为是否能够在时间上领先并解释美国失业申领波动。",
                     image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project1.png",
-                    background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力市场变化提供潜在领先信号。",
+                    background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力 market 变化提供潜在领先信号。",
                     role: "构建行为假设、多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
                     value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
                     placeholders: [
@@ -431,7 +435,6 @@
                             desc: "对比核心关键词搜索指数与实际失业人数变动曲线，揭示搜索行为的领先特征。", 
                             imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" 
                         }
-                        
                     ]
                 },
                 {
@@ -488,11 +491,6 @@
                     ]
                 }
             ],
-            experiences: [
-                { company: "华威商学院", role: "商业战略与市场模拟项目核心成员", date: "2025.06", desc: ["制定战略路线图，平衡财务与能源转型。","数据驱动动态定价，实现企业增加值提升 170%。","在 89 支队伍中斩获第 14 名。"] },
-                { company: "中国建材科学研究总院", role: "科技部国际合作实习生", date: "2024.06 - 2024.09", desc: ["输出海外市场分析报告，编制 3 期行业洞察简报（月均阅读量 800+）。","组织 30+ 线上跨国会议，负责协议审核与进度跟踪。"] },
-                { company: "SET校园营销大赛", role: "营销负责人 (自热火锅)", date: "2020.04", desc: ["从 0 到 1 校园创业，月销售额 5000+ 元。","制定多平台传播策略，吸纳 215 人私域社群。"] }
-            ],
             experienceGallery: [
                 {
                     title: "国际合作与洞察",
@@ -500,7 +498,7 @@
                     images: [
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业洞察" },
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/diversity.jpg", title: "跨文化协作" },
-                        { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", title: "数据战略" },
+                        { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800", title: "数据战略" },
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "合作落地" }
                     ]
                 },
@@ -508,10 +506,10 @@
                     title: "商业战略与增长",
                     subtitle: "华为商学院商业模拟运营，校园创业项目",
                     images: [
-                        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800", title: "科研分析" },
-                        { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800", title: "行业报告" },
+                        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800", title: "科研分析" },
+                        { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800", title: "行业报告" },
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "营销宣传" },
-                        { url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800", title: "市场洞察" }
+                        { url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800", title: "市场洞察" }
                     ]
                 },
                 {
@@ -520,14 +518,13 @@
                     images: [
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/yue.jpg", title: "国际交流" },
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "主题活动" },
-                        { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&q=80&w=800", title: "数据决策" },
-                        { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800", title: "团队共创" }
+                        { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=800", title: "数据决策" },
+                        { url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800", title: "团队共创" }
                     ]
                 }
             ]
         };
 
-        // 安全地调用 lucide.createIcons
         function initLucideIcons() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -558,15 +555,12 @@
         function renderBase() {
             if (document.getElementById('hero-tags')) {
                 DATA.personal.tags.forEach((tag, index) => {
-                    // 在第四个标签（用户洞察）之前插入一个换行占位符
                     if (index === 3) {
                         const lineBreak = document.createElement('div');
                         lineBreak.className = "w-full h-0"; 
                         document.getElementById('hero-tags').appendChild(lineBreak);
                     }
-                    
                     const span = document.createElement('span');
-                    // 微调：rounded-full (胶囊型), 增加内边距, 调整字号与间距
                     span.className = "px-5 py-2.5 bg-white/5 backdrop-blur-md border border-white/10 text-white text-[11px] font-medium rounded-full shadow-lg tracking-wider transition-all hover:bg-white/10 hover:border-white/20";
                     span.innerText = tag;
                     document.getElementById('hero-tags').appendChild(span);
@@ -578,7 +572,7 @@
                     document.getElementById('about-content').innerHTML += `
                         <div class="flex items-start">
                             <div class="flex-shrink-0 mt-2 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
-                            <p class="ml-6 text-slate-700 leading-relaxed md:text-lg">${text}</p>
+                            <p class="ml-6 text-slate-700 leading-relaxed md:text-lg text-justify">${text}</p>
                         </div>`;
                 });
             }
@@ -609,32 +603,15 @@
                         </div>
                         <div class="p-8 flex flex-col flex-1">
                             <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#2B6BF3] transition-colors">${project.title}</h3>
-                            <p class="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed">${project.summary}</p>
+                            <p class="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed text-justify">${project.summary}</p>
                             <div class="flex gap-2 mb-6">
                                 ${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}
                             </div>
                             <div class="mt-auto pt-6 border-t border-slate-50 text-sm font-bold text-[#2B6BF3] flex items-center">
-                                Case Study <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                点击查看详情 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </div>
                         </div>`;
                     document.getElementById('projects-grid').appendChild(card);
-                });
-            }
-
-            if (document.getElementById('experience-list')) {
-                DATA.experiences.forEach((exp, idx) => {
-                    document.getElementById('experience-list').innerHTML += `
-                        <div class="relative flex items-start md:justify-center">
-                            <div class="absolute left-0 md:left-1/2 md:-ml-2 w-4 h-4 rounded-full bg-white border-4 border-[#2B6BF3] shadow-sm mt-2 z-10"></div>
-                            <div class="w-full ml-10 md:ml-0 md:w-[45%] bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-lg transition-shadow ${idx % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}">
-                                <span class="text-[10px] font-bold text-[#2B6BF3] uppercase tracking-widest mb-3 block">${exp.date}</span>
-                                <h3 class="font-bold text-lg text-slate-900 mb-1">${exp.company}</h3>
-                                <div class="text-sm font-medium text-slate-400 mb-6">${exp.role}</div>
-                                <ul class="space-y-3">
-                                    ${exp.desc.map(d => `<li class="text-sm text-slate-600 flex items-start leading-relaxed"><span class="text-[#2B6BF3]/30 mr-3 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#2B6BF3] flex-shrink-0"></span>${d}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>`;
                 });
             }
 
@@ -649,37 +626,27 @@
                         <span class="font-medium tracking-wide">${DATA.personal.phone}</span>
                     </a>`;
             }
-            
             initLucideIcons();
         }
 
         function switchExperienceTab(index) {
             const navContainer = document.getElementById('exp-nav-container');
             const imgContainer = document.getElementById('exp-img-container');
-            
             if (!navContainer || !imgContainer) return;
-
-            // 渲染左侧导航
             navContainer.innerHTML = DATA.experienceGallery.map((tab, i) => {
                 const isActive = i === index;
-                if (isActive) {
-                    return `
+                return isActive ? `
                     <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
                         <div class="absolute left-0 top-1.5 w-[3px] h-6 bg-[#2B6BF3] shadow-[0_0_10px_rgba(43,107,243,0.5)]"></div>
                         <h2 class="text-2xl font-bold text-white mb-2 tracking-wide">${tab.title}</h2>
-                        <p class="text-[13px] text-slate-400 mb-6 font-light">${tab.subtitle}</p>
+                        <p class="text-[13px] text-slate-400 mb-6 font-light text-justify">${tab.subtitle}</p>
                         <i data-lucide="arrow-right" class="w-5 h-5 text-white font-light group-hover:translate-x-2 transition-transform"></i>
-                    </div>`;
-                } else {
-                    return `
+                    </div>` : `
                     <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
                         <h2 class="text-xl font-bold text-slate-500 group-hover:text-slate-300 transition-colors mb-2 tracking-wide">${tab.title}</h2>
-                        <p class="text-[13px] text-slate-600 font-light group-hover:text-slate-400 transition-colors">${tab.subtitle}</p>
+                        <p class="text-[13px] text-slate-600 font-light group-hover:text-slate-400 transition-colors text-justify">${tab.subtitle}</p>
                     </div>`;
-                }
             }).join('');
-
-            // 渲染右侧图片
             imgContainer.innerHTML = DATA.experienceGallery[index].images.map(img => `
                 <div class="relative group overflow-hidden bg-slate-800 animate-[fadeIn_0.5s_ease-out]">
                     <img src="${img.url}" alt="${img.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
@@ -687,18 +654,14 @@
                     <div class="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
                         <h3 class="text-white text-lg md:text-xl font-medium tracking-wide">${img.title}</h3>
                     </div>
-                </div>
-            `).join('');
-
+                </div>`).join('');
             initLucideIcons();
         }
 
         let currentSwiper = null;
-
         function openModal(project) {
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
-            
             const introSlide = `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -726,7 +689,6 @@
                         </div>
                     </div>
                 </div>`;
-
             const resultSlides = (project.placeholders || []).map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
@@ -734,57 +696,35 @@
                              <div class="absolute top-8 left-8 z-10">
                                 <span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span>
                              </div>
-                             <img 
-                                src="${p.imageUrl || 'https://placehold.co/1200x800/e2e8f0/64748b?text=Project+Result+0' + (i+1)}" 
-                                alt="${p.title}" 
-                                onerror="this.src='https://placehold.co/1200x800/e2e8f0/64748b?text=Image+Load+Error'"
-                             >
+                             <img src="${p.imageUrl}" alt="${p.title}">
                         </div>
                         <div class="p-8 md:p-12 bg-white border-t border-slate-100">
                              <h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3>
-                             <p class="text-sm text-slate-500 leading-relaxed">${p.desc}</p>
+                             <p class="text-sm text-slate-500 leading-relaxed text-justify">${p.desc}</p>
                         </div>
                     </div>
                 </div>`).join('');
-
             wrapper.innerHTML = introSlide + resultSlides;
             modal.style.setProperty('display', 'flex', 'important');
             document.body.style.overflow = 'hidden';
-            
             if(currentSwiper) currentSwiper.destroy();
             currentSwiper = new Swiper('.swiper-container', {
-                slidesPerView: 1,
-                spaceBetween: 40, 
-                centeredSlides: true,
-                grabCursor: true,
-                speed: 1000,
-                pagination: { el: '.swiper-pagination', clickable: true },
-                mousewheel: true,
-                keyboard: true,
+                slidesPerView: 1, spaceBetween: 40, centeredSlides: true, grabCursor: true, speed: 1000,
+                pagination: { el: '.swiper-pagination', clickable: true }, mousewheel: true, keyboard: true,
             });
             initLucideIcons();
         }
 
         function closeModal() {
-            const modal = document.getElementById('modal-overlay');
-            modal.style.setProperty('display', 'none', 'important');
+            document.getElementById('modal-overlay').style.setProperty('display', 'none', 'important');
             document.body.style.overflow = 'unset';
         }
 
-        document.getElementById('modal-overlay').onclick = (e) => {
-            if(e.target.id === 'modal-overlay') closeModal();
-        };
-
-        function scrollToId(id) {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-
+        document.getElementById('modal-overlay').onclick = (e) => { if(e.target.id === 'modal-overlay') closeModal(); };
+        function scrollToId(id) { const el = document.getElementById(id); if(el) el.scrollIntoView({ behavior: 'smooth' }); }
         function setupAnimations() {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('active');
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
