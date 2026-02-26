@@ -234,15 +234,14 @@
                     <p class="text-xl md:text-2xl text-slate-200 font-light max-w-2xl" id="hero-title">数据驱动的商业分析与战略执行候选人</p>
                 </div>
                 
-                <div class="flex flex-wrap gap-2" id="hero-tags"></div>
+                <!-- 标签容器 -->
+                <div class="flex flex-wrap gap-3 mt-10" id="hero-tags"></div>
 
                 <div class="flex flex-col sm:flex-row gap-4">
                     <button onclick="scrollToId('projects')" class="flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20 group">
                         查看精选项目 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </button>
-                    <button class="flex items-center justify-center px-8 py-4 bg-white/10 text-white font-semibold rounded-xl border border-white/20 backdrop-blur-md hover:bg-white/20 transition-all shadow-sm">
-                        <i data-lucide="download" class="w-4 h-4 mr-2"></i> 下载完整简历
-                    </button>
+                    <!-- 删除了下载简历按钮 -->
                 </div>
             </div>
         </div>
@@ -395,16 +394,16 @@
                 email: "pengling2024uk@163.com",
                 phone: "15377614239",
                 about: [
-                    "关注用户行为与商业增长，致力于通过结构化思维拆解复杂业务问题。",
-                    "擅长用数据支持商业决策，具备从数据清洗、建模分析到策略落地的全链路能力。",
-                    "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目从 0 到 1 落地。"
+                    "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目落地。",
+                    "关注用户行为与市场变化，擅长通过数据洞察识别需求机会并支持营销与产品决策。",
+                    "在商业模拟与产品项目中，形成以增长为导向的战略思维，能够通过资源配置与策略节奏提升市场表现。"
                 ]
             },
             skills: [
                 { category: "商业分析", icon: "bar-chart-2", items: ["市场调研", "竞品分析", "商业模式拆解", "战略支持"] },
                 { category: "数据分析", icon: "pie-chart", items: ["Excel", "R语言建模", "时间序列预测", "数据可视化"] },
                 { category: "品牌传播", icon: "target", items: ["企业文化建设", "活动策划执行", "客服需求发掘", "多渠道运营"] },
-                { category: "语言能力", icon: "lightbulb", items: ["英语雅思7分", "BEC商务英语中级", "跨国沟通经验", "需求优先级梳理"] }
+                { category: "语言能力", icon: "lightbulb", items: ["英语雅思7分", "BEC商务英语中级", "跨国沟通经验"] }
             ],
             projects: [
                 {
@@ -412,7 +411,7 @@
                     title: "Google Trends 宏观失业预测模型",
                     tags: ["数据分析", "R语言"],
                     summary: "检验 Google 搜索行为是否能够在时间上领先并解释美国失业申领波动。",
-                    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=400",
+                    image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project1.png",
                     background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力市场变化提供潜在领先信号。",
                     role: "构建行为假设、多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
                     value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
@@ -440,7 +439,7 @@
                     title: "PureFit+｜AI 驱动的数字健身生态产品设计",
                     tags: ["产品设计", "AI应用"],
                     summary: "通过 AI 个性化、社区激励与碳足迹追踪，设计 PureGym 数字健身生态，提升用户留存并探索多边平台商业模式。",
-                    image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
+                    image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/purefit%2B.jpg",
                     background: "PureGym 作为英国最大平价连锁健身品牌，拥有超过 150 万会员，但其数字服务仍停留在预约与会员管理层面，缺乏个性化训练、社区互动及可持续行为激励。",
                     role: "用户需求洞察与竞品分析、AI 个性化健身模块功能拆解、多边平台商业模式设计、碳足迹追踪与可持续价值体系构建、MVP 路线图与敏捷实施方案规划",
                     value: "构建 AI 个性化 + 社区激励 + 可持续行为反馈 的数字健身生态，推动 PureGym 从 低价健身房 → 数据驱动健康平台 的战略升级。",
@@ -464,10 +463,10 @@
                 },
                 {
                     id: 3,
-                    title: "车企商业战略与市场模拟项目",
+                    title: "车企商业模拟运营项目",
                     tags: ["战略制定", "需求分析"],
                     summary: "在华威商学院 89 支队伍的模拟竞争中，主导市场部门策略制定，驱动营收增长 100%、企业增加值提升 261%，团队排名 14/89。",
-                    image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800&h=400",
+                    image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project3.jpg",
                     background: "在新能源转型和可持续发展背景下，公司需在市场窗口期内平衡增长速度、盈利能力与资源约束。",
                     role: "设计跨周期营销资源配置策略、基于营销效率、利润率与需求变化识别投入产出拐点、参与制定增长与盈利并行的跨周期战略路线图。",
                     value: "企业增加值提升 261% 、电动车业务实现规模化落地并支撑 ESG 转型。",
@@ -500,7 +499,7 @@
                     subtitle: "中国建筑材料科学研究总院，华为商学院商业模拟运营",
                     images: [
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业洞察" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/diversity.jpg", title: "文化协作" },
+                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/diversity.jpg", title: "跨文化协作" },
                         { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", title: "数据战略" },
                         { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "合作落地" }
                     ]
@@ -558,9 +557,17 @@
 
         function renderBase() {
             if (document.getElementById('hero-tags')) {
-                DATA.personal.tags.forEach(tag => {
+                DATA.personal.tags.forEach((tag, index) => {
+                    // 在第四个标签（用户洞察）之前插入一个换行占位符
+                    if (index === 3) {
+                        const lineBreak = document.createElement('div');
+                        lineBreak.className = "w-full h-0"; 
+                        document.getElementById('hero-tags').appendChild(lineBreak);
+                    }
+                    
                     const span = document.createElement('span');
-                    span.className = "px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-lg shadow-sm";
+                    // 微调：rounded-full (胶囊型), 增加内边距, 调整字号与间距
+                    span.className = "px-5 py-2.5 bg-white/5 backdrop-blur-md border border-white/10 text-white text-[11px] font-medium rounded-full shadow-lg tracking-wider transition-all hover:bg-white/10 hover:border-white/20";
                     span.innerText = tag;
                     document.getElementById('hero-tags').appendChild(span);
                 });
