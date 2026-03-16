@@ -281,9 +281,12 @@
                 <a href="#projects" class="hover:text-white transition-colors">项目作品</a>
                 <a href="#experience" class="hover:text-white transition-colors">实践经历</a>
             </div>
-            <button onclick="scrollToId('contact')" class="px-5 py-2 text-sm font-medium text-slate-900 bg-white rounded-full hover:bg-slate-100 transition-all shadow-lg">
-                联系我
-            </button>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleLang()" id="lang-btn" class="text-white hover:text-blue-400 font-bold tracking-widest transition-colors border border-white/20 rounded-full px-3 py-1 text-sm bg-white/5 backdrop-blur-sm shadow-sm">EN</button>
+                <button onclick="scrollToId('contact')" class="px-5 py-2 text-sm font-medium text-slate-900 bg-white rounded-full hover:bg-slate-100 transition-all shadow-lg">
+                    联系我
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -408,58 +411,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 flex-1">
-                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2025.06</div>
-                                <h3 class="text-2xl font-bold text-slate-900 mb-1">华威商学院</h3>
-                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">市场部负责人</div>
-                                <ul class="space-y-4 flex-1">
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        制定战略路线图，平衡财务与能源转型。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        数据驱动动态定价，实现企业增加值提升 170%。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        在 89 支队伍中获第 14 名。
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2024.06 - 2024.09 & 2023.02 - 2023.03</div>
-                                <h3 class="text-2xl font-bold text-slate-900 mb-1">中国建材科学研究总院</h3>
-                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">科技部国际合作实习生</div>
-                                <ul class="space-y-4 flex-1">
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        输出海外市场分析报告，编制 3 期行业信息简报 (月均阅读量 800+)。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        组织 30+ 线上跨国会议，负责协议审核与进度跟踪。
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                                <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">2020.04</div>
-                                <h3 class="text-2xl font-bold text-slate-900 mb-1">SET校园营销大赛</h3>
-                                <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">营销负责人 (自热火锅)</div>
-                                <ul class="space-y-4 flex-1">
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        从 0 到 1 校园创业，月销售额 5000+ 元。
-                                    </li>
-                                    <li class="flex items-start text-slate-600 text-sm leading-relaxed">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
-                                        制定多平台传播策略，吸纳 215 人私域社群。
-                                    </li>
-                                </ul>
-                            </div>
+                        <div id="exp-timeline-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 flex-1">
+                            <!-- 动态渲染，以支持中英双语无缝切换 -->
                         </div>
                     </div>
                 </div>
@@ -542,132 +495,299 @@
     </div>
 
     <script>
+        let currentLang = 'zh';
+
+        const I18N = {
+            zh: {
+                navAbout: "关于我", navEdu: "全球化视野", navSkills: "专业技能", navProj: "项目作品", navExp: "实践经历", navContact: "联系我",
+                heroSearching: " 正在求职中",
+                heroGreeting: `<span class="hi-wrapper"><span class="drop-char" style="animation: drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;">H</span><span class="drop-char" style="animation: drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.65s both;">i</span></span><span>，</span><span class="wave-char" style="animation-delay: 1.9s;">我</span><span class="wave-char" style="animation-delay: 1.98s;">是</span> <span class="wave-char" style="animation-delay: 2.06s;">彭</span><span class="wave-char" style="animation-delay: 2.14s;">羚</span>`,
+                heroTitle: "数据驱动的商业分析与战略执行候选人",
+                btnProjects: '查看精选项目 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>',
+                aboutTitle: "About Me",
+                eduTitle: "全球化视野", eduSub: "Global Perspective",
+                edu1: "国际商务学习", edu2: "商业模拟运营", edu3: "多元文化体验",
+                skillsTitle: "Core Skills", skillsSub: "专业技能与工具栈，构建扎实的执行力壁垒。",
+                projTitle: "Featured Projects", projSub: "从数据洞察到项目实践，精选案例。",
+                expTitle: "实践经历", expSwipe: '<i data-lucide="mouse-pointer-2" class="w-3 h-3 md:w-4 md:h-4 mr-1 inline"></i> 滑动查看更多经历',
+                insightTitle: "职业期待",
+                insight1Title: "在真实业务中持续成长", insight1Sub: "用数据理解市场，用实践推动价值创造。",
+                insight2Title: "成为兼具战略与执行力的业务人才", insight2Sub: "既能洞察方向，也能推动落地。",
+                contactTitle: "Let's Connect", contactSub: "随时期待与您交流新的工作机会。",
+                modalSwipe: '<i data-lucide="mouse-pointer-2" class="w-3 h-3 mr-1 inline"></i> 左右滑动浏览项目详情与成果',
+                btnProjectDetails: '点击查看详情 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>',
+                modalRoleLabel: '我的角色', modalBgLabel: '项目背景', modalValueLabel: '项目价值', modalResultLabel: '成果展示',
+                footerPrefix: "© ", footerSuffix: " 彭羚. Crafted with Product Thinking & Visual Design."
+            },
+            en: {
+                navAbout: "About", navEdu: "Global View", navSkills: "Skills", navProj: "Projects", navExp: "Experience", navContact: "Contact",
+                heroSearching: " Open to Work",
+                heroGreeting: `<span class="hi-wrapper"><span class="drop-char" style="animation: drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;">H</span><span class="drop-char" style="animation: drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.65s both;">i</span></span><span>,</span> <span class="wave-char" style="animation-delay: 1.9s;">I</span><span class="wave-char" style="animation-delay: 1.98s;">'</span><span class="wave-char" style="animation-delay: 2.06s;">m</span> <span class="wave-char" style="animation-delay: 2.14s;">P</span><span class="wave-char" style="animation-delay: 2.22s;">e</span><span class="wave-char" style="animation-delay: 2.30s;">l</span><span class="wave-char" style="animation-delay: 2.38s;">i</span><span class="wave-char" style="animation-delay: 2.46s;">n</span>`,
+                heroTitle: "Data-Driven Business Analyst & Strategic Execution Candidate",
+                btnProjects: 'View Projects <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>',
+                aboutTitle: "About Me",
+                eduTitle: "Global Perspective", eduSub: "Global Perspective",
+                edu1: "International Business Studies", edu2: "Business Simulation", edu3: "Multicultural Experience",
+                skillsTitle: "Core Skills", skillsSub: "Professional skills and tools building a solid barrier of execution.",
+                projTitle: "Featured Projects", projSub: "Selected cases from data insights to project practice.",
+                expTitle: "Experience", expSwipe: '<i data-lucide="mouse-pointer-2" class="w-3 h-3 md:w-4 md:h-4 mr-1 inline"></i> Swipe for more',
+                insightTitle: "Career Aspirations",
+                insight1Title: "Continuous Growth in Real Business", insight1Sub: "Understanding markets through data, driving value creation through practice.",
+                insight2Title: "Strategic & Executional Talent", insight2Sub: "Capable of both directing strategy and driving implementation.",
+                contactTitle: "Let's Connect", contactSub: "Always looking forward to discussing new career opportunities.",
+                modalSwipe: '<i data-lucide="mouse-pointer-2" class="w-3 h-3 mr-1 inline"></i> Swipe to view details',
+                btnProjectDetails: 'View Details <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>',
+                modalRoleLabel: 'My Role', modalBgLabel: 'Background', modalValueLabel: 'Project Value', modalResultLabel: 'Result Showcase',
+                footerPrefix: "© ", footerSuffix: " Pelin. Crafted with Product Thinking & Visual Design."
+            }
+        };
+
         const DATA = {
-            personal: {
-                name: "彭羚",
-                tags: ["华威大学国际商务硕士", "武汉理工大学国际经济与贸易本科", "国际商务战略", "跨文化管理", "经济金融基础", "大数据分析"],
-                email: "pengling2024uk@163.com",
-                phone: "15377614239",
-                about: [
-                    "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目落地。",
-                    "关注用户行为与市场变化，擅长通过数据洞察识别需求机会并支持营销与产品决策。",
-                    "在专业学习与商业模拟中，形成以增长为导向的战略思维，能够通过资源配置与策略节奏提升市场表现。"
+            zh: {
+                personal: {
+                    name: "彭羚",
+                    tags: ["华威大学国际商务硕士", "武汉理工大学国际经济与贸易本科", "国际商务战略", "跨文化管理", "经济金融基础", "大数据分析"],
+                    email: "pengling2024uk@163.com",
+                    phone: "15377614239",
+                    about: [
+                        "拥有跨文化沟通与跨团队协作经验，能在快节奏环境中驱动项目落地。",
+                        "关注用户行为与市场变化，擅长通过数据洞察识别需求机会并支持营销与产品决策。",
+                        "在专业学习与商业模拟中，形成以增长为导向的战略思维，能够通过资源配置与策略节奏提升市场表现。"
+                    ]
+                },
+                skills: [
+                    { category: "商业分析", icon: "bar-chart-2", items: ["市场调研", "竞品分析", "战略支持"] },
+                    { category: "数据分析", icon: "pie-chart", items: ["Excel", "R语言应用", "数据可视化"] },
+                    { category: "品牌传播", icon: "target", items: ["企业文化建设", "活动策划执行", "多渠道运营"] },
+                    { category: "语言能力", icon: "lightbulb", items: ["英语雅思7分", "BEC商务英语中级", "跨国沟通经验"] }
+                ],
+                projects: [
+                    {
+                        id: 1,
+                        title: "Google Trends 宏观失业预测模型",
+                        tags: ["数据分析", "R语言"],
+                        summary: "检验 Google 搜索行为是否能够在时间上领先并解释美国失业申领波动。",
+                        image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project1.png",
+                        background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力 market 变化提供潜在领先信号。",
+                        role: "构建行为假设、多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
+                        value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
+                        placeholders: [
+                            { title: "交叉相关分析", desc: "相关性峰值出现在同期（Lag=0），未观察到稳定的领先或滞后关系。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/ccanalysis.png" },
+                            { title: "相关性散点分析", desc: "通过散点图与回归线量化搜索指数与失业数据的相关强度，验证模型的解释力。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/scatter.png" },
+                            { title: "Google Trends 搜索指数对比", desc: "对比核心关键词搜索指数与实际失业人数变动曲线，揭示搜索行为的领先特征。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        title: "PureFit+：数字健身生态产品设计",
+                        tags: ["产品设计", "AI应用"],
+                        summary: "通过 AI 个性化、社区激励与碳足迹追踪，设计 PureGym 数字健身生态。",
+                        image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/purefit%2B.jpg",
+                        background: "PureGym 作为英国最大平价连锁健身品牌，拥有超过 150 万会员，但其数字服务仍停留在预约与会员管理层面，缺乏个性化训练、社区互动及可持续行为激励。",
+                        role: "用户需求洞察与竞品分析、AI 个性化健身模块功能拆解、多边平台商业模式设计、碳足迹追踪与可持续价值体系构建、MVP 路线图与敏捷实施方案规划",
+                        value: "构建 AI 个性化 + 社区激励 + 可持续行为反馈 的数字健身生态，推动 PureGym 从 低价健身房 → 数据驱动健康平台 的战略升级。",
+                        placeholders: [
+                            { title: "AI 个性化健身方案", desc: "基于用户健身目标、历史训练记录与可穿戴设备数据，构建 AI 自适应训练方案，实现动态强度调整与行为预测，提升用户训练坚持率与效果反馈。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" },
+                            { title: "社区社交与挑战", desc: "通过好友排名与勋章体系构建高留存的运动社区氛围。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/community.png" },
+                            { title: "碳足迹与低碳追踪", desc: "将运动消耗转化为环保碳积分，构建可视化反馈机制，建立可持续发展的品牌心智。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        title: "商业模拟运营某车企",
+                        tags: ["战略制定", "需求分析"],
+                        summary: "在华威商学院 89 支队伍的模拟竞争中，企业增加值提升 261%，团队排名 14/89。",
+                        image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project3.jpg",
+                        background: "在新能源转型和可持续发展背景下，公司需在市场窗口期内平衡增长速度、盈利能力与资源约束。",
+                        role: "设计跨周期营销资源配置策略、基于营销效率、利润率与需求变化识别投入产出拐点、参与制定增长与盈利并行的跨周期战略路线图。",
+                        value: "企业增加值提升 261% 、电动车业务实现规模化落地并支撑 ESG 转型。",
+                        placeholders: [
+                            { title: "营销节奏：窗口期进攻与利润收割", desc: "早期以略高于行业均值投入建立认知，中期在电动化窗口期集中加码以获取市场份额，后期在竞争地位确立后主动收缩投入，实现利润回升与增长稳定。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2marketing_efficiency.png" },
+                            { title: "效率矩阵：高投入不等于低利润", desc: "跨团队对标显示，多数高营销支出团队未获得相应利润回报，而我队同时实现高投入与高利润，验证高支出集中于关键增长窗口、并通过后期收缩避免边际回报递减。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/chart2_efficiency_matrix.png" },
+                            { title: "增长代价与战略回报", desc: "盈利曲线呈现典型转型轨迹：早期因人才与能力投入导致利润承压，中期随着电动车规模化实现收入加速，后期通过成本结构优化与需求匹配完成盈利能力恢复，形成“先承压、后释放”的增长路径。", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2profitability_arc.png" }
+                        ]
+                    }
+                ],
+                experienceTimeline: [
+                    {
+                        date: "2025.06", title: "华威商学院", role: "市场部负责人",
+                        points: [
+                            "制定战略路线图，平衡财务与能源转型。",
+                            "数据驱动动态定价，实现企业增加值提升 170%。",
+                            "在 89 支队伍中获第 14 名。"
+                        ]
+                    },
+                    {
+                        date: "2024.06 - 2024.09 & 2023.02 - 2023.03", title: "中国建材科学研究总院", role: "科技部国际合作实习生",
+                        points: [
+                            "输出海外市场分析报告，编制 3 期行业信息简报 (月均阅读量 800+)。",
+                            "组织 30+ 线上跨国会议，负责协议审核与进度跟踪。"
+                        ]
+                    },
+                    {
+                        date: "2020.04", title: "SET校园营销大赛", role: "营销负责人 (自热火锅)",
+                        points: [
+                            "从 0 到 1 校园创业，月销售额 5000+ 元。",
+                            "制定多平台传播策略，吸纳 215 人私域社群。"
+                        ]
+                    }
+                ],
+                experienceGallery: [
+                    { title: "国际合作与洞察", images: [{ url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业跟踪" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/cooperation.jpg", title: "跨国合作" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "合作落地" }] },
+                    { title: "商业战略与增长", images: [{ url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/setmkt.jpg", title: "市场洞察" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "平台宣传" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/revenue.png", title: "促进盈利" }] },
+                    { title: "活动策划与执行", images: [{ url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/yue.jpg", title: "国际交流" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "主题活动" }] }
                 ]
             },
-            skills: [
-                { category: "商业分析", icon: "bar-chart-2", items: ["市场调研", "竞品分析", "战略支持"] },
-                { category: "数据分析", icon: "pie-chart", items: ["Excel", "R语言应用", "数据可视化"] },
-                { category: "品牌传播", icon: "target", items: ["企业文化建设", "活动策划执行", "多渠道运营"] },
-                { category: "语言能力", icon: "lightbulb", items: ["英语雅思7分", "BEC商务英语中级", "跨国沟通经验"] }
-            ],
-            projects: [
-                {
-                    id: 1,
-                    title: "Google Trends 宏观失业预测模型",
-                    tags: ["数据分析", "R语言"],
-                    summary: "检验 Google 搜索行为是否能够在时间上领先并解释美国失业申领波动。",
-                    image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project1.png",
-                    background: "官方失业申领数据存在统计与发布滞后，而搜索行为可能提前反映个体就业焦虑与信息需求，为劳动力 market 变化提供潜在领先信号。",
-                    role: "构建行为假设、多源周度数据获取与清洗、时间序列对齐、交叉相关分析、滞后回归建模、模型诊断与可视化表达。",
-                    value: "探索数字行为数据在宏观经济 nowcasting 中的作用",
-                    placeholders: [
-                        { 
-                            title: "交叉相关分析", 
-                            desc: "相关性峰值出现在同期（Lag=0），未观察到稳定的领先或滞后关系。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/ccanalysis.png"  
-                        },
-                        { 
-                            title: "相关性散点分析", 
-                            desc: "通过散点图与回归线量化搜索指数与失业数据的相关强度，验证模型的解释力。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/scatter.png" 
-                        },
-                        { 
-                            title: "Google Trends 搜索指数对比", 
-                            desc: "对比核心关键词搜索指数与实际失业人数变动曲线，揭示搜索行为的领先特征。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" 
-                        }
+            en: {
+                personal: {
+                    name: "Pelin",
+                    tags: ["MSc International Business, Warwick", "BSc International Economics & Trade, WUT", "International Business Strategy", "Cross-cultural Mgmt", "Economics & Finance", "Big Data Analytics"],
+                    email: "pengling2024uk@163.com",
+                    phone: "15377614239",
+                    about: [
+                        "Experienced in cross-cultural communication and cross-functional collaboration, capable of driving projects forward in fast-paced environments.",
+                        "Attentive to user behavior and market shifts, skilled in using data insights to identify demand opportunities and support marketing/product decisions.",
+                        "Developed a growth-oriented strategic mindset through academic studies and business simulations, adept at improving market performance through resource allocation and strategic pacing."
                     ]
                 },
-                {
-                    id: 2,
-                    title: "PureFit+：数字健身生态产品设计",
-                    tags: ["产品设计", "AI应用"],
-                    summary: "通过 AI 个性化、社区激励与碳足迹追踪，设计 PureGym 数字健身生态。",
-                    image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/purefit%2B.jpg",
-                    background: "PureGym 作为英国最大平价连锁健身品牌，拥有超过 150 万会员，但其数字服务仍停留在预约与会员管理层面，缺乏个性化训练、社区互动及可持续行为激励。",
-                    role: "用户需求洞察与竞品分析、AI 个性化健身模块功能拆解、多边平台商业模式设计、碳足迹追踪与可持续价值体系构建、MVP 路线图与敏捷实施方案规划",
-                    value: "构建 AI 个性化 + 社区激励 + 可持续行为反馈 的数字健身生态，推动 PureGym 从 低价健身房 → 数据驱动健康平台 的战略升级。",
-                    placeholders: [
-                        { 
-                            title: "AI 个性化健身方案", 
-                            desc: "基于用户健身目标、历史训练记录与可穿戴设备数据，构建 AI 自适应训练方案，实现动态强度调整与行为预测，提升用户训练坚持率与效果反馈。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" 
-                        },
-                        { 
-                            title: "社区社交与挑战", 
-                            desc: "通过好友排名与勋章体系构建高留存的运动社区氛围。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/community.png" 
-                        },
-                        { 
-                            title: "碳足迹与低碳追踪", 
-                            desc: "将运动消耗转化为环保碳积分，构建可视化反馈机制，建立可持续发展的品牌心智。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" 
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    title: "商业模拟运营某车企",
-                    tags: ["战略制定", "需求分析"],
-                    summary: "在华威商学院 89 支队伍的模拟竞争中，企业增加值提升 261%，团队排名 14/89。",
-                    image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project3.jpg",
-                    background: "在新能源转型和可持续发展背景下，公司需在市场窗口期内平衡增长速度、盈利能力与资源约束。",
-                    role: "设计跨周期营销资源配置策略、基于营销效率、利润率与需求变化识别投入产出拐点、参与制定增长与盈利并行的跨周期战略路线图。",
-                    value: "企业增加值提升 261% 、电动车业务实现规模化落地并支撑 ESG 转型。",
-                    placeholders: [
-                        { 
-                            title: "营销节奏：窗口期进攻与利润收割", 
-                            desc: "早期以略高于行业均值投入建立认知，中期在电动化窗口期集中加码以获取市场份额，后期在竞争地位确立后主动收缩投入，实现利润回升与增长稳定。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2marketing_efficiency.png" 
-                        },
-                        { 
-                            title: "效率矩阵：高投入不等于低利润", 
-                            desc: "跨团队对标显示，多数高营销支出团队未获得相应利润回报，而我队同时实现高投入与高利润，验证高支出集中于关键增长窗口、并通过后期收缩避免边际回报递减。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/chart2_efficiency_matrix.png" 
-                        },
-                        { 
-                            title: "增长代价与战略回报", 
-                            desc: "盈利曲线呈现典型转型轨迹：早期因人才与能力投入导致利润承压，中期随着电动车规模化实现收入加速，后期通过成本结构优化与需求匹配完成盈利能力恢复，形成“先承压、后释放”的增长路径。", 
-                            imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2profitability_arc.png" }
-                    ]
-                }
-            ],
-            experienceGallery: [
-                {
-                    title: "国际合作与洞察",
-                    images: [
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "行业跟踪" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/cooperation.jpg", title: "跨国合作" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "合作落地" }
-                    ]
-                },
-                {
-                    title: "商业战略与增长",
-                    images: [
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/setmkt.jpg", title: "市场洞察" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "平台宣传" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/revenue.png", title: "促进盈利" }
-                    ]
-                },
-                {
-                    title: "活动策划与执行",
-                    images: [
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/yue.jpg", title: "国际交流" },
-                        { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "主题活动" }
-                    ]
-                }
-            ]
+                skills: [
+                    { category: "Business Analysis", icon: "bar-chart-2", items: ["Market Research", "Competitor Analysis", "Strategic Support"] },
+                    { category: "Data Analytics", icon: "pie-chart", items: ["Excel", "R Programming", "Data Visualization"] },
+                    { category: "Brand Comm.", icon: "target", items: ["Corporate Culture", "Event Planning & Execution", "Multi-channel Operation"] },
+                    { category: "Languages", icon: "lightbulb", items: ["IELTS 7.0", "BEC Vantage", "Cross-national Comm."] }
+                ],
+                projects: [
+                    {
+                        id: 1,
+                        title: "Google Trends Macro Unemployment Model",
+                        tags: ["Data Analysis", "R"],
+                        summary: "Examined whether Google search behaviors lead and explain US unemployment claims fluctuations.",
+                        image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project1.png",
+                        background: "Official unemployment data lags, while search behavior may reflect employment anxiety early, providing potential leading signals for labor market shifts.",
+                        role: "Hypothesis building, multi-source weekly data fetching & cleaning, cross-correlation analysis, lag regression modeling, diagnosis & visualization.",
+                        value: "Assessed the potential of using digital behavioral data to enhance macroeconomic nowcasting accuracy.",
+                        placeholders: [
+                            { title: "Cross-Correlation Analysis", desc: "Peak correlation at Lag=0, no stable leading/lagging relation observed.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/ccanalysis.png" },
+                            { title: "Correlation Scatter Plot", desc: "Quantified correlation strength with scatter plot and regression line to verify model's explanatory power.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/scatter.png" },
+                            { title: "Google Trends Index Comparison", desc: "Contrasted core keyword searches with actual unemployment curves, revealing search behavior lead characteristics.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/timecomparison.png" }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        title: "PureFit+: Digital Fitness Ecosystem",
+                        tags: ["Product Design", "AI Application"],
+                        summary: "Designed PureGym digital ecosystem through AI personalization, community incentives, and carbon tracking.",
+                        image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/purefit%2B.jpg",
+                        background: "PureGym is the UK's largest budget gym brand with 1.5M+ members, yet digital services lack personalized training, social interaction, and sustainability incentives.",
+                        role: "User insights & competitor analysis, AI feature breakdown, multi-sided platform business model design, carbon tracking value system, MVP roadmap planning.",
+                        value: "Constructed an AI + Community + Sustainability ecosystem, driving strategic upgrade to a data-driven health platform.",
+                        placeholders: [
+                            { title: "AI Personalized Plan", desc: "Adaptive AI training based on goals and wearables, dynamically adjusting intensity to boost retention.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aipersonalisation.png" },
+                            { title: "Community & Challenges", desc: "Fostering a highly engaging sports atmosphere through friend rankings and badge systems.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/community.png" },
+                            { title: "Carbon Footprint Tracker", desc: "Converting calories to carbon credits, building visual feedback for a sustainable brand image.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/carbontracker.png" }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        title: "Automotive Business Simulation",
+                        tags: ["Strategy", "Demand Analysis"],
+                        summary: "In an 89-team competition at Warwick, increased enterprise value by 261%, ranking 14th.",
+                        image: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/project3.jpg",
+                        background: "Amidst energy transition, the company needed to balance growth, profitability, and resource constraints within market windows.",
+                        role: "Designed cross-cycle marketing resource allocation, identified ROI inflection points, co-developed dual growth-profit roadmap.",
+                        value: "Boosted added value by 261%, scaling EV business to support ESG transition.",
+                        placeholders: [
+                            { title: "Marketing Rhythm", desc: "Aggressive early spending, concentrated window push, and later active contraction for profit recovery.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2marketing_efficiency.png" },
+                            { title: "Efficiency Matrix", desc: "Benchmarking showed our team achieved both high input and high profit by avoiding diminishing returns.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/chart2_efficiency_matrix.png" },
+                            { title: "Cost of Growth", desc: "Profit curve followed a classic transition path: early pressure from investment, later release via scale and efficiency.", imageUrl: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/2profitability_arc.png" }
+                        ]
+                    }
+                ],
+                experienceTimeline: [
+                    {
+                        date: "Jun 2025", title: "Warwick Business School", role: "Head of Marketing",
+                        points: [
+                            "Formulated strategic roadmap, balancing finance and energy transition.",
+                            "Data-driven dynamic pricing, increasing enterprise added value by 170%.",
+                            "Ranked 14th out of 89 teams."
+                        ]
+                    },
+                    {
+                        date: "Jun-Sep 2024 & Feb-Mar 2023", title: "China Building Materials Academy", role: "International Cooperation Intern",
+                        points: [
+                            "Produced overseas market analysis reports, compiled 3 industry info briefs (800+ avg monthly reads).",
+                            "Organized 30+ cross-border online meetings, managed protocol review and progress tracking."
+                        ]
+                    },
+                    {
+                        date: "Apr 2020", title: "SET Campus Mkt Competition", role: "Marketing Lead",
+                        points: [
+                            "0-to-1 campus entrepreneurship, monthly sales exceeding 5000 RMB.",
+                            "Formulated multi-platform spread strategy, acquired 215 private domain community members."
+                        ]
+                    }
+                ],
+                experienceGallery: [
+                    { title: "International Cooperation", images: [{ url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/industry.jpg", title: "Industry Tracking" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/cooperation.jpg", title: "Cross-border Collab" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/aramco.jpg", title: "Execution" }] },
+                    { title: "Strategy & Growth", images: [{ url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/setmkt.jpg", title: "Market Insight" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/campus.png", title: "Promotion" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/revenue.png", title: "Profitability" }] },
+                    { title: "Event Execution", images: [{ url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/yue.jpg", title: "International Exchange" }, { url: "https://raw.githubusercontent.com/pelinpl/images/refs/heads/main/english.jpg", title: "Thematic Event" }] }
+                ]
+            }
         };
+
+        function toggleLang() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            document.getElementById('lang-btn').innerText = currentLang === 'zh' ? 'EN' : '中';
+            updateStaticTexts();
+            renderBase();
+            switchExperienceTab(0);
+            document.getElementById('year').innerText = new Date().getFullYear();
+        }
+
+        function updateStaticTexts() {
+            const t = I18N[currentLang];
+            document.querySelector('a[href="#about"]').innerText = t.navAbout;
+            document.querySelector('a[href="#education"]').innerText = t.navEdu;
+            document.querySelector('a[href="#skills"]').innerText = t.navSkills;
+            document.querySelector('a[href="#projects"]').innerText = t.navProj;
+            document.querySelector('a[href="#experience"]').innerText = t.navExp;
+            document.querySelector('button[onclick="scrollToId(\'contact\')"]').innerText = t.navContact;
+            
+            document.querySelector('.inline-flex').lastChild.nodeValue = t.heroSearching;
+            document.querySelector('#hero h1').innerHTML = t.heroGreeting;
+            document.getElementById('hero-title').innerText = t.heroTitle;
+            document.querySelector('.hero-section button').innerHTML = t.btnProjects;
+            
+            document.querySelector('#about h2').innerText = t.aboutTitle;
+            document.querySelector('#education h2').innerText = t.eduTitle;
+            document.querySelector('#education p').innerText = t.eduSub;
+            const eduItems = document.querySelectorAll('#education span.text-white\\/80');
+            eduItems[0].innerText = t.edu1; eduItems[1].innerText = t.edu2; eduItems[2].innerText = t.edu3;
+            
+            document.querySelector('#skills h2').innerText = t.skillsTitle;
+            document.querySelector('#skills p').innerText = t.skillsSub;
+            
+            document.querySelector('#projects h2').innerText = t.projTitle;
+            document.querySelector('#projects p').innerText = t.projSub;
+            
+            document.querySelector('#experience .absolute.top-8').innerHTML = t.expSwipe;
+            document.querySelector('#experience h2.text-3xl').innerText = t.expTitle;
+            
+            document.querySelector('#insights h2').innerText = t.insightTitle;
+            const insightCards = document.querySelectorAll('.insight-card');
+            insightCards[0].querySelector('h3').innerText = t.insight1Title;
+            insightCards[0].querySelector('p').innerText = t.insight1Sub;
+            insightCards[1].querySelector('h3').innerText = t.insight2Title;
+            insightCards[1].querySelector('p').innerText = t.insight2Sub;
+            
+            document.querySelector('#contact h2').innerText = t.contactTitle;
+            document.querySelector('#contact p').innerText = t.contactSub;
+            
+            document.querySelector('footer p').innerHTML = `${t.footerPrefix}<span id="year">${new Date().getFullYear()}</span>${t.footerSuffix}`;
+            document.querySelector('.project-modal-container .flex.items-center.gap-3').innerHTML = t.modalSwipe;
+
+            initLucideIcons(); // 刷新因更改 innerHTML 而失效的图标
+        }
 
         function initLucideIcons() {
             if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -715,8 +835,12 @@
         }
 
         function renderBase() {
+            const langData = DATA[currentLang];
+            const t = I18N[currentLang];
+
             if (document.getElementById('hero-tags')) {
-                DATA.personal.tags.forEach((tag, index) => {
+                document.getElementById('hero-tags').innerHTML = ''; // 清空原有标签
+                langData.personal.tags.forEach((tag, index) => {
                     if (index === 2) {
                         const lineBreak = document.createElement('div');
                         lineBreak.className = "w-full h-0"; 
@@ -730,7 +854,8 @@
             }
 
             if (document.getElementById('about-content')) {
-                DATA.personal.about.forEach(text => {
+                document.getElementById('about-content').innerHTML = '';
+                langData.personal.about.forEach(text => {
                     document.getElementById('about-content').innerHTML += `
                         <div class="flex items-start">
                             <div class="flex-shrink-0 mt-2 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
@@ -740,7 +865,8 @@
             }
 
             if (document.getElementById('skills-grid')) {
-                DATA.skills.forEach(skill => {
+                document.getElementById('skills-grid').innerHTML = '';
+                langData.skills.forEach(skill => {
                     document.getElementById('skills-grid').innerHTML += `
                         <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
                             <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#2B6BF3] transition-colors">
@@ -755,7 +881,8 @@
             }
 
             if (document.getElementById('projects-grid')) {
-                DATA.projects.forEach(project => {
+                document.getElementById('projects-grid').innerHTML = '';
+                langData.projects.forEach(project => {
                     const card = document.createElement('div');
                     card.className = "group bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all cursor-pointer flex flex-col";
                     card.onclick = () => openModal(project);
@@ -766,36 +893,58 @@
                         <div class="p-8 flex flex-col flex-1">
                             <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#2B6BF3] transition-colors">${project.title}</h3>
                             <p class="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed text-justify">${project.summary}</p>
-                            <div class="flex gap-2 mb-6">
+                            <div class="flex gap-2 mb-6 flex-wrap">
                                 ${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}
                             </div>
                             <div class="mt-auto pt-6 border-t border-slate-50 text-sm font-bold text-[#2B6BF3] flex items-center">
-                                点击查看详情 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                ${t.btnProjectDetails}
                             </div>
                         </div>`;
                     document.getElementById('projects-grid').appendChild(card);
                 });
             }
 
+            // 动态渲染经验时间轴卡片 (中英自适应)
+            const timelineGrid = document.getElementById('exp-timeline-grid');
+            if (timelineGrid) {
+                timelineGrid.innerHTML = '';
+                langData.experienceTimeline.forEach(exp => {
+                    timelineGrid.innerHTML += `
+                        <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-xl border border-slate-100 flex flex-col hover:-translate-y-2 transition-transform duration-300">
+                            <div class="text-[#2B6BF3] text-sm font-bold tracking-widest mb-4 uppercase">${exp.date}</div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-1">${exp.title}</h3>
+                            <div class="text-slate-500 text-sm mb-6 pb-6 border-b border-slate-100">${exp.role}</div>
+                            <ul class="space-y-4 flex-1">
+                                ${exp.points.map(pt => `
+                                <li class="flex items-start text-slate-600 text-sm leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#2B6BF3] mt-2 mr-3 flex-shrink-0"></span>
+                                    ${pt}
+                                </li>`).join('')}
+                            </ul>
+                        </div>`;
+                });
+            }
+
             if (document.getElementById('contact-info')) {
                 document.getElementById('contact-info').innerHTML = `
-                    <a href="mailto:${DATA.personal.email}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
+                    <a href="mailto:${langData.personal.email}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
                         <i data-lucide="mail" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-medium tracking-wide">${DATA.personal.email}</span>
+                        <span class="font-medium tracking-wide">${langData.personal.email}</span>
                     </a>
-                    <a href="tel:${DATA.personal.phone}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
+                    <a href="tel:${langData.personal.phone}" class="flex items-center px-8 py-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl backdrop-blur-sm transition-all text-blue-400 group">
                         <i data-lucide="phone" class="w-5 h-5 mr-4 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-medium tracking-wide">${DATA.personal.phone}</span>
+                        <span class="font-medium tracking-wide">${langData.personal.phone}</span>
                     </a>`;
             }
             initLucideIcons();
         }
 
         function switchExperienceTab(index) {
+            const langData = DATA[currentLang];
             const navContainer = document.getElementById('exp-nav-container');
             const imgContainer = document.getElementById('exp-img-container');
             if (!navContainer || !imgContainer) return;
-            navContainer.innerHTML = DATA.experienceGallery.map((tab, i) => {
+            navContainer.innerHTML = langData.experienceGallery.map((tab, i) => {
                 const isActive = i === index;
                 return isActive ? `
                     <div class="relative pl-6 cursor-pointer group" onclick="switchExperienceTab(${i})">
@@ -808,7 +957,7 @@
                     </div>`;
             }).join('');
             
-            const images = DATA.experienceGallery[index]?.images || [];
+            const images = langData.experienceGallery[index]?.images || [];
             
             // 动态调整网格布局：如果是2张图，则只渲染1行（让2张图等分整个高度）；否则渲染2行
             if (images.length === 2) {
@@ -822,10 +971,8 @@
                 // 动态分配跨列布局：不同板块呈现不同的3图排版
                 if (images.length === 3) {
                     if (index === 0 && idx === 2) {
-                        // 国际合作板块：第3张跨列 (上2下1)
                         spanClass = " col-span-2";
                     } else if (index === 1 && idx === 0) {
-                        // 商业战略板块：第1张跨列 (上1下2)
                         spanClass = " col-span-2";
                     }
                 }
@@ -844,22 +991,23 @@
 
         let currentSwiper = null;
         function openModal(project) {
+            const t = I18N[currentLang];
             const modal = document.getElementById('modal-overlay');
             const wrapper = document.getElementById('modal-slides-wrapper');
             const introSlide = `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
                         <div class="flex-1 p-8 md:p-14 flex flex-col justify-center overflow-y-auto no-scrollbar">
-                            <div class="flex gap-2 mb-6">${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}</div>
+                            <div class="flex gap-2 mb-6 flex-wrap">${project.tags.map(tag => `<span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-lg tracking-wider border border-blue-100">${tag}</span>`).join('')}</div>
                             <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">${project.title}</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                                 <div class="space-y-6">
-                                    <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">项目背景</div><p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.background}</p></div>
-                                    <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">我的角色</div><p class="text-slate-600 leading-relaxed text-sm md:text-base text-justify">${project.role}</p></div>
+                                    <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">${t.modalBgLabel}</div><p class="text-slate-600 leading-relaxed text-xs md:text-sm text-justify">${project.background}</p></div>
+                                    <div><div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">${t.modalRoleLabel}</div><p class="text-slate-600 leading-relaxed text-xs md:text-sm text-justify">${project.role}</p></div>
                                 </div>
                                 <div class="bg-blue-600/5 p-8 rounded-[2rem] border border-blue-100/50 flex flex-col justify-center">
-                                    <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">项目价值</div>
-                                    <p class="text-blue-900 text-lg md:text-2xl font-bold leading-snug text-justify">${project.value}</p>
+                                    <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-3">${t.modalValueLabel}</div>
+                                    <p class="text-blue-900 text-base md:text-lg font-bold leading-snug text-justify">${project.value}</p>
                                 </div>
                             </div>
                         </div>
@@ -868,7 +1016,7 @@
             const resultSlides = (project.placeholders || []).map((p, i) => `
                 <div class="swiper-slide p-0">
                     <div class="standard-card">
-                        <div class="result-image-box flex-1"><div class="absolute top-8 left-8 z-10"><span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">成果展示 0${i+1}</span></div><img src="${p.imageUrl}" alt="${p.title}"></div>
+                        <div class="result-image-box flex-1"><div class="absolute top-8 left-8 z-10"><span class="px-4 py-2 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase rounded-full tracking-widest shadow-xl border border-white/10">${t.modalResultLabel} 0${i+1}</span></div><img src="${p.imageUrl}" alt="${p.title}"></div>
                         <div class="p-8 md:p-12 bg-white border-t border-slate-100"><h3 class="text-xl font-bold text-slate-800 mb-2">${p.title}</h3><p class="text-sm text-slate-500 leading-relaxed text-justify">${p.desc}</p></div>
                     </div>
                 </div>`).join('');
@@ -907,5 +1055,3 @@
     </script>
 </body>
 </html>
-
-
