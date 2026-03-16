@@ -337,25 +337,26 @@
         </div>
         <div class="edu-global-overlay"></div>
 
-        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full flex-1 flex flex-col">
-            <div class="text-center mt-20 mb-auto reveal">
+        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full flex flex-col">
+            <div class="text-center mt-20 reveal">
                 <h2 class="text-5xl md:text-7xl font-light tracking-[0.5em] tech-silver-blue uppercase opacity-70">全球化视野</h2>
-                <p class="text-blue-400/40 font-semibold tracking-[0.6em] uppercase text-[10px] md:text-sm mt-4">Global Perspective</p>
                 <div class="w-16 h-[0.5px] bg-blue-500/20 mx-auto mt-8"></div>
             </div>
+        </div>
 
-            <div class="w-full flex justify-around items-end mb-20 reveal">
-                <div class="flex flex-col items-center group">
+        <div class="w-full relative z-10 flex-1 flex flex-col justify-end mb-20">
+            <div class="w-full grid grid-cols-3 items-end reveal px-2">
+                <div class="flex flex-col items-center group px-2 text-center">
                     <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
-                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">国际商务学习</span>
+                    <span class="text-white/80 font-bold text-xs md:text-base tracking-widest md:tracking-[0.2em] uppercase group-hover:text-blue-200 transition-colors">国际商务学习</span>
                 </div>
-                <div class="flex flex-col items-center group">
+                <div class="flex flex-col items-center group px-2 text-center">
                     <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
-                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">商业模拟运营</span>
+                    <span class="text-white/80 font-bold text-xs md:text-base tracking-widest md:tracking-[0.2em] uppercase group-hover:text-blue-200 transition-colors">商业模拟运营</span>
                 </div>
-                <div class="flex flex-col items-center group">
+                <div class="flex flex-col items-center group px-2 text-center">
                     <div class="w-6 h-[1px] bg-blue-400/30 mb-6 group-hover:w-10 group-hover:bg-blue-400 transition-all"></div>
-                    <span class="text-white/80 font-bold text-sm md:text-xl tracking-[0.5em] uppercase group-hover:text-blue-200 transition-colors">多元文化体验</span>
+                    <span class="text-white/80 font-bold text-xs md:text-base tracking-widest md:tracking-[0.2em] uppercase group-hover:text-blue-200 transition-colors">多元文化体验</span>
                 </div>
             </div>
         </div>
@@ -505,7 +506,7 @@
                 heroTitle: "数据驱动的商业分析与战略执行候选人",
                 btnProjects: '查看精选项目 <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>',
                 aboutTitle: "About Me",
-                eduTitle: "全球化视野", eduSub: "Global Perspective",
+                eduTitle: "全球化视野",
                 edu1: "国际商务学习", edu2: "商业模拟运营", edu3: "多元文化体验",
                 skillsTitle: "Core Skills", skillsSub: "专业技能与工具栈，构建扎实的执行力壁垒。",
                 projTitle: "Featured Projects", projSub: "从数据洞察到项目实践，精选案例。",
@@ -526,7 +527,7 @@
                 heroTitle: "Data-Driven Business Analyst & Strategic Execution Candidate",
                 btnProjects: 'View Projects <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>',
                 aboutTitle: "About Me",
-                eduTitle: "Global Perspective", eduSub: "Global Perspective",
+                eduTitle: "Global Perspective",
                 edu1: "International Business Studies", edu2: "Business Simulation", edu3: "Multicultural Experience",
                 skillsTitle: "Core Skills", skillsSub: "Professional skills and tools building a solid barrier of execution.",
                 projTitle: "Featured Projects", projSub: "Selected cases from data insights to project practice.",
@@ -760,7 +761,6 @@
             
             document.querySelector('#about h2').innerText = t.aboutTitle;
             document.querySelector('#education h2').innerText = t.eduTitle;
-            document.querySelector('#education p').innerText = t.eduSub;
             const eduItems = document.querySelectorAll('#education span.text-white\\/80');
             eduItems[0].innerText = t.edu1; eduItems[1].innerText = t.edu2; eduItems[2].innerText = t.edu3;
             
